@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/02/25 17:03:28 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/25 17:39:59 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ char	**get_input()
 		return (NULL);
 	}
 	tokens = ft_split(line, ' ');
+	int i = 0;
+	while (tokens[i])
+	{
+		printf("%s\n", tokens[i]);
+		i++;
+	}
 	free(line);
 	return (tokens);
 }
