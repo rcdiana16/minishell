@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:45:02 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/25 13:43:08 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/02/25 19:06:48 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 
 char	**get_path(char **env)
 {
-	int		i;
 	char	*path;
 
-	i = 0;
-	path = NULL;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-			path = env[i];
-		i++;
-	}
-	return (split_path(path + 5));
+	path = get_env("PATH", env);
+	if (!path)
+		return (NULL);
+	return (split_path(path));
 }
 
 char	**split_path(char *path)
@@ -33,5 +27,7 @@ char	**split_path(char *path)
 	char	**path_splited;
 
 	path_splited = ft_split(path, ':');
+	if (!path_splited)
+		return (NULL);
 	return (path_splited);
 }
