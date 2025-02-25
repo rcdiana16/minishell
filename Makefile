@@ -20,6 +20,7 @@ SRCS            = main.c \
 					path.c \
 					get_env.c \
 					get_input.c \
+					get_env.c
 
 OBJS            = $(SRCS:.c=.o)
 

@@ -25,6 +25,7 @@ char	**get_path(char **env);
 char	**split_path(char *path);
 char	**get_env(char **env);
 
+
 char	**get_input();
 
 #endif
