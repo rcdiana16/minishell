@@ -6,7 +6,7 @@
 #    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/02/25 11:49:07 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/02/25 12:52:24 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CC              = gcc
 CFLAGS          = -Wall -Wextra -Werror
 RM              = rm -rf
 
-SRCS            = main.c
+SRCS            = main.c \
+					path.c
 
 OBJS            = $(SRCS:.c=.o)
 
