@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
+#    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/02/25 14:22:38 by cosmos           ###   ########.fr        #
+#    Updated: 2025/02/25 16:45:49 by diana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SRCS            = main.c \
 					path.c \
 					get_env.c \
 					get_input.c \
-					get_env.c
 
 OBJS            = $(SRCS:.c=.o)
 
