@@ -6,7 +6,7 @@
 #    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/02/25 19:58:42 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/02/25 20:05:42 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ $(LIBFT):
 
 clean:
 				make -C $(LIBFT_PATH) clean
-				$(RM) $(OBJS) $(BONUS_OBJS) $(NAME).bonus
+				$(RM) $(OBJS)
 
 fclean:         clean
 				make -C $(LIBFT_PATH) fclean
