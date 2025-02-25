@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
+#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/02/25 17:36:50 by cosmos           ###   ########.fr        #
+#    Updated: 2025/02/25 19:58:42 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME            = minishell
 
 CC              = gcc
 CFLAGS          = -Wall -Wextra -Werror
+RD				= -lreadline
 RM              = rm -rf
 
 SRCS            = main.c \
@@ -32,7 +33,7 @@ LIBFT           = $(LIBFT_PATH)/libft.a
 all:            $(NAME)
 
 $(NAME):        $(LIBFT) $(OBJS)
-				@$(CC) $(CFLAGS)  -lreadline $(OBJS) $(LIBFT) -o $(NAME)
+				@$(CC) $(CFLAGS) $(RD) $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 				make -C $(LIBFT_PATH)
