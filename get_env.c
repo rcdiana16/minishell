@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:58:26 by cosmos            #+#    #+#             */
-/*   Updated: 2025/02/25 20:09:45 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/02/25 22:10:16 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_env(char *var, char **env)
 	{
 		if (ft_strncmp(env[i], var, var_len) == 0)
 		{
-			variable = &env[i][var_len];
+			variable = &env[i][var_len + 1];
 			return (variable);
 		}
 		i++;
