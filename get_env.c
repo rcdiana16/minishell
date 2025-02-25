@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/25 14:02:16 by cosmos           ###   ########.fr       */
+/*   Created: 2025/02/25 13:58:26 by cosmos            #+#    #+#             */
+/*   Updated: 2025/02/25 14:13:07 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdarg.h>
-# include <stdint.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+char	**get_env(char **env)
+{
+	char	**env_dup;
+	int		i;
 
-char	**get_path(char **env);
-char	**split_path(char *path);
-char	**get_env(char **env);
-
-#endif
+	i = 0;
+	while (env[i])
+		i++;
+	env_dup = malloc(i * (sizeof(char *)));
+	i = 0;
+	while (env[i])
+	{
+		env_dup[i] = ft_strdup(env[i]);
+		i++;
+	}
+	return (env_dup);
+}

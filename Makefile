@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
+#    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/02/25 12:52:24 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/02/25 14:02:05 by cosmos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CFLAGS          = -Wall -Wextra -Werror
 RM              = rm -rf
 
 SRCS            = main.c \
-					path.c
+					path.c \
+					get_env.c
 
 OBJS            = $(SRCS:.c=.o)
 
