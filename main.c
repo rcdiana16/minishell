@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/02/25 16:46:20 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/25 17:01:10 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int ac, char **av)
 {
-	char	**path_splitted;
+	//char	**path_splitted;
 
 	if (ac == 0)
 		
@@ -22,5 +22,5 @@ int	main(int ac, char **av)
 		
 	av = NULL;
 	//path_splitted = get_path(env);
-	path_splitted = get_input();
+	get_input();
 }
