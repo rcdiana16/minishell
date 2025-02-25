@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/02/25 14:54:10 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/25 17:03:28 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 char	**get_input()
 {
 	char	*line;
-	size_t	size;
+	//size_t	size;
 	char	**tokens;
 
 	line = NULL;
-	size = 0;
-	printf("$");
-	if (getline(&line, &size, stdin) == -1)
+	//size = 0;
+	
+	if (readline("$"))
 	{
 		free(line);
 		return (NULL);
