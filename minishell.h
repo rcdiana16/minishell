@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/25 14:02:16 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/25 14:22:18 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,8 @@
 char	**get_path(char **env);
 char	**split_path(char *path);
 char	**get_env(char **env);
+
+
+char	**get_input();
 
 #endif
