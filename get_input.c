@@ -6,28 +6,26 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/02/25 17:39:59 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/25 18:38:59 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_input()
+char	**get_input(void)
 {
 	char	*line;
-	//size_t	size;
 	char	**tokens;
+	int		i;
 
 	line = NULL;
-	//size = 0;
-	
-	if (readline("$"))
-	{
-		free(line);
+	line = readline("$ ");
+	if (!line)
 		return (NULL);
-	}
 	tokens = ft_split(line, ' ');
-	int i = 0;
+	if (!tokens)
+		return (NULL);
+	i = 0;
 	while (tokens[i])
 	{
 		printf("%s\n", tokens[i]);
