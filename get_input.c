@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/02/25 18:38:59 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/25 20:02:21 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,5 @@ char	**get_input(void)
 	if (!tokens)
 		return (NULL);
 	i = 0;
-	while (tokens[i])
-	{
-		printf("%s\n", tokens[i]);
-		i++;
-	}
-	free(line);
 	return (tokens);
 }
