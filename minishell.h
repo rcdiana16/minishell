@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/02/25 13:47:08 by maximemarti      ###   ########.fr       */
+/*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
+/*   Updated: 2025/02/25 13:41:57 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	main(int ac, char **av, char **env)
-{
-	char	**path_splitted;
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdarg.h>
+# include <stdint.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include "libft/libft.h"
 
-	if (ac == 0)
-		;
-	if (av == NULL)
-		;
-	av = NULL;
-	path_splitted = get_path(env);
-}
+char	**get_path(char **env);
+char	**split_path(char *path);
+
+#endif

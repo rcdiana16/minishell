@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/02/25 13:47:08 by maximemarti      ###   ########.fr       */
+/*   Created: 2025/02/25 12:45:02 by maximemarti       #+#    #+#             */
+/*   Updated: 2025/02/25 13:43:08 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+char	**get_path(char **env)
 {
-	char	**path_splitted;
+	int		i;
+	char	*path;
 
-	if (ac == 0)
-		;
-	if (av == NULL)
-		;
-	av = NULL;
-	path_splitted = get_path(env);
+	i = 0;
+	path = NULL;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+			path = env[i];
+		i++;
+	}
+	return (split_path(path + 5));
+}
+
+char	**split_path(char *path)
+{
+	char	**path_splited;
+
+	path_splited = ft_split(path, ':');
+	return (path_splited);
 }
