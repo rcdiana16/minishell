@@ -6,7 +6,7 @@
 #    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/02/25 17:33:59 by cosmos           ###   ########.fr        #
+#    Updated: 2025/02/25 17:36:50 by cosmos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ LIBFT           = $(LIBFT_PATH)/libft.a
 all:            $(NAME)
 
 $(NAME):        $(LIBFT) $(OBJS)
-				@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+				@$(CC) $(CFLAGS)  -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 				make -C $(LIBFT_PATH)
