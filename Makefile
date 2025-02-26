@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
+#    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/02/25 20:05:42 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/02/26 17:09:46 by cosmos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,11 @@ RD				= -lreadline
 RM              = rm -rf
 
 SRCS            = main.c \
-					path.c \
-					get_env.c \
-					get_input.c \
+					src/path/path.c \
+					src/input/get_input.c \
+					src/split/split_bis.c \
+					src/split/util_split.c \
+					src/split/util2.split.c \
 
 OBJS            = $(SRCS:.c=.o)
 

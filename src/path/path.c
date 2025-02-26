@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_input.c                                        :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/02/25 20:05:09 by maximemarti      ###   ########.fr       */
+/*   Created: 2025/02/25 12:45:02 by maximemarti       #+#    #+#             */
+/*   Updated: 2025/02/26 17:11:47 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-char	**get_input(void)
+char	**get_path(void)
 {
-	char	*line;
-	char	**tokens;
+	char	*path;
 
-	line = NULL;
-	line = readline("$ ");
-	if (!line)
+	path = getenv("PATH");
+	if (!path)
 		return (NULL);
-	tokens = ft_split(line, ' ');
-	if (!tokens)
+	return (split_path(path));
+}
+
+char	**split_path(char *path)
+{
+	char	**path_splited;
+
+	path_splited = ft_split(path, ':');
+	if (!path_splited)
 		return (NULL);
-	return (tokens);
+	return (path_splited);
 }
