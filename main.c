@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/02/26 17:43:43 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/26 18:38:54 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ int	main(int ac, char **av, char **env)
 			free_command(cmd_info);
 			continue ;
 		}
-		ok = ft_strjoin(path_splitted[4], "/");
+		//call function add slash to path splitted
+		//call function to find the good path(path_splitted) == good_path
+		//find_ex_path(path_splitted)
+		add_slash(path_splitted);
+		ok = ft_strjoin(path_splitted[5], "/");
 		if (!ok)
 		{
 			free_command(cmd_info);
