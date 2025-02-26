@@ -1,35 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 13:58:26 by cosmos            #+#    #+#             */
-/*   Updated: 2025/02/25 22:10:16 by cosmos           ###   ########.fr       */
+/*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
+/*   Updated: 2025/02/26 17:11:56 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-char	*get_env(char *var, char **env)
+/*
+int	verify_tokens(char **cmd)
 {
-	int		i;
-	int		var_len;
-	char	*variable;
+	int	i;
+	int	c_pipe;
+	int	c_red_i;
+	int	c_red_o;
 
 	i = 0;
-	var_len = ft_strlen(var);
-	if (env == NULL || *env == NULL || var == NULL)
-		return (NULL);
-	while (env[i])
+	c_red_i = 0;
+	c_red_o = 0;
+	while (cmd[i])
 	{
-		if (ft_strncmp(env[i], var, var_len) == 0)
-		{
-			variable = &env[i][var_len + 1];
-			return (variable);
-		}
+		if ()
 		i++;
 	}
-	return (NULL);
+}
+*/
+char	**get_input(void)
+{
+	char	*line;
+	char	**tokens;
+	//char	**tokens2;
+
+	line = NULL;
+	line = readline("$ ");
+	if (!line)
+		return (NULL);
+	tokens = ft_split2(line, " |\t/&");
+	//verify_tokens(tokens);
+	if (!tokens)
+		return (NULL);
+	return (tokens);
 }

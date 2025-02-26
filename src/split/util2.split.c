@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   util2.split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 12:45:02 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/25 19:06:48 by cosmos           ###   ########.fr       */
+/*   Created: 2025/02/26 16:41:22 by cosmos            #+#    #+#             */
+/*   Updated: 2025/02/26 17:12:11 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-char	**get_path(char **env)
+char	**allocate_array(int word_count)
 {
-	char	*path;
-
-	path = get_env("PATH", env);
-	if (!path)
-		return (NULL);
-	return (split_path(path));
+	return (calloc((word_count + 1), sizeof(char *)));
 }
 
-char	**split_path(char *path)
+void	add_word_to_result(char **res, int j, char *word)
 {
-	char	**path_splited;
-
-	path_splited = ft_split(path, ':');
-	if (!path_splited)
-		return (NULL);
-	return (path_splited);
+	res[j] = word;
+	if (!res[j])
+		free_array(res, j);
 }
