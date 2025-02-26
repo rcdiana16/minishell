@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/26 18:38:44 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/26 22:03:36 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void		add_word_to_result(char **res, int j, char *word);
 //get_input.c
 void		free_command(t_command *cmd_info);
 //find_ex_path
-char	**add_slash(char **path_splited);
+char		**add_slash(char **path_splited);
+char		*add_command(char **good_path, char **command);
 
 #endif
