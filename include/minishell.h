@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/26 17:50:57 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/26 18:38:44 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,7 @@ char		**allocate_array(int word_count);
 void		add_word_to_result(char **res, int j, char *word);
 //get_input.c
 void		free_command(t_command *cmd_info);
+//find_ex_path
+char	**add_slash(char **path_splited);
 
 #endif
