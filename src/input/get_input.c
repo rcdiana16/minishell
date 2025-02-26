@@ -6,43 +6,99 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/02/26 17:11:56 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/26 17:55:23 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-int	verify_tokens(char **cmd)
+void	count_redirections(char *cmd, t_command *cmd_info, int *i)
+{
+	if (cmd[*i] == '<')
+	{
+		if (cmd[*i + 1] == '<')
+		{
+			cmd_info->here_doc++;
+			(*i)++;
+		}
+		else
+			cmd_info->c_red_i++;
+	}
+	else if (cmd[*i] == '>')
+	{
+		if (cmd[*i + 1] == '>')
+		{
+			cmd_info->c_append++;
+			(*i)++;
+		}
+		else
+			cmd_info->c_red_o++;
+	}
+}
+
+void	count_special_chars(char *cmd, t_command *cmd_info)
 {
 	int	i;
-	int	c_pipe;
-	int	c_red_i;
-	int	c_red_o;
 
 	i = 0;
-	c_red_i = 0;
-	c_red_o = 0;
 	while (cmd[i])
 	{
-		if ()
+		if (cmd[i] == '|')
+			cmd_info->c_pipe++;
+		else
+			count_redirections(cmd, cmd_info, &i);
 		i++;
 	}
 }
-*/
-char	**get_input(void)
-{
-	char	*line;
-	char	**tokens;
-	//char	**tokens2;
 
-	line = NULL;
+t_command	*verify_and_split_command(char *cmd)
+{
+	t_command	*cmd_info;
+
+	cmd_info = malloc(sizeof(t_command));
+	if (!cmd_info)
+		return (NULL);
+	cmd_info->c_pipe = 0;
+	cmd_info->c_red_i = 0;
+	cmd_info->c_red_o = 0;
+	count_special_chars(cmd, cmd_info);
+	cmd_info->tokens = ft_split2(cmd, " \t");
+	if (!cmd_info->tokens)
+	{
+		free(cmd_info);
+		return (NULL);
+	}
+	return (cmd_info);
+}
+
+t_command	*get_input(void)
+{
+	char		*line;
+	t_command	*cmd_info;
+
 	line = readline("$ ");
 	if (!line)
 		return (NULL);
-	tokens = ft_split2(line, " |\t/&");
-	//verify_tokens(tokens);
-	if (!tokens)
-		return (NULL);
-	return (tokens);
+	cmd_info = verify_and_split_command(line);
+	free(line);
+	return (cmd_info);
+}
+
+void	free_command(t_command *cmd_info)
+{
+	int	i;
+
+	if (!cmd_info)
+		return ;
+	if (cmd_info->tokens)
+	{
+		i = 0;
+		while (cmd_info->tokens[i])
+		{
+			free(cmd_info->tokens[i]);
+			i++;
+		}
+		free(cmd_info->tokens);
+	}
+	free(cmd_info);
 }
