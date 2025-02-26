@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/02/26 17:55:23 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/26 22:27:20 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_command	*verify_and_split_command(char *cmd)
 	cmd_info->c_red_i = 0;
 	cmd_info->c_red_o = 0;
 	count_special_chars(cmd, cmd_info);
-	cmd_info->tokens = ft_split2(cmd, " \t");
+	cmd_info->tokens = ft_split2(cmd, " \t\'\"");
 	if (!cmd_info->tokens)
 	{
 		free(cmd_info);
@@ -76,7 +76,7 @@ t_command	*get_input(void)
 	char		*line;
 	t_command	*cmd_info;
 
-	line = readline("$ ");
+	line = readline("\033[1;32mCBS$ \033[0m");
 	if (!line)
 		return (NULL);
 	cmd_info = verify_and_split_command(line);

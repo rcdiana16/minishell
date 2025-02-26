@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/02/26 18:38:54 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/26 21:46:57 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	main(int ac, char **av, char **env)
 {
 	char		**path_splitted;
+	char		**test;
 	t_command	*cmd_info;
-	char		*ok;
 	int			pid;
 	int			i;
 	char		*temp;
@@ -36,25 +36,15 @@ int	main(int ac, char **av, char **env)
 		//call function add slash to path splitted
 		//call function to find the good path(path_splitted) == good_path
 		//find_ex_path(path_splitted)
-		add_slash(path_splitted);
-		ok = ft_strjoin(path_splitted[5], "/");
-		if (!ok)
-		{
-			free_command(cmd_info);
-			continue ;
-		}
-		temp = ok;
-		ok = ft_strjoin(ok, cmd_info->tokens[0]);
-		free(temp);
-		if (!ok)
-		{
-			free_command(cmd_info);
-			continue ;
-		}
+		test = add_slash(path_splitted);
+		temp = add_command(test, cmd_info->tokens);
+		//ok = ft_strjoin(ok, cmd_info->tokens[0]);
+		//free(temp);
+		
 		pid = fork();
 		if (pid == 0)
 		{
-			if (execve(ok, cmd_info->tokens, env) == -1)
+			if (execve(temp, cmd_info->tokens, env) == -1)
 				perror("error ");
 			i = 0;
 			while (path_splitted[i])
@@ -63,23 +53,15 @@ int	main(int ac, char **av, char **env)
 				i++;
 			}
 			free(path_splitted);
-			free(ok);
 			free_command(cmd_info);
 			exit(1);
 		}
 		else
 		{
 			waitpid(pid, NULL, 0);
-			free(ok);
 			free_command(cmd_info);
 		}
 	}
-	i = 0;
-	while (path_splitted[i])
-	{
-		free(path_splitted[i]);
-		i++;
-	}
-	free(path_splitted);
+	
 	return (0);
 }

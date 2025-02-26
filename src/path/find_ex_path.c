@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:12:30 by diana             #+#    #+#             */
-/*   Updated: 2025/02/26 18:47:37 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/26 22:23:44 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	**add_slash(char **path_splited)
 	while (path_splited[i])
 		i++;
 	good_path = malloc(sizeof(char *) * i + 1);
+	if (!good_path)
+		return (NULL);
 	i = 0;
 	while (path_splited[i])
 	{
@@ -30,11 +32,41 @@ char	**add_slash(char **path_splited)
 			return (NULL);
 		i++;
 	}
+	return (good_path);
+}
+
+char	*path_to_exc(char **path)
+{
+	int	i;
+
+	i = 0;
+	while (path[i])
+	{
+		if (access(path[i], X_OK) == 0)
+			return (path[i]);
+		i++;
+	}
+	return (NULL);
+}
+
+char	*add_command(char **good_path, char **command)
+{
+	int		i;
+	char	**tmp_path;
+
+	i = 0;
+	while (good_path[i])
+		i++;
+	tmp_path = malloc(sizeof(char *) * i + ft_strlen(command[0]));
+	if (!tmp_path)
+		return (NULL);
 	i = 0;
 	while (good_path[i])
 	{
-		printf("%s\n", good_path[i]);
+		tmp_path[i] = ft_strjoin(good_path[i], command[0]);
+		if (!tmp_path)
+			return (NULL);
 		i++;
 	}
-	return (good_path);
+	return (path_to_exc(tmp_path));
 }
