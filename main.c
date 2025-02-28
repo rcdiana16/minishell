@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/02/28 19:11:16 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/28 20:34:19 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	main(int ac, char **av, char **env)
 {
 	char		**path_splitted;
-	char		**test;
+	char		**path_sp_w_slash;
 	t_command	*cmd_info;
 	int			pid;
 	int			i;
-	char		*temp;
+	char		*built_in_path;
 
 	*av = NULL;
 	if (ac == 0)
@@ -36,12 +36,8 @@ int	main(int ac, char **av, char **env)
 		//call function add slash to path splitted
 		//call function to find the good path(path_splitted) == good_path
 		//find_ex_path(path_splitted)
-		test = add_slash(path_splitted);
-		temp = add_command(test, cmd_info->tokens);
-		//ok = ft_strjoin(ok, cmd_info->tokens[0]);
-		//free(temp);
-		//printf("%s\n", temp);
-		//if (!temp)
+		path_sp_w_slash = add_slash(path_splitted);
+		built_in_path = find_no_builtin(path_sp_w_slash, cmd_info->tokens);
 		if ((ft_strncmp(cmd_info->tokens[0], "exit", ft_strlen(cmd_info->tokens[0]))) == 0)
 		{
 			exit(1);
@@ -52,7 +48,7 @@ int	main(int ac, char **av, char **env)
 		{
 			if (check_builtins(cmd_info->tokens) != 1)
 			{
-				if (execve(temp, cmd_info->tokens, env) == -1)
+				if (execve(built_in_path, cmd_info->tokens, env) == -1)
 					perror("error ");
 			}
 			i = 0;
@@ -62,6 +58,8 @@ int	main(int ac, char **av, char **env)
 				i++;
 			}
 			free(path_splitted);
+			
+			free(built_in_path);
 			free_command(cmd_info);
 			exit(1);
 		}
