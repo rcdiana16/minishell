@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/02/28 20:34:19 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/28 20:53:15 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int ac, char **av, char **env)
 			}
 			free(path_splitted);
 			
-			free(built_in_path);
+			//free(built_in_path);
 			free_command(cmd_info);
 			exit(1);
 		}
