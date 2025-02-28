@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:12:30 by diana             #+#    #+#             */
-/*   Updated: 2025/02/28 20:30:49 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/28 20:54:22 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ char	*path_to_exc(char **path)
 	{
 		if (access(path[i], X_OK) == 0)
 			return (path[i]);
-		free(path[i]);
 		i++;
 	}
-	free(path);
 	return (NULL);
 }
 
@@ -70,12 +68,5 @@ char	*find_no_builtin(char **good_path, char **command)
 			return (NULL);
 		i++;
 	}
-	i = 0;
-	while (good_path[i])
-	{
-		free(good_path[i]);
-		i++;
-	}
-	free(good_path);
 	return (path_to_exc(tmp_path));
 }
