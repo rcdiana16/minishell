@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/26 22:03:36 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/28 18:53:55 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ void		free_command(t_command *cmd_info);
 //find_ex_path
 char		**add_slash(char **path_splited);
 char		*add_command(char **good_path, char **command);
+//check_builtins
+int			check_builtins(char **cmd);
 
 #endif

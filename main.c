@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/02/26 21:46:57 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/28 19:11:16 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,21 @@ int	main(int ac, char **av, char **env)
 		temp = add_command(test, cmd_info->tokens);
 		//ok = ft_strjoin(ok, cmd_info->tokens[0]);
 		//free(temp);
-		
+		//printf("%s\n", temp);
+		//if (!temp)
+		if ((ft_strncmp(cmd_info->tokens[0], "exit", ft_strlen(cmd_info->tokens[0]))) == 0)
+		{
+			exit(1);
+			return (1);
+		}
 		pid = fork();
 		if (pid == 0)
 		{
-			if (execve(temp, cmd_info->tokens, env) == -1)
-				perror("error ");
+			if (check_builtins(cmd_info->tokens) != 1)
+			{
+				if (execve(temp, cmd_info->tokens, env) == -1)
+					perror("error ");
+			}
 			i = 0;
 			while (path_splitted[i])
 			{
