@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:38:03 by diana             #+#    #+#             */
-/*   Updated: 2025/02/28 20:27:57 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/28 20:56:55 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,6 @@ void	ft_our_echo(char **cmd)
 	}
 	if (ft_strncmp(cmd[1], "-n", ft_strlen(cmd[1])) != 0)
 		write(1, "\n", 1);
-	i = 0;
-	while(cmd[i])
-	{
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd);
 }
 
 int	check_builtins(char **command)
