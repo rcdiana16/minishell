@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/28 18:53:55 by diana            ###   ########.fr       */
+/*   Updated: 2025/02/28 20:20:48 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		add_word_to_result(char **res, int j, char *word);
 void		free_command(t_command *cmd_info);
 //find_ex_path
 char		**add_slash(char **path_splited);
-char		*add_command(char **good_path, char **command);
+char		*find_no_builtin(char **good_path, char **command);
 //check_builtins
 int			check_builtins(char **cmd);
 
