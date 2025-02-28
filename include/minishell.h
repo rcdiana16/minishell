@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/28 20:20:48 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/28 21:21:05 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ typedef struct s_command
 	int		c_append;
 }	t_command;
 
+typedef struct s_env
+{
+	char			*variable;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 //path.c
 char		**get_path(void);
 char		**split_path(char *path);
@@ -67,5 +74,7 @@ char		**add_slash(char **path_splited);
 char		*find_no_builtin(char **good_path, char **command);
 //check_builtins
 int			check_builtins(char **cmd);
+//ft_list
+void		get_list_env(char **env);
 
 #endif

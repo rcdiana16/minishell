@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/02/28 20:53:15 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/02/28 21:16:20 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int ac, char **av, char **env)
 	if (ac == 0)
 		return (1);
 	path_splitted = get_path();
+	get_list_env(env);
 	while (1)
 	{
 		cmd_info = get_input();

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
+#    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/02/28 17:39:03 by diana            ###   ########.fr        #
+#    Updated: 2025/02/28 21:15:41 by cosmos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS            = main.c \
 					src/split/util2.split.c \
 					src/path/find_ex_path.c \
 					src/check_cmd/check_builtins.c \
+					src/ft_list/list.c \
 
 OBJS            = $(SRCS:.c=.o)
 
