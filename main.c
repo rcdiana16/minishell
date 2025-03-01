@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 22:47:09 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 23:03:15 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	char	*built_in_path;
 	int		pid;
 
+	built_in_path = NULL;
 	if (check_builtins(cmd_info->tokens, env_list))
 	{
 		free_command(cmd_info);
