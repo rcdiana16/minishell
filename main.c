@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 18:50:50 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 19:01:04 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,11 @@ int	main(int ac, char **av, char **env)
 		if (!path_sp_w_slash)
 		{
 			fprintf(stderr, "Error: add_slash() returned NULL\n");
-			exit(1);
 		}
 		built_in_path = find_no_builtin(path_sp_w_slash, cmd_info->tokens);
 		if (!built_in_path)
 		{
 			fprintf(stderr, "Error: find_no_builtin() returned NULL\n");
-			exit(1);
 		}
 		pid = fork();
 		if (pid == 0)
@@ -73,7 +71,6 @@ int	main(int ac, char **av, char **env)
 			free_command(cmd_info);
 			free(built_in_path);
 			free_node(env_list);
-			exit(1);
 		}
 		else
 		{

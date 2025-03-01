@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/01 18:51:27 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 18:58:39 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void		get_list_env(char **envp, t_env	*env_list);
 void		free_command(t_command *cmd_info);
 void		free_arr(char **tok);
 void		free_node(t_env *head);
-void		get_list_env(char **env);
 //builtins/pwd
 t_env		*find_env_var(t_env *env, const char *var, int (*cmp) \
 			(const char *, const char *));
