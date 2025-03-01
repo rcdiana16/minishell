@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 21:08:20 by cosmos            #+#    #+#             */
-/*   Updated: 2025/02/28 21:20:38 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 17:23:33 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_env	*create_node(char *var, char *val)
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
-	new_node->variable = strdup(var);
-	new_node->value = strdup(val);
+	new_node->variable = ft_strdup(var);
+	new_node->value = ft_strdup(val);
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -54,7 +54,7 @@ void	get_list_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		equal_sign = strchr(envp[i], '=');
+		equal_sign = ft_strchr(envp[i], '=');
 		if (equal_sign)
 		{
 			*equal_sign = '\0';

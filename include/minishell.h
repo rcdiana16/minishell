@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/02/28 21:21:05 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 17:35:31 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,8 @@ char		*find_no_builtin(char **good_path, char **command);
 int			check_builtins(char **cmd);
 //ft_list
 void		get_list_env(char **env);
+//ft_free
+void		free_command(t_command *cmd_info);
+void		free_arr(char **tok);
 
 #endif

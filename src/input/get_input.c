@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/02/26 22:27:20 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/01 17:37:44 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_command	*verify_and_split_command(char *cmd)
 	cmd_info->tokens = ft_split2(cmd, " \t\'\"");
 	if (!cmd_info->tokens)
 	{
-		free(cmd_info);
+		free_command(cmd_info);
 		return (NULL);
 	}
 	return (cmd_info);
@@ -82,23 +82,4 @@ t_command	*get_input(void)
 	cmd_info = verify_and_split_command(line);
 	free(line);
 	return (cmd_info);
-}
-
-void	free_command(t_command *cmd_info)
-{
-	int	i;
-
-	if (!cmd_info)
-		return ;
-	if (cmd_info->tokens)
-	{
-		i = 0;
-		while (cmd_info->tokens[i])
-		{
-			free(cmd_info->tokens[i]);
-			i++;
-		}
-		free(cmd_info->tokens);
-	}
-	free(cmd_info);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_ex_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:12:30 by diana             #+#    #+#             */
-/*   Updated: 2025/02/28 20:54:22 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 17:35:20 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ char	*find_no_builtin(char **good_path, char **command)
 			return (NULL);
 		i++;
 	}
+	free_arr(good_path);
 	return (path_to_exc(tmp_path));
 }
