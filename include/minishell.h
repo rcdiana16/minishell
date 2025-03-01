@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/01 18:25:51 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 18:51:27 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ void		get_list_env(char **envp, t_env	*env_list);
 //ft_free
 void		free_command(t_command *cmd_info);
 void		free_arr(char **tok);
+void		free_node(t_env *head);
 
 #endif
