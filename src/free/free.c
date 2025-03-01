@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 17:24:49 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/01 17:34:45 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/01 18:00:15 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	free_arr(char **tok)
 	int	i;
 
 	i = 0;
+	if (!tok)
+		return ;
 	while (tok[i])
 	{
 		free(tok[i]);
