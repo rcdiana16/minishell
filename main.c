@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 21:56:37 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 22:31:44 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,27 @@ int	main(int ac, char **av, char **env)
 			free_command(cmd_info);
 			continue ;
 		}
-		if ((ft_strncmp(cmd_info->tokens[0], "exit", ft_strlen(cmd_info->tokens[0]))) == 0)
-		{
-			exit(1);
-			return (1);
-		}
 		path_sp_w_slash = add_slash(path_splitted);
 		if (!path_sp_w_slash)
 		{
 			fprintf(stderr, "Error: add_slash() returned NULL\n");
 		}
 		built_in_path = find_no_builtin(path_sp_w_slash, cmd_info->tokens);
-		if (!built_in_path)
+		if (check_builtins(cmd_info->tokens, env_list))
 		{
-			fprintf(stderr, "Error: find_no_builtin() returned NULL\n");
+			free_command(cmd_info);
+			continue ;
 		}
 		pid = fork();
 		if (pid == 0)
 		{
-			if (check_builtins(cmd_info->tokens, env_list) != 1)
-			{
-				if (execve(built_in_path, cmd_info->tokens, env) == -1)
-					perror("error ");
-			}
-			free_arr(path_sp_w_slash);
+			if (execve(built_in_path, cmd_info->tokens, env) == -1)
+				perror("error ");
+		}
+			/*free_arr(path_sp_w_slash);
 			free_command(cmd_info);
 			free(built_in_path);
-			free_node(env_list);
-		}
+			free_node(env_list);*/
 		else
 		{
 			waitpid(pid, NULL, 0);
