@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:38:03 by diana             #+#    #+#             */
-/*   Updated: 2025/02/28 20:59:22 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 18:06:46 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	check_builtins(char **command)
 		return (ft_our_echo(command), 1);
 	else if ((ft_strncmp(command[0], "cd", ft_strlen(command[0]))) == 0)
 		return ((printf("Ok %s\n", command[0])), 1);
-	else if ((ft_strncmp(command[0], "pwd", ft_strlen(command[0]))) == 0)
-		return ((printf("Ok %s\n", command[0])), 1);
+	//else if ((ft_strncmp(command[0], "pwd", ft_strlen(command[0]))) == 0)
+		//return (ft_our_pwd(env), 1);
 	else if ((ft_strncmp(command[0], "export", ft_strlen(command[0]))) == 0)
 		return ((printf("Ok %s\n", command[0])), 1);
 	else if ((ft_strncmp(command[0], "unset", ft_strlen(command[0]))) == 0)
