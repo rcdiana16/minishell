@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:14:50 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 23:23:39 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 23:43:03 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,16 @@ void	update_env(t_env *env, char *new_path)
 
 	oldpwd_entry = env;
 	current_pwd = get_env_value(env, "PWD");
-	while (oldpwd_entry)
+	while (env)
 	{
-		if (ft_strncmp(oldpwd_entry->variable, "OLDPWD", 6) == 0)
+		
+		if (ft_strncmp(env->variable, "PWD", 3) == 0)
 		{
-			free(oldpwd_entry->value);
-			if (current_pwd)
-				oldpwd_entry->value = ft_strdup(current_pwd);
-			else
-				oldpwd_entry->value = NULL;
-		}
-		if (ft_strncmp(oldpwd_entry->variable, "PWD", 3) == 0)
-		{
-			free(oldpwd_entry->value);
-			oldpwd_entry->value = ft_strdup(new_path);
+			env->value = ft_strjoin(current_pwd, "/");
+			env->value = ft_strjoin(env->value, new_path);
 			return ;
 		}
-		oldpwd_entry = oldpwd_entry->next;
+		env = env->next;
 	}
 	oldpwd_entry = malloc(sizeof(t_env));
 	oldpwd_entry->variable = ft_strdup("PWD");

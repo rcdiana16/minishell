@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 23:24:00 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 23:27:17 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ int	is_valid_path(char *path, t_env *env_mini)
 		update_env(env_mini, path);
 		return (1);
 	}
+	else
+		perror("Error: ");
 	return (0);
 }
