@@ -3,35 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 22:59:02 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/01 23:24:00 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	is_valid_path(char *path)
+int	is_valid_path(char *path, t_env *env_mini)
 {
 	if (path == NULL)
 		return (0);
-	if (path[0] == '/')
+	if (chdir(path) == 0)
 	{
-		if (chdir(path) == 0)
-		{
-			chdir("/");
-			return (1);
-		}
-	}
-	else
-	{
-		if (chdir(path) == 0)
-		{
-			chdir("/");
-			return (1);
-		}
+		chdir(path);
+		update_env(env_mini, path);
+		return (1);
 	}
 	return (0);
 }
-

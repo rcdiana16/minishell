@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:14:50 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 23:03:24 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/01 23:23:39 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@ void	update_env(t_env *env, char *new_path)
 	t_env	*oldpwd_entry;
 	char	*current_pwd;
 
-	
 	oldpwd_entry = env;
-	current_pwd = get_env_value(env, "pwd");
+	current_pwd = get_env_value(env, "PWD");
 	while (oldpwd_entry)
 	{
-		if (ft_strncmp(oldpwd_entry->variable, "oldpwd", 6) == 0)
+		if (ft_strncmp(oldpwd_entry->variable, "OLDPWD", 6) == 0)
 		{
 			free(oldpwd_entry->value);
 			if (current_pwd)
@@ -52,17 +51,16 @@ void	update_env(t_env *env, char *new_path)
 			else
 				oldpwd_entry->value = NULL;
 		}
-		if (ft_strncmp(oldpwd_entry->variable, "pwd", 3) == 0)
+		if (ft_strncmp(oldpwd_entry->variable, "PWD", 3) == 0)
 		{
 			free(oldpwd_entry->value);
 			oldpwd_entry->value = ft_strdup(new_path);
-			return;
+			return ;
 		}
 		oldpwd_entry = oldpwd_entry->next;
 	}
-
 	oldpwd_entry = malloc(sizeof(t_env));
-	oldpwd_entry->variable = ft_strdup("pwd");
+	oldpwd_entry->variable = ft_strdup("PWD");
 	oldpwd_entry->value = ft_strdup(new_path);
 	oldpwd_entry->next = env;
 	env = oldpwd_entry;

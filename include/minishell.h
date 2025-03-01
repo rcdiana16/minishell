@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/01 23:06:04 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/01 23:24:10 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ char		*get_env_value(t_env *env, const char *var);
 void		ft_our_pwd(t_env *env);
 void		update_env(t_env *env, char *new_path);
 //builtins/cd
-int			is_valid_path(char *path);
-
-
+int			is_valid_path(char *path, t_env *env_mini);
 
 #endif
