@@ -26,9 +26,9 @@ SRCS            = main.c \
 					src/path/find_ex_path.c \
 					src/check_cmd/check_builtins.c \
 					src/ft_list/list.c \
+					src/free/free.c \
 					src/builtins/pwd.c \
 					src/builtins/cd.c \
-
 
 OBJS            = $(SRCS:.c=.o)
 
