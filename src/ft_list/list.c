@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 21:08:20 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/01 18:44:26 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 21:55:02 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	append_node(t_env **head, char *var, char *val)
 	temp->next = new_node;
 }
 
-void	get_list_env(char **envp, t_env	*env_list)
+t_env	*get_list_env(char **envp, t_env	*env_list)
 {
 	int		i;
 	char	*equal_sign;
@@ -76,4 +76,5 @@ void	get_list_env(char **envp, t_env	*env_list)
 		}
 		i++;
 	}
+	return (env_list);
 }

@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 19:01:04 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/01 21:56:37 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac, char **av, char **env)
 		fprintf(stderr, "Error: get_path() returned NULL\n");
 		exit(1);
 	}
-	get_list_env(env, env_list);
+	env_list = get_list_env(env, env_list);
 	while (1)
 	{
 		cmd_info = get_input();
@@ -62,7 +62,7 @@ int	main(int ac, char **av, char **env)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (check_builtins(cmd_info->tokens) != 1)
+			if (check_builtins(cmd_info->tokens, env_list) != 1)
 			{
 				if (execve(built_in_path, cmd_info->tokens, env) == -1)
 					perror("error ");
