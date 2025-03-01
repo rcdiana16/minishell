@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
 /*   Updated: 2025/03/01 18:51:27 by cosmos           ###   ########.fr       */
@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <limits.h>
 # include "../libft/libft.h"
 
 typedef struct s_split_data
@@ -73,6 +74,7 @@ void		free_command(t_command *cmd_info);
 char		**add_slash(char **path_splited);
 char		*find_no_builtin(char **good_path, char **command);
 //check_builtins
+void		ft_our_echo(char **cmd);
 int			check_builtins(char **cmd);
 //ft_list
 void		get_list_env(char **envp, t_env	*env_list);
@@ -80,5 +82,12 @@ void		get_list_env(char **envp, t_env	*env_list);
 void		free_command(t_command *cmd_info);
 void		free_arr(char **tok);
 void		free_node(t_env *head);
+void		get_list_env(char **env);
+//builtins/pwd
+t_env		*find_env_var(t_env *env, const char *var, int (*cmp) \
+			(const char *, const char *));
+char		*get_env_value(t_env *env, const char *var);
+void		ft_our_pwd(t_env *env);
+int			ft_our_strcmp(const char *s1, const char *s2);
 
 #endif

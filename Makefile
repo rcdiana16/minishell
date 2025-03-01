@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
+#    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/01 17:38:30 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/03/01 18:43:51 by diana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRCS            = main.c \
 					src/check_cmd/check_builtins.c \
 					src/ft_list/list.c \
 					src/free/free.c \
+					src/builtins/pwd.c \
+					src/builtins/cd.c \
 
 OBJS            = $(SRCS:.c=.o)
 
