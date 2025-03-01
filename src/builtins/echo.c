@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 14:14:50 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 21:58:34 by cosmos           ###   ########.fr       */
+/*   Created: 2025/03/01 21:32:03 by cosmos            #+#    #+#             */
+/*   Updated: 2025/03/01 21:32:18 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*get_env_value(t_env *env_mini, const char *var)
+void	ft_our_echo(char **cmd)
 {
-	while (env_mini != NULL)
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+		i++;
+	if (i == 1)
 	{
-		if ((ft_strncmp(env_mini->variable, var, ft_strlen(var))) == 0)
-			return (env_mini->value);
-		env_mini = env_mini->next;
+		write(1, "\n", 1);
+		return ;
 	}
-	return (NULL);
-}
-
-void	ft_our_pwd(t_env *env_mini)
-{
-	char	*pwd;
-
-	pwd = get_env_value(env_mini, "PWD");
-	if (pwd)
-		printf("%s\n", pwd);
-	else
-		perror("pwd: no such variable");
+	i = 1;
+	if (ft_strncmp(cmd[1], "-n", ft_strlen(cmd[1])) == 0)
+		i = 2;
+	while (cmd[i])
+	{
+		write(1, cmd[i], ft_strlen(cmd[i]));
+		if (cmd[i + 1] != NULL)
+			write(1, " ", 1);
+		i++;
+	}
+	if (ft_strncmp(cmd[1], "-n", ft_strlen(cmd[1])) != 0)
+		write(1, "\n", 1);
 }
