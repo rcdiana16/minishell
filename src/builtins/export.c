@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/02 23:01:43 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/02 23:40:39 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	ft_export(t_env *env_mini, char **cmd)
 		free(tokens);
 		return ;
 	}
-	new_var->variable = strdup(tokens[0]);
-	new_var->value = strdup(tokens[1]);
+	new_var->variable = ft_strdup(tokens[0]);
+	new_var->value = ft_strdup(tokens[1]);
 	new_var->next = NULL;
 	free(tokens);
 	while (env_mini->next)

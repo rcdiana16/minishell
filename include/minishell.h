@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/02 22:54:05 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/02 23:41:25 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		update_env_last_dir(t_env *env, char *new_path);
 void		update_env_concat(t_env *env, char *current_pwd, char *new_path);
 void		update_env_direct(t_env *env, char *new_path, int flag);
 //builtins/export.c
-void		ft_export(t_env *env_mini, char ** cmd);
+void		ft_export(t_env *env_mini, char **cmd);
 //builtins/unset.c
 void		ft_unset(t_env *env_mini, char *var);
 //free/free.c
