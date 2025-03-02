@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/02 15:54:15 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/02 22:44:15 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	int		pid;
 
 	built_in_path = NULL;
-	if (check_builtins(cmd_info->tokens, env_list))
+	if (check_builtins(cmd_info->tokens, &env_list))
 	{
 		free_command(cmd_info);
 		return (1);

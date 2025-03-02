@@ -3,37 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/02 16:40:29 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/02 23:01:43 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_export(t_env **env_mini, char *var, char *value)
+void	ft_export(t_env *env_mini, char **cmd)
 {
-	t_env	*tmp;
 	t_env	*new_var;
+	char	**tokens;
 
-	tmp = *env_mini;
-	new_var = malloc(sizeof(t_env));
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->variable, var, ft_strlen(var)) == 0 && \
-		ft_strlen(tmp->variable) == ft_strlen(var))
-		{
-			free (tmp->value);
-			tmp->value = ft_strdup(value);
-			return ;
-		}
-		tmp = tmp->next;
-	}
-	if (!new_var)
+	if (!cmd || !cmd[1])
 		return ;
-	new_var->variable = ft_strdup(var);
-	new_var->value = ft_strdup(value);
-	new_var->next = *env_mini;
-	*env_mini = new_var;
+	tokens = ft_split2(cmd[1], "=");
+	if (!tokens || !tokens[0] || !tokens[1])
+	{
+		free(tokens);
+		return ;
+	}
+	new_var = malloc(sizeof(t_env));
+	if (!new_var)
+	{
+		free(tokens);
+		return ;
+	}
+	new_var->variable = strdup(tokens[0]);
+	new_var->value = strdup(tokens[1]);
+	new_var->next = NULL;
+	free(tokens);
+	while (env_mini->next)
+		env_mini = env_mini->next;
+	env_mini->next = new_var;
 }
