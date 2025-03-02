@@ -12,12 +12,12 @@
 
 #include "../../include/minishell.h"
 
-void	ft_unset(t_env **env_mini, char *var)
+void	ft_unset(t_env *env_mini, char *var)
 {
 	t_env	*tmp;
 	t_env	*prev;
 
-	tmp = *env_mini;
+	tmp = env_mini;
 	prev = NULL;
 	while (tmp)
 	{
@@ -25,7 +25,7 @@ void	ft_unset(t_env **env_mini, char *var)
 		ft_strlen(tmp->variable) == ft_strlen(var))
 		{
 			if (prev == NULL)
-				*env_mini = tmp->next;
+				env_mini = tmp->next;
 			else
 				prev->next = tmp->next;
 			free(tmp->variable);

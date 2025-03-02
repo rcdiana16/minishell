@@ -55,12 +55,12 @@ int	check_standard_builtins(char **command, t_env *env_mini)
 		return (0);
 }
 
-int	check_env_builtins(char **command, t_env **env_mini)
+int	check_env_builtins(char **command, t_env *env_mini)
 {
 	if ((ft_strncmp(command[0], "export", ft_strlen(command[0]) + 1)) == 0)
 	{
 		if (command[1] == NULL)
-			return (ft_our_env(*env_mini), 1);
+			return (ft_our_env(env_mini), 1);
 		if (command[2] == NULL)
 			ft_export(env_mini, command);
 		return (1);
@@ -74,9 +74,9 @@ int	check_env_builtins(char **command, t_env **env_mini)
 	return (0);
 }
 
-int	check_builtins(char **cmd, t_env **env_mini)
+int	check_builtins(char **cmd, t_env *env_mini)
 {
-	if (check_standard_builtins(cmd, *env_mini))
+	if (check_standard_builtins(cmd, env_mini))
 		return (1);
 	if (check_env_builtins(cmd, env_mini))
 		return (1);

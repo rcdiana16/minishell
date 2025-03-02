@@ -48,7 +48,7 @@ LIBFT           = $(LIBFT_PATH)/libft.a
 all:            $(NAME)
 
 $(NAME):        $(LIBFT) $(OBJS)
-				@$(CC) $(CFLAGS) $(RD) $(OBJS) $(LIBFT) -o $(NAME)
+				@$(CC) $(CFLAGS)  $(OBJS) $(LIBFT) -o $(NAME) $(RD)
 
 $(LIBFT):
 				make -C $(LIBFT_PATH)

@@ -40,7 +40,7 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	int		pid;
 
 	built_in_path = NULL;
-	if (check_builtins(cmd_info->tokens, &env_list))
+	if (check_builtins(cmd_info->tokens, env_list))
 	{
 		free_command(cmd_info);
 		return (1);
