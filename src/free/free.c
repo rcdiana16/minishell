@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 17:24:49 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/01 18:50:02 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/02 15:46:04 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,23 @@ void	free_arr(char **tok)
 	free(tok);
 }
 
-void	free_node(t_env *head)
+void	free_node(t_env *node)
+{
+	if (!node)
+		return ;
+	free(node->variable);
+	free(node->value);
+	free(node);
+}
+
+void	free_env_list(t_env *env)
 {
 	t_env	*tmp;
 
-	while (head)
+	while (env)
 	{
-		tmp = head;
-		head = head->next;
-		free(tmp->variable);
-		free(tmp->value);
-		free(tmp);
+		tmp = env;
+		env = env->next;
+		free_node(tmp);
 	}
 }

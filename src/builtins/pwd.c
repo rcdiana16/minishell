@@ -3,109 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:14:50 by diana             #+#    #+#             */
-/*   Updated: 2025/03/02 12:22:44 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/02 16:07:03 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*get_env_value(t_env *env_mini, const char *var)
+void	handle_flag_1(t_env *env, char *current_pwd, char *new_path)
 {
-	while (env_mini != NULL)
-	{
-		if ((ft_strncmp(env_mini->variable, var, ft_strlen(var))) == 0)
-			return (env_mini->value);
-		env_mini = env_mini->next;
-	}
-	return (NULL);
+	env->value = ft_strjoin(current_pwd, "/");
+	env->value = ft_strjoin(env->value, new_path);
 }
 
-void	ft_our_pwd(t_env *env_mini)
+void	handle_flag_0(t_env *env, char *new_path)
 {
-	char	*pwd;
+	char	*last_dir;
 
-	pwd = get_env_value(env_mini, "PWD");
-	if (pwd)
-		printf("%s\n", pwd);
-	else
-		perror("pwd: no such variable");
+	last_dir = ft_strdup(ft_find_dir(new_path));
+	env->value = ft_strjoin(env->value, last_dir);
+	free(last_dir);
 }
 
-char	*ft_find_dir(char *path)
+void	handle_flag_3(t_env *env, char *new_path)
 {
-	int	i;
-	int	c_slash;
-
-	c_slash = 0;
-	i = ft_strlen(path) - 1;
-	while (i >= 0)
-	{
-		if (path[i] == '/')
-		{
-			c_slash = i;
-			break ;
-		}
-		i--;
-	}
-	return (path + c_slash);
+	env->value = ft_strdup(new_path);
 }
 
-char	*ft_find_gd_dir(char *path)
+void	handle_flag_4(t_env *env, char *new_path)
 {
-	int		i;
-	int		c_slash;
-	char	*good_path;
-
-	i = ft_strlen(path) - 1;
-	c_slash = 0;
-	while (i >= 0)
-	{
-		if (path[i] == '/')
-		{
-			c_slash = i;
-			break ;
-		}
-		i--;
-	}
-	good_path = ft_strndup(path, c_slash);
-	return (good_path);
+	env->value = ft_strdup(ft_find_gd_dir(new_path));
 }
 
 void	update_env(t_env *env, char *new_path, char *env_to_update, int flag)
 {
 	char	*current_pwd;
-	char	*last_dir;
 
 	current_pwd = get_env_value(env, env_to_update);
 	while (env)
 	{
 		if (ft_strncmp(env->variable, env_to_update, \
-			ft_strlen(env->variable)) == 0 && flag == 1)
+			ft_strlen(env->variable)) == 0)
 		{
-			env->value = ft_strjoin(current_pwd, "/");
-			env->value = ft_strjoin(env->value, new_path);
-			return ;
-		}
-		else if (ft_strncmp(env->variable, env_to_update, \
-			ft_strlen(env->variable)) == 0 && flag == 0)
-		{
-			last_dir = ft_strdup(ft_find_dir(new_path));
-			env->value = ft_strjoin(env->value, last_dir);
-			return ;
-		}
-		else if (ft_strncmp(env->variable, env_to_update, \
-			ft_strlen(env->variable)) == 0 && flag == 3)
-		{
-			env->value = ft_strdup(new_path);
-			return ;
-		}
-		else if (ft_strncmp(env->variable, env_to_update, \
-			ft_strlen(env->variable)) == 0 && flag == 4)
-		{
-			env->value = ft_strdup(ft_find_gd_dir(new_path));
+			if (flag == 1)
+				handle_flag_1(env, current_pwd, new_path);
+			else if (flag == 0)
+				handle_flag_0(env, new_path);
+			else if (flag == 3)
+				handle_flag_3(env, new_path);
+			else if (flag == 4)
+				handle_flag_4(env, new_path);
 			return ;
 		}
 		env = env->next;
