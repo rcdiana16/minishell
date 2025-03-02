@@ -34,6 +34,8 @@ SRCS            = main.c \
 					src/builtins/echo.c \
 					src/builtins/env.c \
 					src/utils/util.c
+					src/builtins/export.c \
+					src/builtins/unset.c \
 
 OBJS            = $(SRCS:.c=.o)
 

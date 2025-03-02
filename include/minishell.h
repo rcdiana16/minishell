@@ -153,7 +153,26 @@ ytes in 8 blocks are still reachable in loss record 33 of 87
 ==33558==    by 0x400E57: get_path (in /home/cosmos/42/minishell/minishell)
 ==33558==    by 0x400B7F: handle_path (in /home/cosmos/42/minishell/minishell)
 ==33558==    by 0x400DD7: main (in /home/cosmos/42/minishell/minishell)
-
+=======
+//ft_list
+t_env		*get_list_env(char **envp, t_env	*env_list);
+//ft_free
+void		free_command(t_command *cmd_info);
+void		free_arr(char **tok);
+void		free_node(t_env *head);
+//builtins/pwd
+char		*get_env_value(t_env *env, const char *var);
+void		ft_our_pwd(t_env *env);
+void		update_env(t_env *env, char *new_path, \
+			char *env_to_update, int flag);
+//builtins/cd
+int			is_valid_path(char *path, t_env *env_mini);
+//builtins/env
+void		ft_our_env(t_env *env_mini);
+//builtins/export
+void		ft_export(t_env **env_mini, char *var, char *value);
+//builtins/unset
+void		ft_unset(t_env **env_mini, char *var);
 0 bytes in 1 blocks are still reachable in loss record 20 of 87
 ==33558==    at 0x48854F0: malloc (vg_replace_malloc.c:446)
 ==33558==    by 0x402B3B: ft_strjoin (in /home/cosmos/42/minishell/minishell)
