@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/02 11:39:41 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/02 16:19:36 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,9 @@ void		update_env(t_env *env, char *new_path, \
 int			is_valid_path(char *path, t_env *env_mini);
 //builtins/env
 void		ft_our_env(t_env *env_mini);
+//builtins/export
+void		ft_export(t_env **env_mini, char *var, char *value);
+//builtins/unset
+void		ft_unset(t_env **env_mini, char *var);
 
 #endif
