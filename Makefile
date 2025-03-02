@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
+#    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/02 11:20:13 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/03/02 15:44:35 by diana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ SRCS            = main.c \
 					src/builtins/cd.c \
 					src/builtins/echo.c \
 					src/builtins/env.c \
+					src/builtins/export.c \
+					src/builtins/unset.c \
 
 OBJS            = $(SRCS:.c=.o)
 
