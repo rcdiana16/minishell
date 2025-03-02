@@ -68,7 +68,7 @@ int	check_env_builtins(char **command, t_env *env_mini)
 	else if ((ft_strncmp(command[0], "unset", ft_strlen(command[0]) + 1)) == 0)
 	{
 		if (command[1] != NULL)
-			ft_unset(env_mini, command[1]);
+			ft_unset(env_mini, command);
 		return (1);
 	}
 	return (0);

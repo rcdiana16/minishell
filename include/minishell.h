@@ -80,7 +80,7 @@ void		update_env_direct(t_env *env, char *new_path, int flag);
 //builtins/export.c
 void		ft_export(t_env *env_mini, char **cmd);
 //builtins/unset.c
-void		ft_unset(t_env *env_mini, char *var);
+void		ft_unset(t_env *env_mini, char **var);
 //free/free.c
 void		free_command(t_command *cmd_info);
 void		free_arr(char **tok);
