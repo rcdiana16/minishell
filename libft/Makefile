@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
+#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 10:59:42 by maximemarti       #+#    #+#              #
-#    Updated: 2024/12/23 21:50:33 by cosmos           ###   ########.fr        #
+#    Updated: 2025/03/02 12:13:02 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = ft_memset.c		\
 		ft_strrchr.c	\
 		ft_strncmp.c	\
 		ft_strlcpy.c	\
+		ft_strndup.c    \
 		ft_strlcat.c	\
 		ft_strnstr.c	\
 		ft_atoi.c		\

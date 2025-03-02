@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:14:50 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 23:43:03 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/02 12:22:44 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,80 @@ void	ft_our_pwd(t_env *env_mini)
 		perror("pwd: no such variable");
 }
 
-void	update_env(t_env *env, char *new_path)
+char	*ft_find_dir(char *path)
 {
-	t_env	*oldpwd_entry;
-	char	*current_pwd;
+	int	i;
+	int	c_slash;
 
-	oldpwd_entry = env;
-	current_pwd = get_env_value(env, "PWD");
+	c_slash = 0;
+	i = ft_strlen(path) - 1;
+	while (i >= 0)
+	{
+		if (path[i] == '/')
+		{
+			c_slash = i;
+			break ;
+		}
+		i--;
+	}
+	return (path + c_slash);
+}
+
+char	*ft_find_gd_dir(char *path)
+{
+	int		i;
+	int		c_slash;
+	char	*good_path;
+
+	i = ft_strlen(path) - 1;
+	c_slash = 0;
+	while (i >= 0)
+	{
+		if (path[i] == '/')
+		{
+			c_slash = i;
+			break ;
+		}
+		i--;
+	}
+	good_path = ft_strndup(path, c_slash);
+	return (good_path);
+}
+
+void	update_env(t_env *env, char *new_path, char *env_to_update, int flag)
+{
+	char	*current_pwd;
+	char	*last_dir;
+
+	current_pwd = get_env_value(env, env_to_update);
 	while (env)
 	{
-		
-		if (ft_strncmp(env->variable, "PWD", 3) == 0)
+		if (ft_strncmp(env->variable, env_to_update, \
+			ft_strlen(env->variable)) == 0 && flag == 1)
 		{
 			env->value = ft_strjoin(current_pwd, "/");
 			env->value = ft_strjoin(env->value, new_path);
 			return ;
 		}
+		else if (ft_strncmp(env->variable, env_to_update, \
+			ft_strlen(env->variable)) == 0 && flag == 0)
+		{
+			last_dir = ft_strdup(ft_find_dir(new_path));
+			env->value = ft_strjoin(env->value, last_dir);
+			return ;
+		}
+		else if (ft_strncmp(env->variable, env_to_update, \
+			ft_strlen(env->variable)) == 0 && flag == 3)
+		{
+			env->value = ft_strdup(new_path);
+			return ;
+		}
+		else if (ft_strncmp(env->variable, env_to_update, \
+			ft_strlen(env->variable)) == 0 && flag == 4)
+		{
+			env->value = ft_strdup(ft_find_gd_dir(new_path));
+			return ;
+		}
 		env = env->next;
 	}
-	oldpwd_entry = malloc(sizeof(t_env));
-	oldpwd_entry->variable = ft_strdup("PWD");
-	oldpwd_entry->value = ft_strdup(new_path);
-	oldpwd_entry->next = env;
-	env = oldpwd_entry;
 }

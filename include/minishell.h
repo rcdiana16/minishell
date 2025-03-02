@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/01 23:24:10 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/02 11:39:41 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,11 @@ void		free_node(t_env *head);
 //builtins/pwd
 char		*get_env_value(t_env *env, const char *var);
 void		ft_our_pwd(t_env *env);
-void		update_env(t_env *env, char *new_path);
+void		update_env(t_env *env, char *new_path, \
+			char *env_to_update, int flag);
 //builtins/cd
 int			is_valid_path(char *path, t_env *env_mini);
+//builtins/env
+void		ft_our_env(t_env *env_mini);
 
 #endif
