@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/02 16:38:48 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/02 20:27:41 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ char		*create_word(const char *str, int start, int end);
 char		**allocate_array(int word_count);
 void		add_word_to_result(char **res, int j, char *word);
 //check_cmd/check_builtins.c
-int			check_builtins(char **cmd, t_env *env_mini);
+int			check_builtins(char **cmd, t_env **env_mini);
+int			check_standard_builtins(char **command, t_env *env_mini);
+int			check_env_builtins(char **command, t_env **env_mini);
 //utils/utils.c
 char		*get_env_value(t_env *env_mini, const char *var);
 
