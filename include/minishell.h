@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/02 11:39:41 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/02 15:40:49 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,86 @@ t_env		*get_list_env(char **envp, t_env	*env_list);
 void		free_command(t_command *cmd_info);
 void		free_arr(char **tok);
 void		free_node(t_env *head);
+void		free_env_list(t_env *env);
+
 //builtins/pwd
 char		*get_env_value(t_env *env, const char *var);
 void		ft_our_pwd(t_env *env);
 void		update_env(t_env *env, char *new_path, \
 			char *env_to_update, int flag);
+char		*ft_find_dir(char *path);
+char		*ft_find_gd_dir(char *path);
 //builtins/cd
 int			is_valid_path(char *path, t_env *env_mini);
 //builtins/env
 void		ft_our_env(t_env *env_mini);
+//utils
+char		*get_env_value(t_env *env_mini, const char *var);
+//builtins utils_pwd
+void		update_env_last_dir(t_env *env, char *new_path);
+char		*get_env_value(t_env *env_mini, const char *var);
+void		update_env_concat(t_env *env, char *current_pwd, char *new_path);
+void		update_env_direct(t_env *env, char *new_path, int flag);
 
 #endif
+/*
+,740 bytes in 88 blocks are still reachable in loss record 57 of 87
+==33558==    at 0x48854F0: malloc (vg_replace_malloc.c:446)
+==33558==    by 0x402A57: ft_strdup (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x401D07: create_node (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x401D73: append_node (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x401E7F: get_list_env (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400C43: initialize_environment (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400DE3: main (in /home/cosmos/42/minishell/minishell)
+
+160 bytes in 90 blocks are still reachable in loss record 54 of 87
+==33558==    at 0x48854F0: malloc (vg_replace_malloc.c:446)
+==33558==    by 0x401CB3: create_node (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x401D73: append_node (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x401E7F: get_list_env (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400C43: initialize_environment (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400DE3: main (in /home/cosmos/42/minishell/minishell)
+
+ytes in 8 blocks are still reachable in loss record 33 of 87
+==33558==    at 0x48854F0: malloc (vg_replace_malloc.c:446)
+==33558==    by 0x402B3B: ft_strjoin (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x4017BF: allocate_paths_with_slash (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x40189B: add_slash (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400BD3: handle_path (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400DD7: main (in /home/cosmos/42/minishell/minishell)
+
+02 bytes in 8 blocks are still reachable in loss record 32 of 87
+==33558==    at 0x48854F0: malloc (vg_replace_malloc.c:446)
+==33558==    by 0x402DBF: fill_word (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x402C77: ft_split (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400E77: split_path (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400E57: get_path (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400B7F: handle_path (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400DD7: main (in /home/cosmos/42/minishell/minishell)
+
+2 bytes in 1 blocks are still reachable in loss record 27 of 87
+==33558==    at 0x48854F0: malloc (vg_replace_malloc.c:446)
+==33558==    by 0x40176B: allocate_paths_with_slash (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x40189B: add_slash (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400BD3: handle_path (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400DD7: main (in /home/cosmos/42/minishell/minishell)
+
+2 bytes in 1 blocks are still reachable in loss record 26 of 87
+==33558==    at 0x48854F0: malloc (vg_replace_malloc.c:446)
+==33558==    by 0x4030AF: ft_calloc (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x402BBF: ft_split (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400E77: split_path (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400E57: get_path (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400B7F: handle_path (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400DD7: main (in /home/cosmos/42/minishell/minishell)
+
+0 bytes in 1 blocks are still reachable in loss record 20 of 87
+==33558==    at 0x48854F0: malloc (vg_replace_malloc.c:446)
+==33558==    by 0x402B3B: ft_strjoin (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x40229B: update_env_concat (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x402203: update_env (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x4024F3: update_pwd_env (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x402557: is_valid_path (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x401B17: check_builtins (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400C77: execute_command (in /home/cosmos/42/minishell/minishell)
+==33558==    by 0x400E0B: main (in /home/cosmos/42/minishell/minishell)*/
