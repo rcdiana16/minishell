@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/02 15:40:49 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/02 16:25:10 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,41 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-//path.c
+//path/path.c
 char		**get_path(void);
 char		**split_path(char *path);
-//get_input.c
+//path/find_ex_path.c
+char		**add_slash(char **path_splited);
+char		*find_no_builtin(char **good_path, char **command);
+//builtins/cd.c
+int			is_valid_path(char *path, t_env *env_mini);
+//builtins/echo.c
+void		ft_our_echo(char **cmd);
+//builtins/env.c
+void		ft_our_env(t_env *env_mini);
+//builtins/pwd.c
+char		*get_env_value(t_env *env, const char *var);
+
+void		update_env(t_env *env, char *new_path, \
+			char *env_to_update, int flag);
+//builtins/util_pwd.c
+void		ft_our_pwd(t_env *env);
+char		*ft_find_dir(char *path);
+char		*ft_find_gd_dir(char *path);
+//builtins/util2_pwd.c
+void		update_env_last_dir(t_env *env, char *new_path);
+void		update_env_concat(t_env *env, char *current_pwd, char *new_path);
+void		update_env_direct(t_env *env, char *new_path, int flag);
+//free/free.c
+void		free_command(t_command *cmd_info);
+void		free_arr(char **tok);
+void		free_node(t_env *head);
+void		free_env_list(t_env *env);
+//ft_list/list.c
+t_env		*get_list_env(char **envp, t_env	*env_list);
+//input/get_input.c
 t_command	*get_input(void);
-//split_bis.c
+//split/split_bis.c
 char		**ft_split2(const char *s, const char *delimiters);
 //utils_split.c
 bool		is_delimiter(char c, const char *delimiters);
@@ -68,40 +97,10 @@ char		*create_word(const char *str, int start, int end);
 //utils2_split.c
 char		**allocate_array(int word_count);
 void		add_word_to_result(char **res, int j, char *word);
-//get_input.c
-void		free_command(t_command *cmd_info);
-//find_ex_path
-char		**add_slash(char **path_splited);
-char		*find_no_builtin(char **good_path, char **command);
-//check_builtins
-void		ft_our_echo(char **cmd);
+//check_cmd/check_builtins.c
 int			check_builtins(char **cmd, t_env *env_mini);
-//ft_list
-t_env		*get_list_env(char **envp, t_env	*env_list);
-//ft_free
-void		free_command(t_command *cmd_info);
-void		free_arr(char **tok);
-void		free_node(t_env *head);
-void		free_env_list(t_env *env);
-
-//builtins/pwd
-char		*get_env_value(t_env *env, const char *var);
-void		ft_our_pwd(t_env *env);
-void		update_env(t_env *env, char *new_path, \
-			char *env_to_update, int flag);
-char		*ft_find_dir(char *path);
-char		*ft_find_gd_dir(char *path);
-//builtins/cd
-int			is_valid_path(char *path, t_env *env_mini);
-//builtins/env
-void		ft_our_env(t_env *env_mini);
-//utils
+//utils/utils.c
 char		*get_env_value(t_env *env_mini, const char *var);
-//builtins utils_pwd
-void		update_env_last_dir(t_env *env, char *new_path);
-char		*get_env_value(t_env *env_mini, const char *var);
-void		update_env_concat(t_env *env, char *current_pwd, char *new_path);
-void		update_env_direct(t_env *env, char *new_path, int flag);
 
 #endif
 /*
