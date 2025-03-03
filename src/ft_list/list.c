@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 21:08:20 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/01 21:55:02 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:02:26 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	append_node(t_env **head, char *var, char *val)
 	new_node = create_node(var, val);
 	if (!new_node)
 	{
-		fprintf(stderr, "Error: Failed to create node\n");
+		write(2, "Error: Failed to create node\n", \
+		ft_strlen("Error: Failed to create node\n"));
 		return ;
 	}
 	if (*head == NULL)
@@ -65,6 +66,8 @@ t_env	*get_list_env(char **envp, t_env	*env_list)
 
 	env_list = NULL;
 	i = 0;
+	if (!envp)
+		return (env_list);
 	while (envp[i])
 	{
 		equal_sign = ft_strchr(envp[i], '=');

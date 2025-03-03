@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/02 23:41:25 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/03 15:32:51 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char		*find_no_builtin(char **good_path, char **command);
 //builtins/cd.c
 int			is_valid_path(char *path, t_env *env_mini);
 //builtins/echo.c
-void		ft_our_echo(char **cmd);
+void		ft_our_echo(char **cmd, t_env *env_mini);
 //builtins/env.c
 void		ft_our_env(t_env *env_mini);
 //builtins/pwd.c

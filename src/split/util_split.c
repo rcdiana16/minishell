@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:39:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/02/26 17:12:07 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:00:18 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*create_word(const char *str, int start, int end)
 	int		i;
 
 	len = end - start;
+	if (!str)
+		return (NULL);
 	word = malloc((len + 1) * sizeof(char));
 	if (!word)
 		return (NULL);

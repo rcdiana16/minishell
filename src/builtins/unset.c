@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:58 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 00:33:21 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/03 12:55:07 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	remove_first_node(t_env *env_mini, char *var)
 {
 	t_env	*tmp;
 
+	if (!var)
+		return (0);
 	if (env_mini && ft_strncmp((env_mini)->variable, var, ft_strlen(var)) == 0)
 	{
 		tmp = env_mini;
@@ -33,6 +35,8 @@ void	remove_variable(t_env *env_mini, char *var)
 	t_env	*tmp;
 	t_env	*prev;
 
+	if (!var)
+		return ;
 	tmp = env_mini;
 	prev = NULL;
 	while (tmp)
