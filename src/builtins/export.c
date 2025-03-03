@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 12:50:06 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/04 00:16:50 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_export(t_env *env_mini, char **cmd)
 
 	if (!cmd || !cmd[1])
 		return ;
-	tokens = ft_split2(cmd[1], "=");
+	tokens = ft_split2(replace_env_vars(cmd[1], env_mini), "=");
 	if (!tokens || !tokens[0] || !tokens[1])
 	{
 		free_tokens(tokens);
