@@ -6,15 +6,11 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:32:03 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/03 15:49:20 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 15:53:44 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
 
 void	handle_env_var_echo(char *cmd, t_env *env_mini)
 {
