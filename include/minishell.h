@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/03 15:32:51 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 22:45:27 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_cmd_state
+{
+	char	*cmd;
+	int		i;
+}	t_cmd_state;
 
 //path/path.c
 char		**get_path(void);
@@ -107,5 +113,6 @@ int			check_standard_builtins(char **command, t_env *env_mini);
 int			check_env_builtins(char **command, t_env *env_mini);
 //utils/utils.c
 char		*get_env_value(t_env *env_mini, const char *var);
+char		*replace_env_vars(char *cmd, t_env *env_mini);
 
 #endif

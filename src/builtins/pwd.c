@@ -6,18 +6,17 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:14:50 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 12:53:52 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 23:57:00 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	handle_flag_1(t_env *env, char *current_pwd, char *new_path)
+void	handle_flag_1(t_env *env, char *new_path)
 {
-	env->value = ft_strjoin(current_pwd, "/");
 	if (!env->value)
 		return ;
-	env->value = ft_strjoin(env->value, new_path);
+	env->value = ft_strdup(new_path);
 	if (!env->value)
 		return ;
 }
@@ -64,7 +63,7 @@ void	update_env(t_env *env, char *new_path, char *env_to_update, int flag)
 			ft_strlen(env->variable)) == 0)
 		{
 			if (flag == 1)
-				handle_flag_1(env, current_pwd, new_path);
+				handle_flag_1(env, new_path);
 			else if (flag == 0)
 				handle_flag_0(env, new_path);
 			else if (flag == 3)
