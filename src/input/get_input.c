@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 15:32:48 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 16:16:24 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	count_redirections(char *cmd, t_command *cmd_info, int *i)
 {
-	if (!cmd)
-		return ;
 	if (cmd[*i] == '<')
 	{
 		if (cmd[*i + 1] == '<')
@@ -43,8 +41,6 @@ void	count_special_chars(char *cmd, t_command *cmd_info)
 	int	i;
 
 	i = 0;
-	if (!cmd)
-		return ;
 	while (cmd[i])
 	{
 		if (cmd[i] == '|')
@@ -59,8 +55,6 @@ t_command	*verify_and_split_command(char *cmd)
 {
 	t_command	*cmd_info;
 
-	if (!cmd)
-		return (NULL);
 	cmd_info = malloc(sizeof(t_command));
 	if (!cmd_info)
 		return (NULL);
