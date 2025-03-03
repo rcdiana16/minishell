@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_bis.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:50:23 by cosmos            #+#    #+#             */
-/*   Updated: 2025/02/28 18:55:25 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/03 13:58:38 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ static char	**setup_split(const char *s, const char *delimiters)
 
 char	**ft_split2(const char *s, const char *delimiters)
 {
+	if (!s | !delimiters)
+		return (NULL);
 	return (setup_split(s, delimiters));
 }

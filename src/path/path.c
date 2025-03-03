@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:45:02 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/02 15:55:36 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 13:57:37 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	**split_path(char *path)
 {
 	char	**path_splited;
 
+	if (!path)
+		return (NULL);
 	path_splited = ft_split(path, ':');
 	if (!path_splited)
 		return (NULL);

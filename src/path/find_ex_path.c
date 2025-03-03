@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:12:30 by diana             #+#    #+#             */
-/*   Updated: 2025/03/01 23:03:02 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 13:57:08 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	**allocate_paths_with_slash(char **path_splited, int count)
 	char	**good_path;
 	int		i;
 
+	if (!path_splited)
+		return (NULL);
 	good_path = malloc(sizeof(char *) * (count + 1));
 	if (!good_path)
 		return (NULL);
@@ -62,6 +64,8 @@ char	*path_to_exc(char **path)
 	int	i;
 
 	i = 0;
+	if (!path)
+		return (NULL);
 	while (path[i])
 	{
 		if (access(path[i], X_OK) == 0)
@@ -77,6 +81,8 @@ char	*find_no_builtin(char **good_path, char **command)
 	char	**tmp_path;
 
 	i = 0;
+	if (!good_path | !command)
+		return (NULL);
 	while (good_path[i])
 		i++;
 	tmp_path = malloc(sizeof(char *) * (i + 1));
@@ -95,6 +101,5 @@ char	*find_no_builtin(char **good_path, char **command)
 		}
 		i++;
 	}
-	//free_arr(good_path);
 	return (path_to_exc(tmp_path));
 }

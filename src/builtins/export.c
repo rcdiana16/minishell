@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 00:33:04 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/03 12:50:06 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_tokens(char **tokens)
 	int	i;
 
 	i = 0;
+	if (!tokens)
+		return ;
 	while (tokens[i])
 	{
 		free(tokens[i]);
@@ -27,6 +29,8 @@ void	free_tokens(char **tokens)
 
 int	update_existing_variable(t_env *env_mini, char **tokens)
 {
+	if (!tokens)
+		return (0);
 	while (env_mini)
 	{
 		if (ft_strncmp(tokens[0], env_mini->variable, \
@@ -45,6 +49,8 @@ void	add_new_variable(t_env *env_mini, char **tokens)
 {
 	t_env	*new_var;
 
+	if (!tokens)
+		return ;
 	new_var = malloc(sizeof(t_env));
 	if (!new_var)
 		return ;

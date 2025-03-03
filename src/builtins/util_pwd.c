@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:06:29 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/02 16:07:13 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 12:56:37 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*ft_find_dir(char *path)
 	int	c_slash;
 
 	c_slash = 0;
+	if (!path)
+		return (NULL);
 	i = ft_strlen(path) - 1;
 	while (i >= 0)
 	{
@@ -48,6 +50,8 @@ char	*ft_find_gd_dir(char *path)
 	int		c_slash;
 	char	*good_path;
 
+	if (!path)
+		return (NULL);
 	i = ft_strlen(path) - 1;
 	c_slash = 0;
 	while (i >= 0)
@@ -60,5 +64,7 @@ char	*ft_find_gd_dir(char *path)
 		i--;
 	}
 	good_path = ft_strndup(path, c_slash);
+	if (!good_path)
+		return (NULL);
 	return (good_path);
 }
