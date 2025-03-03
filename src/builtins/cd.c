@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 12:43:16 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/03 23:09:25 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,20 @@ void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)
 int	is_valid_path(char *path, t_env *env_mini)
 {
 	char	*oldpwd;
+	char	*expanded_path;
 
 	if (!path)
 		return (0);
-	if (chdir(path) == 0)
+	expanded_path = replace_env_vars(path, env_mini);
+	if (!expanded_path)
+		return (print_cd_error(path));
+	if (chdir(expanded_path) == 0)
 	{
 		oldpwd = get_env_value(env_mini, "PWD");
-		update_pwd_env(env_mini, oldpwd, path);
+		update_pwd_env(env_mini, oldpwd, expanded_path);
+		free(expanded_path);
 		return (1);
 	}
+	free(expanded_path);
 	return (print_cd_error(path));
 }
