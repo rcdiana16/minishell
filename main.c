@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/04 10:05:45 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/04 21:21:41 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	handle_path(char ***path_splitted, char ***path_sp_w_slash, t_env *env_mini)
+void	handle_path(char ***path_splitted, char ***path_sp_w_slash, \
+	t_env *env_mini)
 {
 	*path_splitted = get_path(env_mini);
 	if (!*path_splitted)
@@ -30,20 +31,25 @@ void	handle_path(char ***path_splitted, char ***path_sp_w_slash, t_env *env_mini
 	}
 }
 
-int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, t_env *env_list)
+int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
+	t_env *env_list)
 {
 	char	*built_in_path;
 
-	if (cmd_info->tokens[0][0] == '/' || ft_strchr(cmd_info->tokens[0], '/') != NULL)
+	if (cmd_info->tokens[0][0] == '/' || \
+		ft_strchr(cmd_info->tokens[0], '/') != NULL)
 	{
-		execve(cmd_info->tokens[0], cmd_info->tokens, convert_env_to_array(env_list));
+		execve(cmd_info->tokens[0], cmd_info->tokens, \
+			convert_env_to_array(env_list));
 		perror("execve");
 		exit(1);
 	}
 	built_in_path = find_no_builtin(path_sp_w_slash, cmd_info->tokens);
 	if (!built_in_path)
 	{
-		write(2, "Command not found: %s\n", ft_strlen("Command not found: %s\n"));
+		write(2, "Command not found: ", ft_strlen("Command not found: "));
+		write(2, cmd_info->tokens[0], ft_strlen(cmd_info->tokens[0]));
+		write(2, "\n", 1);
 		exit(127);
 	}
 	execve(built_in_path, cmd_info->tokens, convert_env_to_array(env_list));
