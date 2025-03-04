@@ -59,7 +59,7 @@ typedef struct s_cmd_state
 }	t_cmd_state;
 
 //path/path.c
-char		**get_path(void);
+char		**get_path(t_env *env_mini);
 char		**split_path(char *path);
 //path/find_ex_path.c
 char		**add_slash(char **path_splited);

@@ -12,9 +12,9 @@
 
 #include "include/minishell.h"
 
-void	handle_path(char ***path_splitted, char ***path_sp_w_slash)
+void	handle_path(char ***path_splitted, char ***path_sp_w_slash, t_env *env_mini)
 {
-	*path_splitted = get_path();
+	*path_splitted = get_path(env_mini);
 	if (!*path_splitted)
 	{
 		write(2, "Error: get_path() returned NULL\n", \
@@ -34,7 +34,7 @@ int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, t_env *en
 {
 	char	*built_in_path;
 
-	if (cmd_info->tokens[0][0] == '/' || strchr(cmd_info->tokens[0], '/') != NULL)
+	if (cmd_info->tokens[0][0] == '/' || ft_strchr(cmd_info->tokens[0], '/') != NULL)
 	{
 		execve(cmd_info->tokens[0], cmd_info->tokens, convert_env_to_array(env_list));
 		perror("execve");
@@ -98,10 +98,10 @@ int	main(int ac, char **av, char **env)
 	env_list = NULL;
 	if (ac == 0)
 		return (1);
-	handle_path(&path_splitted, &path_sp_w_slash);
 	env_list = initialize_environment(env, env_list);
 	while (1)
 	{
+		handle_path(&path_splitted, &path_sp_w_slash, env_list);
 		if (handle_input(&cmd_info, env_list))
 			continue ;
 		if (execute_command(cmd_info, path_sp_w_slash, env_list))
