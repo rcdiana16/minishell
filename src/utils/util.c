@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/03 22:44:56 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/04 10:35:26 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_env_value(t_env *env_mini, const char *var)
 		while (env_mini != NULL)
 		{
 			if ((ft_strncmp(env_mini->variable, var, \
-				ft_strlen(env_mini->variable))) == 0)
+				ft_strlen(var) + 1)) == 0)
 				return (env_mini->value);
 			env_mini = env_mini->next;
 		}
@@ -87,14 +87,12 @@ char	*replace_env_vars(char *cmd, t_env *env_mini)
 {
 	int			i;
 	int			j;
-	int			result_size;
 	char		*result;
 	t_cmd_state	state;
 
 	i = 0;
 	j = 0;
-	result_size = strlen(cmd) + 1;
-	result = malloc(result_size);
+	result = malloc(256);
 	if (!result)
 		return (NULL);
 	state.cmd = cmd;

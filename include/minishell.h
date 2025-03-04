@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/03 22:45:27 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/04 10:36:28 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char		*find_no_builtin(char **good_path, char **command);
 //builtins/cd.c
 int			is_valid_path(char *path, t_env *env_mini);
 //builtins/echo.c
-void		ft_our_echo(char **cmd, t_env *env_mini);
+void		ft_our_echo(char **cmd);
 //builtins/env.c
 void		ft_our_env(t_env *env_mini);
 //builtins/pwd.c
@@ -95,7 +95,7 @@ void		free_env_list(t_env *env);
 //ft_list/list.c
 t_env		*get_list_env(char **envp, t_env	*env_list);
 //input/get_input.c
-t_command	*get_input(void);
+t_command	*get_input(t_env *env_mini);
 //split/split_bis.c
 char		**ft_split2(const char *s, const char *delimiters);
 //utils_split.c
@@ -114,5 +114,8 @@ int			check_env_builtins(char **command, t_env *env_mini);
 //utils/utils.c
 char		*get_env_value(t_env *env_mini, const char *var);
 char		*replace_env_vars(char *cmd, t_env *env_mini);
+//utils/util2.c
+char		**convert_env_to_array(t_env *env);
+t_env		*initialize_environment(char **env, t_env *env_list);
 
 #endif

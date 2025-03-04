@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:38:03 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 23:35:07 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/04 09:00:50 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_standard_builtins(char **command, t_env *env_mini)
 	if (!command)
 		return (0);
 	if ((ft_strncmp(command[0], "echo", ft_strlen(command[0]) + 1)) == 0)
-		return (ft_our_echo(command, env_mini), 1);
+		return (ft_our_echo(command), 1);
 	else if ((ft_strncmp(command[0], "cd", ft_strlen(command[0]) + 1)) == 0)
 		return (is_valid_path(command[1], env_mini), 1);
 	else if ((ft_strncmp(command[0], "pwd", ft_strlen(command[0]) + 1)) == 0)

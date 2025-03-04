@@ -6,7 +6,7 @@
 #    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/02 16:33:31 by cosmos           ###   ########.fr        #
+#    Updated: 2025/03/04 10:03:21 by cosmos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS            = main.c \
 					src/builtins/echo.c \
 					src/builtins/env.c \
 					src/utils/util.c \
+					src/utils/util2.c \
 					src/builtins/export.c \
 					src/builtins/unset.c \
 

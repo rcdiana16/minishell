@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 16:16:24 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/04 09:34:47 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ void	count_special_chars(char *cmd, t_command *cmd_info)
 	}
 }
 
-t_command	*verify_and_split_command(char *cmd)
+t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 {
 	t_command	*cmd_info;
+	int			i;
 
 	cmd_info = malloc(sizeof(t_command));
 	if (!cmd_info)
@@ -68,10 +69,16 @@ t_command	*verify_and_split_command(char *cmd)
 		free_command(cmd_info);
 		return (NULL);
 	}
+	i = 1;
+	while (cmd_info->tokens[i])
+	{
+		cmd_info->tokens[i] = replace_env_vars(cmd_info->tokens[i], env_mini);
+		i++;
+	}
 	return (cmd_info);
 }
 
-t_command	*get_input(void)
+t_command	*get_input(t_env *env_mini)
 {
 	char		*line;
 	t_command	*cmd_info;
@@ -79,7 +86,7 @@ t_command	*get_input(void)
 	line = readline("\033[1;32mCBS$ \033[0m");
 	if (!line)
 		return (NULL);
-	cmd_info = verify_and_split_command(line);
+	cmd_info = verify_and_split_command(line, env_mini);
 	free(line);
 	return (cmd_info);
 }
