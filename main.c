@@ -30,18 +30,25 @@ void	handle_path(char ***path_splitted, char ***path_sp_w_slash)
 	}
 }
 
-int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
-	t_env *env_list)
+int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, t_env *env_list)
 {
 	char	*built_in_path;
 
-	built_in_path = find_no_builtin(path_sp_w_slash, cmd_info->tokens);
-	if (execve(built_in_path, cmd_info->tokens, \
-		convert_env_to_array(env_list)) == -1)
+	if (cmd_info->tokens[0][0] == '/' || strchr(cmd_info->tokens[0], '/') != NULL)
 	{
-		perror("error ");
+		execve(cmd_info->tokens[0], cmd_info->tokens, convert_env_to_array(env_list));
+		perror("execve");
 		exit(1);
 	}
+	built_in_path = find_no_builtin(path_sp_w_slash, cmd_info->tokens);
+	if (!built_in_path)
+	{
+		write(2, "Command not found: %s\n", ft_strlen("Command not found: %s\n"));
+		exit(127);
+	}
+	execve(built_in_path, cmd_info->tokens, convert_env_to_array(env_list));
+	perror("execve");
+	exit(1);
 	return (0);
 }
 

@@ -18,7 +18,7 @@ char	**get_path(void)
 
 	path = getenv("PATH");
 	if (!path)
-		return (NULL);
+		path = "";
 	return (split_path(path));
 }
 
