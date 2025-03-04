@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/03/04 09:33:54 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/04 10:47:07 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)
 {
 	char	*cwd;
 
-	cwd = malloc(256);
+	cwd = calloc(256, 4);
 	if (!oldpwd | !path | !cwd)
 		return ;
 	if (ft_strncmp(path, "..", 2) == 0)
