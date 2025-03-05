@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/04 10:35:26 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/04 17:07:19 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*extract_var_name(t_cmd_state *state)
 
 	k = 0;
 	j = 0;
-	while (state->cmd[state->i] && (isalnum(state->cmd[state->i]) \
+	while (state->cmd[state->i] && (ft_isalnum(state->cmd[state->i]) \
 	|| state->cmd[state->i] == '_'))
 	{
 		k++;
