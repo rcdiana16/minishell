@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/04 10:36:28 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/05 14:40:33 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <limits.h>
 # include "../libft/libft.h"
+
+extern	int	g_code;
 
 typedef struct s_split_data
 {
@@ -117,5 +120,11 @@ char		*replace_env_vars(char *cmd, t_env *env_mini);
 //utils/util2.c
 char		**convert_env_to_array(t_env *env);
 t_env		*initialize_environment(char **env, t_env *env_list);
-
+//signals/ctrl_c_d.c
+void		handle_sigint(int sig);
+void		setup_signal_handlers(void);
+//main.c??
+int			get_gcode (void);
+void		set_gcode(int val);
+void	set_signals(void);
 #endif

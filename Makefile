@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
+#    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/04 10:03:21 by cosmos           ###   ########.fr        #
+#    Updated: 2025/03/04 17:19:13 by diana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS            = main.c \
 					src/utils/util2.c \
 					src/builtins/export.c \
 					src/builtins/unset.c \
+					src/signals/ctrl_c_d.c \
 
 OBJS            = $(SRCS:.c=.o)
 

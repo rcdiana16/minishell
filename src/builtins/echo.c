@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:32:03 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/04 10:37:32 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/04 17:06:56 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_echo(char **cmd, int i, int newline)
 {
 	while (cmd[i])
 	{
-		write(1, cmd[i], strlen(cmd[i]));
+		write(1, cmd[i], ft_strlen(cmd[i]));
 		if (cmd[i + 1] != NULL)
 			write(1, " ", 1);
 		i++;
