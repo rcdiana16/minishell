@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/04 09:34:47 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/05 12:44:00 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,14 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 	cmd_info->c_red_i = 0;
 	cmd_info->c_red_o = 0;
 	count_special_chars(cmd, cmd_info);
-	cmd_info->tokens = ft_split2(cmd, " \t\'\"");
+	cmd_info->tokens = ft_split2(cmd, " \t");
+	if (cmd_info->tokens[1] != NULL && cmd_info->tokens[1][ft_strlen(cmd_info->tokens[1]) - 1])
+	{
+		if (cmd_info->tokens[1][0] == '\'' && cmd_info->tokens[1][ft_strlen(cmd_info->tokens[1]) - 1] == '\'')
+			cmd_info->tokens = ft_split2(cmd, " \t\'");
+		else if (cmd_info->tokens[1][0] == '\"' && cmd_info->tokens[1][ft_strlen(cmd_info->tokens[1]) - 1] == '\"')
+			cmd_info->tokens = ft_split2(cmd, " \t\"");
+	}
 	if (!cmd_info->tokens)
 	{
 		free_command(cmd_info);
