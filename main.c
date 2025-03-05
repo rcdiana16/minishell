@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/05 14:42:14 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/05 20:42:04 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-
 int	g_code = 0;
 
-int	get_gcode (void)
+int	get_gcode(void)
 {
 	return (g_code);
 }
@@ -25,7 +24,7 @@ void	set_gcode(int val)
 	g_code = val;
 }
 
-void	handle_path(char ***path_splitted, char ***path_sp_w_slash)
+void	handle_path(char ***path_splitted, char ***path_sp_w_slash, t_env *env_mini)
 {
 	*path_splitted = get_path(env_mini);
 	if (!*path_splitted)

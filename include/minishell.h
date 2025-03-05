@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/05 14:40:33 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/05 20:41:31 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <limits.h>
 # include "../libft/libft.h"
 
-extern	int	g_code;
+extern int	g_code;
 
 typedef struct s_split_data
 {
@@ -46,6 +46,7 @@ typedef struct s_command
 	int		c_red_o;
 	int		here_doc;
 	int		c_append;
+	int		flag;
 }	t_command;
 
 typedef struct s_env
@@ -124,7 +125,8 @@ t_env		*initialize_environment(char **env, t_env *env_list);
 void		handle_sigint(int sig);
 void		setup_signal_handlers(void);
 //main.c??
-int			get_gcode (void);
+int			get_gcode(void);
 void		set_gcode(int val);
-void	set_signals(void);
+void		set_signals(void);
+
 #endif
