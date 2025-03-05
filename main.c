@@ -12,6 +12,7 @@
 
 #include "include/minishell.h"
 
+
 int	g_code = 0;
 
 int	get_gcode (void)
@@ -26,7 +27,7 @@ void	set_gcode(int val)
 
 void	handle_path(char ***path_splitted, char ***path_sp_w_slash)
 {
-	*path_splitted = get_path();
+	*path_splitted = get_path(env_mini);
 	if (!*path_splitted)
 	{
 		write(2, "Error: get_path() returned NULL\n", \
@@ -47,13 +48,25 @@ int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 {
 	char	*built_in_path;
 
-	built_in_path = find_no_builtin(path_sp_w_slash, cmd_info->tokens);
-	if (execve(built_in_path, cmd_info->tokens, \
-		convert_env_to_array(env_list)) == -1)
+	if (cmd_info->tokens[0][0] == '/' || \
+		ft_strchr(cmd_info->tokens[0], '/') != NULL)
 	{
-		perror("error ");
+		execve(cmd_info->tokens[0], cmd_info->tokens, \
+			convert_env_to_array(env_list));
+		perror("execve");
 		exit(1);
 	}
+	built_in_path = find_no_builtin(path_sp_w_slash, cmd_info->tokens);
+	if (!built_in_path)
+	{
+		write(2, "Command not found: ", ft_strlen("Command not found: "));
+		write(2, cmd_info->tokens[0], ft_strlen(cmd_info->tokens[0]));
+		write(2, "\n", 1);
+		exit(127);
+	}
+	execve(built_in_path, cmd_info->tokens, convert_env_to_array(env_list));
+	perror("execve");
+	exit(1);
 	return (0);
 }
 
@@ -103,10 +116,10 @@ int	main(int ac, char **av, char **env)
 	env_list = NULL;
 	if (ac == 0)
 		return (1);
-	handle_path(&path_splitted, &path_sp_w_slash);
 	env_list = initialize_environment(env, env_list);
 	while (1)
 	{
+		handle_path(&path_splitted, &path_sp_w_slash, env_list);
 		//set_signals();
 		if (handle_input(&cmd_info, env_list))
 			continue ;

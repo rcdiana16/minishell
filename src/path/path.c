@@ -12,13 +12,13 @@
 
 #include "../../include/minishell.h"
 
-char	**get_path(void)
+char	**get_path(t_env *env_mini)
 {
 	char	*path;
 
-	path = getenv("PATH");
+	path = get_env_value(env_mini, "PATH");
 	if (!path)
-		return (NULL);
+		path = "";
 	return (split_path(path));
 }
 
