@@ -3,17 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/04 21:21:41 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/05 14:42:14 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	handle_path(char ***path_splitted, char ***path_sp_w_slash, \
-	t_env *env_mini)
+
+int	g_code = 0;
+
+int	get_gcode (void)
+{
+	return (g_code);
+}
+
+void	set_gcode(int val)
+{
+	g_code = val;
+}
+
+void	handle_path(char ***path_splitted, char ***path_sp_w_slash)
 {
 	*path_splitted = get_path(env_mini);
 	if (!*path_splitted)
@@ -108,6 +120,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		handle_path(&path_splitted, &path_sp_w_slash, env_list);
+		//set_signals();
 		if (handle_input(&cmd_info, env_list))
 			continue ;
 		if (execute_command(cmd_info, path_sp_w_slash, env_list))
