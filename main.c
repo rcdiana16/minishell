@@ -6,25 +6,16 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/05 20:42:04 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/07 17:27:14 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	g_code = 0;
+static int	g_code = 0;
 
-int	get_gcode(void)
-{
-	return (g_code);
-}
-
-void	set_gcode(int val)
-{
-	g_code = val;
-}
-
-void	handle_path(char ***path_splitted, char ***path_sp_w_slash, t_env *env_mini)
+void	handle_path(char ***path_splitted, char ***path_sp_w_slash, \
+	t_env *env_mini)
 {
 	*path_splitted = get_path(env_mini);
 	if (!*path_splitted)
@@ -47,6 +38,8 @@ int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 {
 	char	*built_in_path;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (cmd_info->tokens[0][0] == '/' || \
 		ft_strchr(cmd_info->tokens[0], '/') != NULL)
 	{
@@ -116,14 +109,25 @@ int	main(int ac, char **av, char **env)
 	if (ac == 0)
 		return (1);
 	env_list = initialize_environment(env, env_list);
+	disable_echoctl();
+	set_signals();
 	while (1)
 	{
 		handle_path(&path_splitted, &path_sp_w_slash, env_list);
-		//set_signals();
 		if (handle_input(&cmd_info, env_list))
 			continue ;
 		if (execute_command(cmd_info, path_sp_w_slash, env_list))
 			continue ;
 	}
 	return (0);
+}
+
+int	get_gcode(void)
+{
+	return (g_code);
+}
+
+void	set_gcode(int val)
+{
+	g_code = val;
 }

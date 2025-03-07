@@ -6,7 +6,7 @@
 #    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/04 17:19:13 by diana            ###   ########.fr        #
+#    Updated: 2025/03/05 21:42:52 by diana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME            = minishell
 
 CC              = gcc
 CFLAGS          = -Wall -Wextra -Werror
-RD				= -lreadline
+RD				= -lreadline -lhistory
+LDFLAGS			= -L/opt/homebrew/opt/readline/lib
+CPPFLAGS		= -I/opt/homebrew/opt/readline/include
 RM              = rm -rf
 
 SRCS            = main.c \
@@ -37,7 +39,9 @@ SRCS            = main.c \
 					src/utils/util2.c \
 					src/builtins/export.c \
 					src/builtins/unset.c \
-					src/signals/ctrl_c_d.c \
+					src/signals/ctrl_c.c \
+					src/signals/ctrl_nothing.c \
+					src/signals/signal_pipex.c \
 
 OBJS            = $(SRCS:.c=.o)
 
@@ -45,12 +49,12 @@ LIBFT_PATH      = ./libft
 LIBFT           = $(LIBFT_PATH)/libft.a
 
 %.o: %.c
-				$(CC) $(CFLAGS) -c $< -o $@
+				$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 all:            $(NAME)
 
 $(NAME):        $(LIBFT) $(OBJS)
-				@$(CC) $(CFLAGS)  $(OBJS) $(LIBFT) -o $(NAME) $(RD)
+				@$(CC) $(CFLAGS)  $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME) $(RD)
 
 $(LIBFT):
 				make -C $(LIBFT_PATH)
