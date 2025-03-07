@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/05 20:41:31 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:48:27 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <limits.h>
+# include <termios.h>
+# include <unistd.h>
 # include "../libft/libft.h"
 
-extern int	g_code;
+
+//extern int	g_code;
 
 typedef struct s_split_data
 {
@@ -121,12 +124,21 @@ char		*replace_env_vars(char *cmd, t_env *env_mini);
 //utils/util2.c
 char		**convert_env_to_array(t_env *env);
 t_env		*initialize_environment(char **env, t_env *env_list);
-//signals/ctrl_c_d.c
+//signals/ctrl_c.c
 void		handle_sigint(int sig);
-void		setup_signal_handlers(void);
+void		set_signals(void);
+void		sigint(void);
+void		disable_echoctl(void);
+//signals/ctrl_nothing.c
+void		sigquit(void);
+void		handle_sigquit(int sig);
+//signals/signal_pipex.c
+void		backslash_n(int v);
+void		sigint_update(void);
+void		nothing(int v);
+void		sigquit_update(void);
 //main.c??
 int			get_gcode(void);
 void		set_gcode(int val);
-void		set_signals(void);
 
 #endif
