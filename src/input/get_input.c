@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/07 17:16:40 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/07 18:55:43 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,7 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 	}
 	i = 1;
 	if (cmd_info->flag != 0)
-	{
-		printf("ok\n");
 		make_good_cmd(cmd_info);
-	}
 	else if (cmd_info->flag == 0)
 	{
 		while (cmd_info->tokens[i])
