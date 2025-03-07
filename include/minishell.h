@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
 /*   Updated: 2025/03/07 18:35:24 by diana            ###   ########.fr       */
@@ -29,6 +29,9 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
+
+extern int	g_code;
+
 typedef struct s_split_data
 {
 	char		**res;
@@ -46,6 +49,7 @@ typedef struct s_command
 	int		c_red_o;
 	int		here_doc;
 	int		c_append;
+	int		flag;
 }	t_command;
 
 typedef struct s_env
