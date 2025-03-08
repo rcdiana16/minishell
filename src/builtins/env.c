@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 11:20:16 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/02 11:39:16 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/08 17:14:53 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	ft_our_env(t_env *env_mini)
 		printf("%s=%s\n", env_mini->variable, env_mini->value);
 		env_mini = env_mini->next;
 	}
+	set_gcode(EXIT_SUCCESS);
 }
