@@ -25,7 +25,7 @@ void	sigquit(void)
 	struct sigaction	action;
 
 	action.sa_handler = handle_sigquit;
-	action.sa_mask = 0;
+	//action.sa_mask;
 	action.sa_flags = 0;
 	sigaction(SIGQUIT, &action, NULL);
 }
