@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/07 18:55:43 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/08 14:32:26 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,7 @@ t_command	*get_input(t_env *env_mini)
 
 	line = readline("\033[1;32mCBS$ \033[0m");
 	if (!line)
-	{
-		write(1, "exit\n", 5);
 		exit(0);
-	}
 	cmd_info = verify_and_split_command(line, env_mini);
 	free(line);
 	return (cmd_info);
