@@ -14,11 +14,15 @@
 
 int	print_cd_error(char *path)
 {
-	if (open(path, O_RDONLY) != -1)
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd != -1)
 	{
 		write(2, "cd: ", 4);
 		write(2, path, ft_strlen(path));
 		write(2, ": Not a directory\n", 18);
+		close(fd);
 	}
 	else
 	{
@@ -59,7 +63,11 @@ int	is_valid_path(char *path, t_env *env_mini)
 	char	*oldpwd;
 
 	if (!path)
-		return (0);
+	{
+		path = get_env_value(env_mini, "HOME");
+		if (!path)
+			return (0);
+	}
 	if (chdir(path) == 0)
 	{
 		oldpwd = get_env_value(env_mini, "PWD");
