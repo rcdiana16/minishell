@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:32:03 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/04 17:06:56 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/08 17:10:25 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ void	ft_our_echo(char **cmd)
 	if (!cmd[1])
 	{
 		write(1, "\n", 1);
+		set_gcode(EXIT_SUCCESS);
 		return ;
 	}
 	else if (cmd[1][0] == '\0')
 	{
 		write(1, "\n", 1);
+		set_gcode(EXIT_SUCCESS);
 		return ;
 	}
 	if (ft_strncmp(cmd[1], "-n", ft_strlen(cmd[1])) == 0)
@@ -48,4 +50,5 @@ void	ft_our_echo(char **cmd)
 		i = 2;
 	}
 	print_echo(cmd, i, newline);
+	set_gcode(EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/03/04 10:47:07 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/08 18:52:38 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	print_cd_error(char *path)
 		write(2, path, ft_strlen(path));
 		write(2, ": No such file or directory\n", 29);
 	}
+	set_gcode(EXIT_FAILURE);
 	return (0);
 }
 
@@ -72,6 +73,7 @@ int	is_valid_path(char *path, t_env *env_mini)
 	{
 		oldpwd = get_env_value(env_mini, "PWD");
 		update_pwd_env(env_mini, oldpwd, path);
+		set_gcode(EXIT_SUCCESS);
 		return (1);
 	}
 	return (print_cd_error(path));
