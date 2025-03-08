@@ -15,8 +15,8 @@ NAME            = minishell
 CC              = gcc
 CFLAGS          = -Wall -Wextra -Werror
 RD				= -lreadline -lhistory
-LDFLAGS			= -L/opt/homebrew/opt/readline/lib
-CPPFLAGS		= -I/opt/homebrew/opt/readline/include
+//LDFLAGS			= -L/opt/homebrew/opt/readline/lib
+//CPPFLAGS		= -I/opt/homebrew/opt/readline/include
 RM              = rm -rf
 
 SRCS            = main.c \
@@ -49,12 +49,12 @@ LIBFT_PATH      = ./libft
 LIBFT           = $(LIBFT_PATH)/libft.a
 
 %.o: %.c
-				$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+				$(CC) $(CFLAGS)  -c $< -o $@
 
 all:            $(NAME)
 
 $(NAME):        $(LIBFT) $(OBJS)
-				@$(CC) $(CFLAGS)  $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME) $(RD)
+				@$(CC) $(CFLAGS)  $(OBJS) $(LIBFT) -o $(NAME) $(RD)
 
 $(LIBFT):
 				make -C $(LIBFT_PATH)
