@@ -70,22 +70,24 @@ void	ft_export(t_env *env_mini, char **cmd)
 	i = 0;
 	if (!cmd || !cmd[1])
 		return ;
-	while (cmd[1][i])
-	{
-		if (ft_isalpha(cmd[1][i]) != 1)
-		{
-			write(2, "export: ", ft_strlen("export: "));
-			write(2, cmd[1], ft_strlen(cmd[1]));
-			write(2, ": not a valid identifier\n", ft_strlen(": not a valid identifier\n"));
-			return ;
-		}
-	}
+	
 	tokens = ft_split2(cmd[1], "=");
 	if (!tokens || !tokens[0] || !tokens[1])
 	{
 		perror("ok: ");
 		free_tokens(tokens);
 		return ;
+	}
+	while (tokens[0][i])
+	{
+		if (ft_isalpha(tokens[0][i]) != 1)
+		{
+			write(2, "export: ", ft_strlen("export: "));
+			write(2, cmd[1], ft_strlen(cmd[1]));
+			write(2, ": not a valid identifier\n", ft_strlen(": not a valid identifier\n"));
+			return ;
+		}
+		i++;
 	}
 	if (!update_existing_variable(env_mini, tokens))
 		add_new_variable(env_mini, tokens);
