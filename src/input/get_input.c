@@ -6,15 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2025/03/07 18:55:43 by maximemarti      ###   ########.fr       */
-=======
-/*   Updated: 2025/03/05 14:14:02 by cosmos           ###   ########.fr       */
->>>>>>> 41ae7f0 (try for parsing make good cmd)
-=======
 /*   Updated: 2025/03/08 14:32:26 by diana            ###   ########.fr       */
->>>>>>> 76603d9 (parte 1 set_gcode)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +65,6 @@ t_command	*make_good_cmd(t_command *cmd_info)
 		while (cmd_info->tokens[i][j])
 		{
 			if (cmd_info->tokens[i][j] != '\'')
-<<<<<<< HEAD
 			{
 				cmd_info->tokens[i][k++] = cmd_info->tokens[i][j];
 			}
@@ -103,9 +94,6 @@ t_command	*make_good_cmd2(t_command *cmd_info)
 			{
 				cmd_info->tokens[i][k++] = cmd_info->tokens[i][j];
 			}
-=======
-				cmd_info->tokens[i][k++] = cmd_info->tokens[i][j];
->>>>>>> 41ae7f0 (try for parsing make good cmd)
 			j++;
 		}
 		cmd_info->tokens[i][k] = '\0';
@@ -132,7 +120,6 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 	if (cmd_info->tokens[1])
 	{
 		if (cmd_info->tokens[1][0] == '\'' && cmd_info->tokens[1][ft_strlen(cmd_info->tokens[1]) - 1] == '\'')
-<<<<<<< HEAD
 			cmd_info->flag = 1;
 	}
 	i = 1;
@@ -146,29 +133,12 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 			i++;
 		}
 		make_good_cmd2(cmd_info);
-=======
-			cmd_info->tokens = ft_split2(cmd, " \t\'");
-		else if (cmd_info->tokens[1][0] == '\"' && cmd_info->tokens[1][ft_strlen(cmd_info->tokens[1]) - 1] == '\"')
-			cmd_info->tokens = ft_split2(cmd, " \t\"");
-		else
-			cmd_info->tokens = ft_split2(cmd, " \t");
->>>>>>> 41ae7f0 (try for parsing make good cmd)
 	}
 	if (!cmd_info->tokens)
 	{
 		free_command(cmd_info);
 		return (NULL);
 	}
-<<<<<<< HEAD
-=======
-	i = 1;
-	while (cmd_info->tokens[i])
-	{
-		cmd_info->tokens[i] = replace_env_vars(cmd_info->tokens[i], env_mini);
-		i++;
-	}
-	make_good_cmd(cmd_info);
->>>>>>> 41ae7f0 (try for parsing make good cmd)
 	return (cmd_info);
 }
 
