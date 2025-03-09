@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/08 17:54:18 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/08 22:47:45 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,26 @@ void	ft_export(t_env *env_mini, char **cmd)
 	i = 0;
 	if (!cmd || !cmd[1])
 		return ;
-	while (cmd[1][i])
+	
+	tokens = ft_split2(cmd[1], "=");
+	if (!tokens || !tokens[0] || !tokens[1])
 	{
-		if (ft_isalpha(cmd[1][i]) != 1)
+		perror("ok: ");//eliminar ok no?
+		free_tokens(tokens);
+		return ;
+	}
+	while (tokens[0][i])
+	{
+		if (ft_isalpha(tokens[0][i]) != 1)
 		{
 			write(2, "export: ", ft_strlen("export: "));
 			write(2, cmd[1], ft_strlen(cmd[1]));
 			write(2, ": not a valid identifier\n", ft_strlen(": not a valid identifier\n"));
+			//set_gcode(EXIT_FAILURE);
+			//printf("g_code = %d\n", get_gcode());
 			return ;
 		}
-	}
-	tokens = ft_split2(cmd[1], "=");
-	if (!tokens || !tokens[0] || !tokens[1])
-	{
-		perror("ok: ");
-		free_tokens(tokens);
-		return ;
+		i++;
 	}
 	if (!update_existing_variable(env_mini, tokens))
 		add_new_variable(env_mini, tokens);
