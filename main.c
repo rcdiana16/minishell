@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/10 16:27:08 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/10 21:02:07 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ void	handle_path(char ***path_splitted, char ***path_sp_w_slash, \
 		exit(1);
 	}
 	*path_sp_w_slash = add_slash(*path_splitted);
+	/*int i = 0;
+	while (path_splitted[i])
+	{
+		free(path_splitted[i]);
+		i++;
+	}
+	//free(path_splitted);*/
 	if (!*path_sp_w_slash)
 	{
 		write(2, "Error: add_slash() returned NULL\n", \
@@ -114,6 +121,13 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		handle_path(&path_splitted, &path_sp_w_slash, env_list);
+		/*int i = 0;
+		while (path_splitted[i])
+		{
+			free(path_splitted[i]);
+			i++;
+		}
+		free(path_splitted);*/
 		if (isatty(STDIN_FILENO))
 		{
 			if (handle_input(&cmd_info, env_list, 0))
@@ -123,9 +137,14 @@ int	main(int ac, char **av, char **env)
 			if (handle_input(&cmd_info, env_list,1))
 				continue ;
 		}
-		
 		if (execute_command(cmd_info, path_sp_w_slash, env_list))
 			continue ;
+		/*int i = 0;
+		while (path_sp_w_slash[i])
+		{
+			free(path_sp_w_slash[i]);
+			i++;
+		}*/
 	}
 	return (0);
 }

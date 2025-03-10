@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:06:29 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/03 12:56:37 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/10 20:50:07 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ void	ft_our_pwd(t_env *env_mini)
 {
 	char	*pwd;
 
+	pwd = NULL;
 	pwd = get_env_value(env_mini, "PWD");
 	if (pwd)
-		printf("%s\n", pwd);
+		ft_printf("%s\n", pwd);
 	else
 		perror("pwd: no such variable");
 }
