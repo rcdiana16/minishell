@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/10 16:25:32 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/10 18:10:25 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void		update_env_direct(t_env *env, char *new_path, int flag);
 void		ft_export(t_env *env_mini, char **cmd);
 //builtins/unset.c
 void		ft_unset(t_env *env_mini, char **var);
+//builtins/exit.c
+void		ft_our_exit(t_env *env_mini, char **cmd);
 //free/free.c
 void		free_command(t_command *cmd_info);
 void		free_arr(char **tok);
