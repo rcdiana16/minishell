@@ -29,7 +29,7 @@ void	free_tokens(char **tokens)
 
 int	update_existing_variable(t_env *env_mini, char **tokens)
 {
-	if (!tokens)
+	if (!tokens || !tokens[1])
 		return (0);
 	while (env_mini)
 	{
@@ -49,7 +49,7 @@ void	add_new_variable(t_env *env_mini, char **tokens)
 {
 	t_env	*new_var;
 
-	if (!tokens)
+	if (!tokens || !tokens[1])
 		return ;
 	new_var = malloc(sizeof(t_env));
 	if (!new_var)
@@ -70,14 +70,13 @@ void	ft_export(t_env *env_mini, char **cmd)
 	i = 0;
 	if (!cmd || !cmd[1])
 		return ;
-	
-	tokens = ft_split2(cmd[1], "=");
-	if (!tokens || !tokens[0] || !tokens[1])
+	tokens = ft_split2(cmd[1], "=");	
+	if (!tokens || !tokens[0])
 	{
-		perror("ok: ");
-		free_tokens(tokens);
+		//free_tokens(tokens);
 		return ;
 	}
+	
 	while (tokens[0][i])
 	{
 		if (ft_isalpha(tokens[0][i]) != 1)
