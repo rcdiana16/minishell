@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/08 16:59:03 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/10 16:27:08 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	return (0);
 }
 
-int	handle_input(t_command **cmd_info, t_env *env_mini)
+int	handle_input(t_command **cmd_info, t_env *env_mini, int mode)
 {
-	*cmd_info = get_input(env_mini);
+	*cmd_info = get_input(env_mini, mode);
 	if (!*cmd_info || !(*cmd_info)->tokens || !(*cmd_info)->tokens[0])
 	{
 		free_command(*cmd_info);
@@ -114,8 +114,16 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		handle_path(&path_splitted, &path_sp_w_slash, env_list);
-		if (handle_input(&cmd_info, env_list))
-			continue ;
+		if (isatty(STDIN_FILENO))
+		{
+			if (handle_input(&cmd_info, env_list, 0))
+				continue ;
+		}
+		else{
+			if (handle_input(&cmd_info, env_list,1))
+				continue ;
+		}
+		
 		if (execute_command(cmd_info, path_sp_w_slash, env_list))
 			continue ;
 	}
