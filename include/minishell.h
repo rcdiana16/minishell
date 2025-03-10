@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/07 18:48:27 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/10 16:25:32 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void		free_env_list(t_env *env);
 //ft_list/list.c
 t_env		*get_list_env(char **envp, t_env	*env_list);
 //input/get_input.c
-t_command	*get_input(t_env *env_mini);
+t_command	*get_input(t_env *env_mini, int mode);
 //split/split_bis.c
 char		**ft_split2(const char *s, const char *delimiters);
 //utils_split.c
