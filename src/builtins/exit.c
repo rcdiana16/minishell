@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_nothing.c                                     :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 11:22:04 by diana             #+#    #+#             */
-/*   Updated: 2025/03/10 20:22:23 by cosmos           ###   ########.fr       */
+/*   Created: 2025/03/10 18:09:42 by cosmos            #+#    #+#             */
+/*   Updated: 2025/03/11 13:32:27 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	handle_sigquit(int sig)
+void	ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info)
 {
-	(void)sig;
-	set_gcode(131);
-	rl_on_new_line();
-	rl_redisplay();
-}
+	int	ex;
 
-void	sigquit(void)
-{
-	struct sigaction	action;
-
-	memset(&action, 0, sizeof(struct sigaction));
-	action.sa_handler = handle_sigquit;
-	//action.sa_mask;
-	action.sa_flags = 0;
-	sigaction(SIGQUIT, &action, NULL);
+	ex = 0;
+	if (cmd[1])
+		ex = ft_atoi(cmd[1]);
+	free_env_list(env_mini);
+	free_command(cmd_info);
+	set_gcode(EXIT_SUCCESS);
+	exit (ex);
 }

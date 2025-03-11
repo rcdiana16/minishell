@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/03/08 18:52:38 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/10 17:48:15 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,7 @@ void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)
 	cwd = calloc(256, 4);
 	if (!oldpwd | !path | !cwd)
 		return ;
-	if (ft_strncmp(path, "..", 2) == 0)
-	{
-		update_env(env_mini, oldpwd, "PWD", 4);
-		update_env(env_mini, oldpwd, "OLDPWD", 3);
-	}
-	else if (path[0] == '/')
+	if (path[0] == '/')
 	{
 		update_env(env_mini, oldpwd, "OLDPWD", 3);
 		update_env(env_mini, getcwd(cwd, 1024), "PWD", 1);

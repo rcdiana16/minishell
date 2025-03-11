@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:03:26 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/04 10:04:02 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 16:34:30 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ char	*allocate_env_entry(const char *variable, const char *value)
 	val_len = ft_strlen(value);
 	total_len = var_len + val_len + 2;
 	entry = malloc(total_len);
+	if (!entry)
+		return (NULL);
+	strcpy(entry, variable);
+	entry[var_len] = '=';
+	strcpy(entry + var_len + 1, value);
 	return (entry);
 }
 
@@ -51,6 +56,8 @@ char	**allocate_env_array(int size)
 	env_array = malloc((size + 1) * sizeof(char *));
 	if (!env_array)
 		return (NULL);
+	env_array[size] = NULL;
+		return (env_array);
 	return (env_array);
 }
 

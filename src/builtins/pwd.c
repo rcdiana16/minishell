@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:14:50 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 23:57:00 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/10 17:55:13 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ void	update_env(t_env *env, char *new_path, char *env_to_update, int flag)
 		{
 			if (flag == 1)
 				handle_flag_1(env, new_path);
-			else if (flag == 0)
-				handle_flag_0(env, new_path);
+			//else if (flag == 0)
+				//handle_flag_0(env, new_path);
 			else if (flag == 3)
 				handle_flag_3(env, new_path);
-			else if (flag == 4)
-				handle_flag_4(env, new_path);
+			//else if (flag == 4)
+				//handle_flag_4(env, new_path);
 			return ;
 		}
 		env = env->next;

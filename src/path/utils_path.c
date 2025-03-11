@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_nothing.c                                     :+:      :+:    :+:   */
+/*   utils_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 11:22:04 by diana             #+#    #+#             */
-/*   Updated: 2025/03/10 20:22:23 by cosmos           ###   ########.fr       */
+/*   Created: 2025/03/11 16:01:42 by cosmos            #+#    #+#             */
+/*   Updated: 2025/03/11 16:04:37 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	handle_sigquit(int sig)
+int	count_paths(char **path_splited)
 {
-	(void)sig;
-	set_gcode(131);
-	rl_on_new_line();
-	rl_redisplay();
-}
+	int	i;
 
-void	sigquit(void)
-{
-	struct sigaction	action;
-
-	memset(&action, 0, sizeof(struct sigaction));
-	action.sa_handler = handle_sigquit;
-	//action.sa_mask;
-	action.sa_flags = 0;
-	sigaction(SIGQUIT, &action, NULL);
+	i = 0;
+	while (path_splited[i])
+		i++;
+	return (i);
 }

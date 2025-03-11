@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:39:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/03 14:00:18 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:05:33 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	initialize_vars(int *j, int *s_word)
 
 int	get_end(const char *s, size_t i, const char *delimiters)
 {
-	if (is_delimiter(s[i], delimiters))
-		return (i);
-	return (i + 1);
+	while (s[i] && !is_delimiter(s[i], delimiters))
+		i++;
+	return (i);
 }
 
 char	*create_word(const char *str, int start, int end)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/07 18:48:27 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/11 16:07:56 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # include <termios.h>
 # include <unistd.h>
 # include "../libft/libft.h"
-
 
 //extern int	g_code;
 
@@ -71,6 +70,8 @@ char		**split_path(char *path);
 //path/find_ex_path.c
 char		**add_slash(char **path_splited);
 char		*find_no_builtin(char **good_path, char **command);
+//path/utlis_path.c
+int			count_paths(char **path_splited);
 //builtins/cd.c
 int			is_valid_path(char *path, t_env *env_mini);
 //builtins/echo.c
@@ -94,15 +95,28 @@ void		update_env_direct(t_env *env, char *new_path, int flag);
 void		ft_export(t_env *env_mini, char **cmd);
 //builtins/unset.c
 void		ft_unset(t_env *env_mini, char **var);
+//builtins/exit.c
+void		ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info);
 //free/free.c
 void		free_command(t_command *cmd_info);
 void		free_arr(char **tok);
 void		free_node(t_env *head);
 void		free_env_list(t_env *env);
+void		free_cmd_state(t_cmd_state *state);
+void		free_split_data(t_split_data *data);
+//free/free_bis.c
+void		free_arr(char **tok);
 //ft_list/list.c
 t_env		*get_list_env(char **envp, t_env	*env_list);
 //input/get_input.c
-t_command	*get_input(t_env *env_mini);
+t_command	*get_input(t_env *env_mini, int mode);
+t_command	*make_good_cmd(t_command *cmd_info);
+t_command	*make_good_cmd2(t_command *cmd_info);
+void		count_redirections(char *cmd, t_command *cmd_info, int *i);
+//input/utils_input.c
+t_command	*initialize_command(void);
+void		process_tokens(t_command *cmd_info, t_env *env_mini);
+void		count_special_chars(char *cmd, t_command *cmd_info);
 //split/split_bis.c
 char		**ft_split2(const char *s, const char *delimiters);
 //utils_split.c
@@ -115,8 +129,9 @@ char		*create_word(const char *str, int start, int end);
 char		**allocate_array(int word_count);
 void		add_word_to_result(char **res, int j, char *word);
 //check_cmd/check_builtins.c
-int			check_builtins(char **cmd, t_env *env_mini);
-int			check_standard_builtins(char **command, t_env *env_mini);
+int			check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info);
+int			check_standard_builtins(char **command, t_env *env_mini, \
+			t_command *cmd_info);
 int			check_env_builtins(char **command, t_env *env_mini);
 //utils/utils.c
 char		*get_env_value(t_env *env_mini, const char *var);

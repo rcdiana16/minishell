@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
+#    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/05 21:42:52 by diana            ###   ########.fr        #
+#    Updated: 2025/03/11 16:07:19 by cosmos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,26 +15,30 @@ NAME            = minishell
 CC              = gcc
 CFLAGS          = -Wall -Wextra -Werror
 RD				= -lreadline -lhistory
-//LDFLAGS			= -L/opt/homebrew/opt/readline/lib
-//CPPFLAGS		= -I/opt/homebrew/opt/readline/include
+#LDFLAGS			= -L/opt/homebrew/opt/readline/lib
+#CPPFLAGS		= -I/opt/homebrew/opt/readline/include
 RM              = rm -rf
 
 SRCS            = main.c \
 					src/path/path.c \
 					src/input/get_input.c \
+					src/input/utils_input.c \
 					src/split/split_bis.c \
 					src/split/util_split.c \
 					src/split/util2.split.c \
 					src/path/find_ex_path.c \
+					src/path/utils_path.c \
 					src/check_cmd/check_builtins.c \
 					src/ft_list/list.c \
 					src/free/free.c \
+					src/free/free_bis.c \
 					src/builtins/pwd.c \
 					src/builtins/util2_pwd.c \
 					src/builtins/util_pwd.c \
 					src/builtins/cd.c \
 					src/builtins/echo.c \
 					src/builtins/env.c \
+					src/builtins/exit.c \
 					src/utils/util.c \
 					src/utils/util2.c \
 					src/builtins/export.c \

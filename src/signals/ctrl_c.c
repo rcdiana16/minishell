@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_c.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:35:08 by diana             #+#    #+#             */
-/*   Updated: 2025/03/07 17:28:30 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/10 20:21:17 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	sigint(void)
 {
 	struct sigaction	action;
 
+	memset(&action, 0, sizeof(struct sigaction));
 	action.sa_handler = &handle_sigint;
 	sigaction(SIGINT, &action, NULL);
 }
