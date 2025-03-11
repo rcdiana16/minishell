@@ -81,6 +81,8 @@ void	ft_export(t_env *env_mini, char **cmd)
 			write(2, cmd[1], ft_strlen(cmd[1]));
 			write(2, ": not a valid identifier\n", \
 			ft_strlen(": not a valid identifier\n"));
+			//set_gcode(EXIT_FAILURE);
+			//printf("g_code = %d\n", get_gcode());
 			return ;
 		}
 		i++;
