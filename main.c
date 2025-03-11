@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/10 21:02:07 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 13:39:43 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 {
 	int	pid;
 
-	if (check_builtins(cmd_info->tokens, env_list))
+	if (check_builtins(cmd_info->tokens, env_list, cmd_info))
 	{
 		free_command(cmd_info);
 		return (1);
@@ -133,8 +133,9 @@ int	main(int ac, char **av, char **env)
 			if (handle_input(&cmd_info, env_list, 0))
 				continue ;
 		}
-		else{
-			if (handle_input(&cmd_info, env_list,1))
+		else
+		{
+			if (handle_input(&cmd_info, env_list, 1))
 				continue ;
 		}
 		if (execute_command(cmd_info, path_sp_w_slash, env_list))

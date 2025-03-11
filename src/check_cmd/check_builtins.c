@@ -6,13 +6,14 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:38:03 by diana             #+#    #+#             */
-/*   Updated: 2025/03/10 18:09:57 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 13:33:44 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	check_standard_builtins(char **command, t_env *env_mini)
+int	check_standard_builtins(char **command, t_env *env_mini, \
+	t_command *cmd_info)
 {
 	if (!command)
 		return (0);
@@ -25,7 +26,7 @@ int	check_standard_builtins(char **command, t_env *env_mini)
 	else if ((ft_strncmp(command[0], "env", ft_strlen(command[0]) + 1)) == 0)
 		return ((ft_our_env(env_mini)), 1);
 	else if ((ft_strncmp(command[0], "exit", ft_strlen(command[0]) + 1)) == 0)
-		return ((ft_our_exit(env_mini, command)), 1);
+		return ((ft_our_exit(env_mini, command, cmd_info)), 1);
 	else
 		return (0);
 }
@@ -57,11 +58,11 @@ int	check_env_builtins(char **command, t_env *env_mini)
 	return (0);
 }
 
-int	check_builtins(char **cmd, t_env *env_mini)
+int	check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info)
 {
 	if (!cmd)
 		return (0);
-	if (check_standard_builtins(cmd, env_mini))
+	if (check_standard_builtins(cmd, env_mini, cmd_info))
 		return (1);
 	if (check_env_builtins(cmd, env_mini))
 		return (1);

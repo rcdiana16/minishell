@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/11 11:16:07 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 13:38:53 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,14 @@ void		ft_export(t_env *env_mini, char **cmd);
 //builtins/unset.c
 void		ft_unset(t_env *env_mini, char **var);
 //builtins/exit.c
-void		ft_our_exit(t_env *env_mini, char **cmd);
+void		ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info);
 //free/free.c
 void		free_command(t_command *cmd_info);
 void		free_arr(char **tok);
 void		free_node(t_env *head);
 void		free_env_list(t_env *env);
+void		free_cmd_state(t_cmd_state *state);
+void		free_split_data(t_split_data *data);
 //ft_list/list.c
 t_env		*get_list_env(char **envp, t_env	*env_list);
 //input/get_input.c
@@ -123,8 +125,9 @@ char		*create_word(const char *str, int start, int end);
 char		**allocate_array(int word_count);
 void		add_word_to_result(char **res, int j, char *word);
 //check_cmd/check_builtins.c
-int			check_builtins(char **cmd, t_env *env_mini);
-int			check_standard_builtins(char **command, t_env *env_mini);
+int			check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info);
+int			check_standard_builtins(char **command, t_env *env_mini, \
+			t_command *cmd_info);
 int			check_env_builtins(char **command, t_env *env_mini);
 //utils/utils.c
 char		*get_env_value(t_env *env_mini, const char *var);

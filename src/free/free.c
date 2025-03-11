@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 17:24:49 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/08 14:54:12 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/11 13:35:35 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,42 @@ void	free_env_list(t_env *env)
 {
 	t_env	*tmp;
 
-	if (!env)
-		return ;
 	while (env)
 	{
 		tmp = env;
 		env = env->next;
 		free_node(tmp);
 	}
+}
+
+void	free_split_data(t_split_data *data)
+{
+	int	i;
+
+	if (!data)
+		return ;
+	if (data->res)
+	{
+		i = 0;
+		while (data->res[i])
+		{
+			free(data->res[i]);
+			i++;
+		}
+		free(data->res);
+	}
+	if (data->j)
+		free(data->j);
+	if (data->s_word)
+		free(data->s_word);
+	free(data);
+}
+
+void	free_cmd_state(t_cmd_state *state)
+{
+	if (!state)
+		return ;
+	if (state->cmd)
+		free(state->cmd);
+	free(state);
 }
