@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:03:26 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/11 16:34:30 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 19:46:00 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ char	*allocate_env_entry(const char *variable, const char *value)
 	entry = malloc(total_len);
 	if (!entry)
 		return (NULL);
-	strcpy(entry, variable);
+	ft_strlcpy(entry, variable, ft_strlen(variable));
 	entry[var_len] = '=';
-	strcpy(entry + var_len + 1, value);
+	ft_strlcpy(entry + var_len + 1, value, ft_strlen(value));
 	return (entry);
 }
 

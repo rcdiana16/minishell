@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/11 16:27:31 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 19:49:28 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ void	handle_path(char ***path_splitted, char ***path_sp_w_slash, \
 		exit(1);
 	}
 	*path_sp_w_slash = add_slash(*path_splitted);
-	/*int i = 0;
-	while (path_splitted[i])
-	{
-		free(path_splitted[i]);
-		i++;
-	}
-	//free(path_splitted);*/
 	if (!*path_sp_w_slash)
 	{
 		write(2, "Error: add_slash() returned NULL\n", \
@@ -132,7 +125,6 @@ int	main(int ac, char **av, char **env)
 				continue ;
 		}
 		execute_command(cmd_info, path_sp_w_slash, env_list);
-		printf("ok\n");
 		free_command(cmd_info);
 		free_arr(path_sp_w_slash);
 		free_arr(path_splitted);

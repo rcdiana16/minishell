@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_nothing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:22:04 by diana             #+#    #+#             */
-/*   Updated: 2025/03/10 20:22:23 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 19:48:14 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	sigquit(void)
 {
 	struct sigaction	action;
 
-	memset(&action, 0, sizeof(struct sigaction));
+	ft_memset(&action, 0, sizeof(struct sigaction));
 	action.sa_handler = handle_sigquit;
 	//action.sa_mask;
 	action.sa_flags = 0;
