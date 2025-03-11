@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:50:23 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/03 13:58:38 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:07:39 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,23 @@ static void	extract_and_add_word(t_split_data *data, size_t i)
 static void	handle_split_logic(t_split_data *data)
 {
 	size_t	i;
+	size_t	end_index;
 
 	i = 0;
 	while (data->s[i])
 	{
 		if (!is_delimiter(data->s[i], data->delimiters) && *(data->s_word) < 0)
 			*(data->s_word) = i;
-		else if ((is_delimiter(data->s[i], data->delimiters) || \
+		if ((is_delimiter(data->s[i], data->delimiters) || \
 		data->s[i + 1] == '\0') && *(data->s_word) >= 0)
-			extract_and_add_word(data, i);
+		{
+			if (is_delimiter(data->s[i], data->delimiters))
+				end_index = i - 1;
+			else
+				end_index = i;
+			extract_and_add_word(data, end_index);
+			*(data->s_word) = -1;
+		}
 		i++;
 	}
 }
@@ -84,7 +92,7 @@ static char	**setup_split(const char *s, const char *delimiters)
 
 char	**ft_split2(const char *s, const char *delimiters)
 {
-	if (!s | !delimiters)
+	if (!s || !delimiters)
 		return (NULL);
 	return (setup_split(s, delimiters));
 }

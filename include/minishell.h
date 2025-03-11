@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/10 18:10:25 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:16:07 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # include <termios.h>
 # include <unistd.h>
 # include "../libft/libft.h"
-
 
 //extern int	g_code;
 
@@ -105,6 +104,13 @@ void		free_env_list(t_env *env);
 t_env		*get_list_env(char **envp, t_env	*env_list);
 //input/get_input.c
 t_command	*get_input(t_env *env_mini, int mode);
+t_command	*make_good_cmd(t_command *cmd_info);
+t_command	*make_good_cmd2(t_command *cmd_info);
+void		count_redirections(char *cmd, t_command *cmd_info, int *i);
+//input/utils_input.c
+t_command	*initialize_command(void);
+void		process_tokens(t_command *cmd_info, t_env *env_mini);
+void		count_special_chars(char *cmd, t_command *cmd_info);
 //split/split_bis.c
 char		**ft_split2(const char *s, const char *delimiters);
 //utils_split.c
