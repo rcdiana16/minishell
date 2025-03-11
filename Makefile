@@ -6,7 +6,7 @@
 #    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/10 18:10:46 by cosmos           ###   ########.fr        #
+#    Updated: 2025/03/11 16:07:19 by cosmos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,16 @@ RM              = rm -rf
 SRCS            = main.c \
 					src/path/path.c \
 					src/input/get_input.c \
+					src/input/utils_input.c \
 					src/split/split_bis.c \
 					src/split/util_split.c \
 					src/split/util2.split.c \
 					src/path/find_ex_path.c \
+					src/path/utils_path.c \
 					src/check_cmd/check_builtins.c \
 					src/ft_list/list.c \
 					src/free/free.c \
+					src/free/free_bis.c \
 					src/builtins/pwd.c \
 					src/builtins/util2_pwd.c \
 					src/builtins/util_pwd.c \

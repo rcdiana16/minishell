@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 17:24:49 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/11 13:35:35 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 16:06:37 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,6 @@ void	free_command(t_command *cmd_info)
 		free(cmd_info->tokens);
 	}
 	free(cmd_info);
-}
-
-void	free_arr(char **tok)
-{
-	int	i;
-
-	i = 0;
-	if (!tok)
-		return ;
-	while (tok[i])
-	{
-		free(tok[i]);
-		i++;
-	}
-	free(tok);
 }
 
 void	free_node(t_env *node)

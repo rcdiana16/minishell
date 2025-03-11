@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/11 11:14:39 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 14:11:35 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ t_command	*get_input(t_env *env_mini, int mode)
 	if (!line)
 		exit(0);
 	cmd_info = verify_and_split_command(line, env_mini);
+	if (!cmd_info)
+		return (NULL);
 	free(line);
 	return (cmd_info);
 }

@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/11 13:38:53 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 16:07:56 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char		**split_path(char *path);
 //path/find_ex_path.c
 char		**add_slash(char **path_splited);
 char		*find_no_builtin(char **good_path, char **command);
+//path/utlis_path.c
+int			count_paths(char **path_splited);
 //builtins/cd.c
 int			is_valid_path(char *path, t_env *env_mini);
 //builtins/echo.c
@@ -102,6 +104,8 @@ void		free_node(t_env *head);
 void		free_env_list(t_env *env);
 void		free_cmd_state(t_cmd_state *state);
 void		free_split_data(t_split_data *data);
+//free/free_bis.c
+void		free_arr(char **tok);
 //ft_list/list.c
 t_env		*get_list_env(char **envp, t_env	*env_list);
 //input/get_input.c
