@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/13 15:36:26 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 18:10:32 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
-//extern int	g_code;
+extern int	g_code;
 
 typedef struct s_split_data
 {
@@ -145,6 +145,9 @@ char		*replace_env_vars(char *cmd, t_env *env_mini);
 //utils/util2.c
 char		**convert_env_to_array(t_env *env);
 t_env		*initialize_environment(char **env, t_env *env_list);
+//utils/utils3.c
+int			process_exit_code(char *result, int j);
+char		*get_env_value(t_env *env_mini, const char *var);
 //signals/ctrl_c.c
 void		handle_sigint(int sig);
 void		set_signals(void);

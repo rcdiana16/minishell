@@ -6,26 +6,11 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/13 14:24:44 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 18:10:16 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-char	*get_env_value(t_env *env_mini, const char *var)
-{
-	if (var != NULL)
-	{
-		while (env_mini != NULL)
-		{
-			if ((ft_strncmp(env_mini->variable, var, \
-				ft_strlen(var) + 1)) == 0)
-				return (env_mini->value);
-			env_mini = env_mini->next;
-		}
-	}
-	return (NULL);
-}
 
 char	*extract_var_name(t_cmd_state *state)
 {
@@ -55,13 +40,12 @@ char	*extract_var_name(t_cmd_state *state)
 	return (var_name);
 }
 
-int	process_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
+int	process_env_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
 {
 	char	*var_name;
 	char	*var_value;
 	char	*tmp;
 
-	state->i++;
 	var_name = extract_var_name(state);
 	if (var_name)
 	{
@@ -73,6 +57,19 @@ int	process_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
 			result[j++] = *tmp++;
 		free(var_name);
 	}
+	return (j);
+}
+
+int	process_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
+{
+	state->i++;
+	if (state->cmd[state->i] == '?')
+	{
+		j = process_exit_code(result, j);
+		state->i++;
+	}
+	else
+		j = process_env_var(state, result, j, env_mini);
 	return (j);
 }
 

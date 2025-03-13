@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/13 14:40:53 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 17:41:34 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini)
 	if (cmd_info->tokens[1] && cmd_info->tokens[1][0] == '\'' &&
 		cmd_info->tokens[1][ft_strlen(cmd_info->tokens[1]) - 1] == '\'')
 		cmd_info->flag = 1;
-	i = 1;
+	i = 0;
 	if (cmd_info->flag != 0)
 		make_good_cmd(cmd_info);
 	else

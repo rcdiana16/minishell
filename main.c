@@ -6,13 +6,13 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/13 15:26:51 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 18:02:03 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-static int	g_code = 0;
+int	g_code = 0;
 
 void	handle_path(char ***path_splitted, char ***path_sp_w_slash, \
 	t_env *env_mini)

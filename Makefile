@@ -6,7 +6,7 @@
 #    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/13 14:45:25 by cosmos           ###   ########.fr        #
+#    Updated: 2025/03/13 18:08:47 by cosmos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRCS            = main.c \
 					src/signals/ctrl_nothing.c \
 					src/signals/signal_pipex.c \
 					src/execute/execute.c \
+					src/utils/utils3.c \
 
 OBJS            = $(SRCS:.c=.o)
 
