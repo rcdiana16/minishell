@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:03:26 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/11 19:46:00 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/13 14:24:26 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,23 @@ char	**allocate_env_array(int size)
 	if (!env_array)
 		return (NULL);
 	env_array[size] = NULL;
-		return (env_array);
 	return (env_array);
 }
 
-char	**convert_env_to_array(t_env *env)
+char	**convert_env_to_array(t_env *env_mini)
 {
 	int		size;
 	char	**env_array;
 	int		i;
 
-	size = env_list_size(env);
+	size = env_list_size(env_mini);
 	env_array = allocate_env_array(size);
 	if (!env_array)
 		return (NULL);
 	i = 0;
-	while (env)
+	while (env_mini)
 	{
-		env_array[i] = allocate_env_entry(env->variable, env->value);
+		env_array[i] = allocate_env_entry(env_mini->variable, env_mini->value);
 		if (!env_array[i])
 		{
 			while (i-- > 0)
@@ -82,9 +81,10 @@ char	**convert_env_to_array(t_env *env)
 			free(env_array);
 			return (NULL);
 		}
-		env = env->next;
+		env_mini = env_mini->next;
 		i++;
 	}
 	env_array[i] = NULL;
+	free_env_list(env_mini);
 	return (env_array);
 }

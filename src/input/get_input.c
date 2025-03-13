@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/11 14:11:35 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 14:40:25 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,20 @@ void	count_redirections(char *cmd, t_command *cmd_info, int *i)
 
 t_command	*make_good_cmd(t_command *cmd_info)
 {
-	int	i;
-	int	j;
-	int	k;
+	int		i;
+	char	*tmp;
 
 	i = 1;
 	while (cmd_info->tokens[i])
 	{
-		j = 0;
-		k = 0;
-		while (cmd_info->tokens[i][j])
+		remove_single_quotes(cmd_info->tokens[i]);
+		tmp = realloc(cmd_info->tokens[i], ft_strlen(cmd_info->tokens[i]) + 1);
+		if (!tmp)
 		{
-			if (cmd_info->tokens[i][j] != '\'')
-			{
-				cmd_info->tokens[i][k++] = cmd_info->tokens[i][j];
-			}
-			j++;
+			perror("realloc failed");
+			return (cmd_info);
 		}
-		cmd_info->tokens[i][k] = '\0';
-		cmd_info->tokens[i] = realloc(cmd_info->tokens[i], k + 1);
+		cmd_info->tokens[i] = tmp;
 		i++;
 	}
 	return (cmd_info);
@@ -64,25 +59,20 @@ t_command	*make_good_cmd(t_command *cmd_info)
 
 t_command	*make_good_cmd2(t_command *cmd_info)
 {
-	int	i;
-	int	j;
-	int	k;
+	int		i;
+	char	*tmp;
 
 	i = 1;
 	while (cmd_info->tokens[i])
 	{
-		j = 0;
-		k = 0;
-		while (cmd_info->tokens[i][j])
+		clean_quotes(cmd_info->tokens[i]);
+		tmp = realloc(cmd_info->tokens[i], ft_strlen(cmd_info->tokens[i]) + 1);
+		if (!tmp)
 		{
-			if (cmd_info->tokens[i][j] != '\"')
-			{
-				cmd_info->tokens[i][k++] = cmd_info->tokens[i][j];
-			}
-			j++;
+			perror("realloc failed");
+			return (cmd_info);
 		}
-		cmd_info->tokens[i][k] = '\0';
-		cmd_info->tokens[i] = realloc(cmd_info->tokens[i], k + 1);
+		cmd_info->tokens[i] = tmp;
 		i++;
 	}
 	return (cmd_info);

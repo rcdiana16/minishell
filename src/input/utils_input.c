@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/11 11:14:45 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 14:40:53 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ t_command	*initialize_command(void)
 
 void	process_tokens(t_command *cmd_info, t_env *env_mini)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	if (cmd_info->tokens[1] && cmd_info->tokens[1][0] == '\'' &&
 		cmd_info->tokens[1][ft_strlen(cmd_info->tokens[1]) - 1] == '\'')
@@ -40,8 +41,12 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini)
 	{
 		while (cmd_info->tokens[i])
 		{
-			cmd_info->tokens[i] = \
-			replace_env_vars(cmd_info->tokens[i], env_mini);
+			tmp = replace_env_vars(cmd_info->tokens[i], env_mini);
+			if (tmp)
+			{
+				free(cmd_info->tokens[i]);
+				cmd_info->tokens[i] = tmp;
+			}
 			i++;
 		}
 		make_good_cmd2(cmd_info);
@@ -61,4 +66,36 @@ void	count_special_chars(char *cmd, t_command *cmd_info)
 			count_redirections(cmd, cmd_info, &i);
 		i++;
 	}
+}
+
+void	clean_quotes(char *token)
+{
+	int	j;
+	int	k;
+
+	j = 0;
+	k = 0;
+	while (token[j])
+	{
+		if (token[j] != '\"')
+			token[k++] = token[j];
+		j++;
+	}
+	token[k] = '\0';
+}
+
+void	remove_single_quotes(char *token)
+{
+	int	j;
+	int	k;
+
+	j = 0;
+	k = 0;
+	while (token[j])
+	{
+		if (token[j] != '\'')
+			token[k++] = token[j];
+		j++;
+	}
+	token[k] = '\0';
 }

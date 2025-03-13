@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/04 17:07:19 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/13 14:24:44 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	process_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
 {
 	char	*var_name;
 	char	*var_value;
+	char	*tmp;
 
 	state->i++;
 	var_name = extract_var_name(state);
@@ -67,10 +68,9 @@ int	process_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
 		var_value = get_env_value(env_mini, var_name);
 		if (!var_value)
 			var_value = "";
-		while (*var_value)
-		{
-			result[j++] = *var_value++;
-		}
+		tmp = var_value;
+		while (*tmp)
+			result[j++] = *tmp++;
 		free(var_name);
 	}
 	return (j);

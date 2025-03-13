@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:06:53 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/11 16:07:42 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 15:36:16 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,12 @@ void	free_arr(char **tok)
 		i++;
 	}
 	free(tok);
+}
+
+void	free_all(t_command *cmd_info, char **path_sp_w_slash, \
+		t_env *env_list)
+{
+	free_arr(path_sp_w_slash);
+	free_env_list(env_list);
+	free_command(cmd_info);
 }

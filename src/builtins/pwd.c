@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:14:50 by diana             #+#    #+#             */
-/*   Updated: 2025/03/10 17:55:13 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 13:54:34 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	handle_flag_1(t_env *env, char *new_path)
 {
-	if (!env->value)
+	if (!env || !new_path)
 		return ;
+	if (env->value)
+		free(env->value);
 	env->value = ft_strdup(new_path);
 	if (!env->value)
 		return ;
@@ -36,8 +38,10 @@ void	handle_flag_0(t_env *env, char *new_path)
 
 void	handle_flag_3(t_env *env, char *new_path)
 {
-	if (!new_path)
+	if (!env || !new_path)
 		return ;
+	if (env->value)
+		free(env->value);
 	env->value = ft_strdup(new_path);
 }
 
