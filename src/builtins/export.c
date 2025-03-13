@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/11 11:04:52 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 14:25:15 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ void	ft_export(t_env *env_mini, char **cmd)
 			write(2, cmd[1], ft_strlen(cmd[1]));
 			write(2, ": not a valid identifier\n", \
 			ft_strlen(": not a valid identifier\n"));
-			//set_gcode(EXIT_FAILURE);
-			//printf("g_code = %d\n", get_gcode());
+			set_gcode(EXIT_FAILURE);
 			return ;
 		}
 		i++;

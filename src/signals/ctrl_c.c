@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_c.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:35:08 by diana             #+#    #+#             */
-/*   Updated: 2025/03/10 20:21:17 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/11 19:47:58 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_sigint(int sig)
 	set_gcode(130);
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	//rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -26,7 +26,7 @@ void	sigint(void)
 {
 	struct sigaction	action;
 
-	memset(&action, 0, sizeof(struct sigaction));
+	ft_memset(&action, 0, sizeof(struct sigaction));
 	action.sa_handler = &handle_sigint;
 	sigaction(SIGINT, &action, NULL);
 }

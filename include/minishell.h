@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/11 16:07:56 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/13 15:36:26 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ void		ft_export(t_env *env_mini, char **cmd);
 //builtins/unset.c
 void		ft_unset(t_env *env_mini, char **var);
 //builtins/exit.c
-void		ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info);
+void		ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, \
+			char **path);
 //free/free.c
 void		free_command(t_command *cmd_info);
 void		free_arr(char **tok);
@@ -106,6 +107,8 @@ void		free_cmd_state(t_cmd_state *state);
 void		free_split_data(t_split_data *data);
 //free/free_bis.c
 void		free_arr(char **tok);
+void		free_all(t_command *cmd_info, char **path_sp_w_slash, \
+			t_env *env_list);
 //ft_list/list.c
 t_env		*get_list_env(char **envp, t_env	*env_list);
 //input/get_input.c
@@ -117,6 +120,8 @@ void		count_redirections(char *cmd, t_command *cmd_info, int *i);
 t_command	*initialize_command(void);
 void		process_tokens(t_command *cmd_info, t_env *env_mini);
 void		count_special_chars(char *cmd, t_command *cmd_info);
+void		clean_quotes(char *token);
+void		remove_single_quotes(char *token);
 //split/split_bis.c
 char		**ft_split2(const char *s, const char *delimiters);
 //utils_split.c
@@ -129,9 +134,10 @@ char		*create_word(const char *str, int start, int end);
 char		**allocate_array(int word_count);
 void		add_word_to_result(char **res, int j, char *word);
 //check_cmd/check_builtins.c
-int			check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info);
+int			check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info, \
+			char **path);
 int			check_standard_builtins(char **command, t_env *env_mini, \
-			t_command *cmd_info);
+			t_command **cmd_info, char **path);
 int			check_env_builtins(char **command, t_env *env_mini);
 //utils/utils.c
 char		*get_env_value(t_env *env_mini, const char *var);
@@ -155,5 +161,10 @@ void		sigquit_update(void);
 //main.c??
 int			get_gcode(void);
 void		set_gcode(int val);
+//execute/execute.c
+int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
+			t_env *env_list);
+int			execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
+			t_env *env_list);
 
 #endif
