@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/13 18:28:34 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/14 13:47:30 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 		return (1);
 	pid = fork();
 	if (pid == 0)
-		execute_child_process(cmd_info, path_sp_w_slash, env_list);
-	else
 	{
-		waitpid(pid, NULL, 0);
+		signal(SIGINT, SIG_DFL);
+		execute_child_process(cmd_info, path_sp_w_slash, env_list);
 	}
+	else
+		waitpid(pid, NULL, 0);
 	return (0);
 }

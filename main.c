@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/14 12:24:01 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/14 13:48:29 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	main(int ac, char **av, char **env)
 		return (1);
 	env_list = initialize_environment(env, env_list);
 	disable_echoctl();
-	set_signals();
 	while (1)
 	{
+		set_signals();
 		handle_path(&path_splitted, &path_sp_w_slash, env_list);
 		if (isatty(STDIN_FILENO))
 		{
@@ -44,7 +44,9 @@ int	main(int ac, char **av, char **env)
 			if (handle_input(&cmd_info, env_list, 1))
 				continue ;
 		}
+		signal(SIGINT, SIG_IGN);
 		execute_command(cmd_info, path_sp_w_slash, env_list);
+		set_signals();
 		if (cmd_info)
 			free_command(cmd_info);
 	}
