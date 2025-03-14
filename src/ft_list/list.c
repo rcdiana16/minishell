@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 21:08:20 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/11 13:37:48 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/14 11:47:46 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,9 @@ t_env	*get_list_env(char **envp, t_env	*env_list)
 		i++;
 	}
 	return (env_list);
+}
+
+t_env	*initialize_environment(char **env, t_env *env_list)
+{
+	return (get_list_env(env, env_list));
 }

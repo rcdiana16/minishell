@@ -6,26 +6,11 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/13 14:25:15 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/14 10:50:30 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	free_tokens(char **tokens)
-{
-	int	i;
-
-	i = 0;
-	if (!tokens)
-		return ;
-	while (tokens[i])
-	{
-		free(tokens[i]);
-		i++;
-	}
-	free(tokens);
-}
 
 int	update_existing_variable(t_env *env_mini, char **tokens)
 {
@@ -88,5 +73,5 @@ void	ft_export(t_env *env_mini, char **cmd)
 	}
 	if (!update_existing_variable(env_mini, tokens))
 		add_new_variable(env_mini, tokens);
-	free_tokens(tokens);
+	free_arr(tokens);
 }

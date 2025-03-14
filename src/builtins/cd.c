@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/03/10 17:48:15 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/14 09:22:53 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	print_cd_error(char *path)
 		write(2, ": No such file or directory\n", 29);
 	}
 	set_gcode(EXIT_FAILURE);
-	return (0);
+	return (1);
 }
 
 void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)

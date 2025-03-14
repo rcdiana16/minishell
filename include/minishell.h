@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/13 18:10:32 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/14 12:24:29 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,110 +64,99 @@ typedef struct s_cmd_state
 	int		i;
 }	t_cmd_state;
 
-//path/path.c
-char		**get_path(t_env *env_mini);
-char		**split_path(char *path);
-//path/find_ex_path.c
-char		**add_slash(char **path_splited);
-char		*find_no_builtin(char **good_path, char **command);
-//path/utlis_path.c
-int			count_paths(char **path_splited);
-//builtins/cd.c
-int			is_valid_path(char *path, t_env *env_mini);
-//builtins/echo.c
-void		ft_our_echo(char **cmd);
-//builtins/env.c
-void		ft_our_env(t_env *env_mini);
-//builtins/pwd.c
-char		*get_env_value(t_env *env, const char *var);
-
+//----------------------------builtins---------------------------------
+//----cd_utils.c----
 void		update_env(t_env *env, char *new_path, \
 			char *env_to_update, int flag);
-//builtins/util_pwd.c
-void		ft_our_pwd(t_env *env);
-char		*ft_find_dir(char *path);
-char		*ft_find_gd_dir(char *path);
-//builtins/util2_pwd.c
-void		update_env_last_dir(t_env *env, char *new_path);
-void		update_env_concat(t_env *env, char *current_pwd, char *new_path);
-void		update_env_direct(t_env *env, char *new_path, int flag);
-//builtins/export.c
-void		ft_export(t_env *env_mini, char **cmd);
-//builtins/unset.c
-void		ft_unset(t_env *env_mini, char **var);
-//builtins/exit.c
+//----cd.c---
+int			is_valid_path(char *path, t_env *env_mini);
+//----echo.c----
+void		ft_our_echo(char **cmd);
+//----env.c----
+void		ft_our_env(t_env *env_mini);
+//----exit.c----
 void		ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, \
 			char **path);
-//free/free.c
-void		free_command(t_command *cmd_info);
-void		free_arr(char **tok);
-void		free_node(t_env *head);
-void		free_env_list(t_env *env);
-void		free_cmd_state(t_cmd_state *state);
-void		free_split_data(t_split_data *data);
-//free/free_bis.c
-void		free_arr(char **tok);
-void		free_all(t_command *cmd_info, char **path_sp_w_slash, \
-			t_env *env_list);
-//ft_list/list.c
-t_env		*get_list_env(char **envp, t_env	*env_list);
-//input/get_input.c
-t_command	*get_input(t_env *env_mini, int mode);
-t_command	*make_good_cmd(t_command *cmd_info);
-t_command	*make_good_cmd2(t_command *cmd_info);
-void		count_redirections(char *cmd, t_command *cmd_info, int *i);
-//input/utils_input.c
-t_command	*initialize_command(void);
-void		process_tokens(t_command *cmd_info, t_env *env_mini);
-void		count_special_chars(char *cmd, t_command *cmd_info);
-void		clean_quotes(char *token);
-void		remove_single_quotes(char *token);
-//split/split_bis.c
-char		**ft_split2(const char *s, const char *delimiters);
-//utils_split.c
-bool		is_delimiter(char c, const char *delimiters);
-void		initialize_vars(int *j, int *s_word);
-int			get_end(const char *s, size_t i, const char *delimiters);
-void		free_array(char **strs, int count);
-char		*create_word(const char *str, int start, int end);
-//utils2_split.c
-char		**allocate_array(int word_count);
-void		add_word_to_result(char **res, int j, char *word);
-//check_cmd/check_builtins.c
+//----export.c----
+void		ft_export(t_env *env_mini, char **cmd);
+//----pwd.c----
+void		ft_our_pwd(t_env *env_mini);
+//----unset.c----
+void		ft_unset(t_env *env_mini, char **cmd);
+//----------------------------check_cmd----------------------------
+//----check_builtins.c----
 int			check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info, \
 			char **path);
-int			check_standard_builtins(char **command, t_env *env_mini, \
-			t_command **cmd_info, char **path);
-int			check_env_builtins(char **command, t_env *env_mini);
-//utils/utils.c
-char		*get_env_value(t_env *env_mini, const char *var);
-char		*replace_env_vars(char *cmd, t_env *env_mini);
-//utils/util2.c
-char		**convert_env_to_array(t_env *env);
-t_env		*initialize_environment(char **env, t_env *env_list);
-//utils/utils3.c
-int			process_exit_code(char *result, int j);
-char		*get_env_value(t_env *env_mini, const char *var);
-//signals/ctrl_c.c
-void		handle_sigint(int sig);
-void		set_signals(void);
-void		sigint(void);
-void		disable_echoctl(void);
-//signals/ctrl_nothing.c
-void		sigquit(void);
-void		handle_sigquit(int sig);
-//signals/signal_pipex.c
-void		backslash_n(int v);
-void		sigint_update(void);
-void		nothing(int v);
-void		sigquit_update(void);
-//main.c??
-int			get_gcode(void);
-void		set_gcode(int val);
-//execute/execute.c
+//----------------------------execute----------------------------
+//----execute.c----
 int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
-int			execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
+//----execute_utils.c----
+char		*find_no_builtin(char **good_path, char **command);
+//----execute_utils_env.c
+char		**convert_env_to_array(t_env *env_mini);
+//----------------------------free----------------------------
+//----free.c---
+void		free_command(t_command *cmd_info);
+void		free_node(t_env *node);
+void		free_env_list(t_env *env);
+void		free_split_data(t_split_data *data);
+void		free_cmd_state(t_cmd_state *state);
+//----free_bis.c----
+void		free_all(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
+void		free_arr(char **tok);
+//----------------------------ft_list----------------------------
+//----list.c----
+t_env		*initialize_environment(char **env, t_env *env_list);
+//----------------------------input----------------------------
+//----get_input.c----
+t_command	*get_input(t_env *env_mini, int mode);
+t_command	*make_good_cmd2(t_command *cmd_info);
+t_command	*make_good_cmd(t_command *cmd_info);
+void		count_redirections(char *cmd, t_command *cmd_info, int *i);
+//----handle_input.c----
+int			handle_input(t_command **cmd_info, t_env *env_mini, int mode);
+//----rep_env_vars.c----
+char		*replace_env_vars(char *cmd, t_env *env_mini);
+//----utils_input.c----
+void		clean_quotes(char *token);
+void		remove_single_quotes(char *token);
+t_command	*initialize_command(void);
+void		count_special_chars(char *cmd, t_command *cmd_info);
+void		process_tokens(t_command *cmd_info, t_env *env_mini);
+//----------------------------path----------------------------
+//----path.c---
+void		handle_path(char ***path_splitted, char ***path_sp_w_slash, \
+			t_env *env_mini);
+//---path_utils.c----
+char		**add_slash(char **path_splited);
+int			count_paths(char **path_splited);
+//----------------------------signals----------------------------
+//----ctrl_c.c----
+void		disable_echoctl(void);
+void		set_signals(void);
+void		sigint(void);
+void		handle_sigint(int sig);
+//----ctrl_nothing.c----
+void		sigquit(void);
+void		handle_sigquit(int sig);
+//----------------------------split----------------------------
+//----split_bis.c
+char		**ft_split2(const char *s, const char *delimiters);
+//----utils_split.c----
+char		*create_word(const char *str, int start, int end);
+int			get_end(const char *s, size_t i, const char *delimiters);
+void		initialize_vars(int *j, int *s_word);
+bool		is_delimiter(char c, const char *delimiters);
+void		free_array(char **strs, int count);
+//---utils2_split.c
+void		add_word_to_result(char **res, int j, char *word);
+char		**allocate_array(int word_count);
+//----------------------------utils----------------------------
+//----utils.c----
+char		*get_env_value(t_env *env_mini, const char *var);
+int			process_exit_code(char *result, int j);
+void		set_gcode(int val);
 
 #endif

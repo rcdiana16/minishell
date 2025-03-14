@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util2.c                                            :+:      :+:    :+:   */
+/*   execute_utils_env.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 10:03:26 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/13 14:24:26 by cosmos           ###   ########.fr       */
+/*   Created: 2025/03/14 11:45:08 by cosmos            #+#    #+#             */
+/*   Updated: 2025/03/14 11:45:25 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-t_env	*initialize_environment(char **env, t_env *env_list)
-{
-	return (get_list_env(env, env_list));
-}
 
 int	env_list_size(t_env *env)
 {
