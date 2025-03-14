@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_input.c                                     :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 11:21:28 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/14 20:59:17 by cosmos           ###   ########.fr       */
+/*   Created: 2025/03/14 23:03:53 by cosmos            #+#    #+#             */
+/*   Updated: 2025/03/14 23:04:13 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	handle_input(t_command **cmd_info, t_env *env_mini, int mode)
+void	init_new_variable(t_env **new_var, char **tokens)
 {
-	*cmd_info = get_input(env_mini, mode);
-	if (!*cmd_info)
-	{
-		write(1, "exit\n", 5);
-		return (-1);
-	}
-	if (!(*cmd_info)->tokens || !(*cmd_info)->tokens[0])
-	{
-		free_command(*cmd_info);
-		*cmd_info = NULL;
-		return (1);
-	}
-	return (0);
+	*new_var = malloc(sizeof(t_env));
+	if (!*new_var)
+		return ;
+	(*new_var)->variable = ft_strdup(tokens[0]);
+	if (tokens[1])
+		(*new_var)->value = ft_strdup(tokens[1]);
+	else
+		(*new_var)->value = ft_strdup("");
+	free_arr(tokens);
 }

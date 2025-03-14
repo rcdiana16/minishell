@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/14 12:24:29 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/14 23:13:35 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void		ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, \
 			char **path);
 //----export.c----
 void		ft_export(t_env *env_mini, char **cmd);
+//----export_utils.c----
+void		init_new_variable(t_env **new_var, char **tokens);
 //----pwd.c----
 void		ft_our_pwd(t_env *env_mini);
 //----unset.c----
@@ -125,6 +127,9 @@ void		remove_single_quotes(char *token);
 t_command	*initialize_command(void);
 void		count_special_chars(char *cmd, t_command *cmd_info);
 void		process_tokens(t_command *cmd_info, t_env *env_mini);
+//----quote.c----
+int			has_enclosed_single_quotes(t_command *cmd_info);
+void		delete_quotes(char *token);
 //----------------------------path----------------------------
 //----path.c---
 void		handle_path(char ***path_splitted, char ***path_sp_w_slash, \

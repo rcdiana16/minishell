@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/13 17:41:34 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/14 20:50:19 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini)
 	int		i;
 	char	*tmp;
 
-	if (cmd_info->tokens[1] && cmd_info->tokens[1][0] == '\'' &&
-		cmd_info->tokens[1][ft_strlen(cmd_info->tokens[1]) - 1] == '\'')
+	if (!cmd_info->tokens || !cmd_info->tokens[0])
+		return ;
+	if (has_enclosed_single_quotes(cmd_info))
 		cmd_info->flag = 1;
 	i = 0;
 	if (cmd_info->flag != 0)
@@ -66,36 +67,4 @@ void	count_special_chars(char *cmd, t_command *cmd_info)
 			count_redirections(cmd, cmd_info, &i);
 		i++;
 	}
-}
-
-void	clean_quotes(char *token)
-{
-	int	j;
-	int	k;
-
-	j = 0;
-	k = 0;
-	while (token[j])
-	{
-		if (token[j] != '\"')
-			token[k++] = token[j];
-		j++;
-	}
-	token[k] = '\0';
-}
-
-void	remove_single_quotes(char *token)
-{
-	int	j;
-	int	k;
-
-	j = 0;
-	k = 0;
-	while (token[j])
-	{
-		if (token[j] != '\'')
-			token[k++] = token[j];
-		j++;
-	}
-	token[k] = '\0';
 }

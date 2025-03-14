@@ -6,7 +6,7 @@
 #    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/14 12:20:59 by cosmos           ###   ########.fr        #
+#    Updated: 2025/03/14 23:04:36 by cosmos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS            = main.c \
 					src/input/utils_input.c \
 					src/input/rep_env_var.c \
 					src/input/handle_input.c \
+					src/input/quote.c \
 					src/split/split_bis.c \
 					src/split/util_split.c \
 					src/split/util2.split.c \
@@ -43,6 +44,7 @@ SRCS            = main.c \
 					src/builtins/env.c \
 					src/builtins/exit.c \
 					src/builtins/export.c \
+					src/builtins/export_utils.c \
 					src/builtins/unset.c \
 					src/signals/ctrl_c.c \
 					src/signals/ctrl_nothing.c \

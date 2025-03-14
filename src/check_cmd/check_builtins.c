@@ -6,7 +6,7 @@
 /*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:38:03 by diana             #+#    #+#             */
-/*   Updated: 2025/03/13 15:33:39 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/14 22:28:59 by cosmos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	check_env_builtins(char **command, t_env *env_mini)
 			set_gcode(EXIT_SUCCESS);
 			return (ft_our_env(env_mini), 1);
 		}
-		if (command[2] == NULL)
+		else
 		{
 			ft_export(env_mini, command);
 			set_gcode(EXIT_SUCCESS);
@@ -66,7 +66,7 @@ int	check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info, \
 		return (0);
 	if (check_standard_builtins(cmd, env_mini, &cmd_info, path))
 		return (1);
-	if (check_env_builtins(cmd, env_mini))
+	if (check_env_builtins(cmd_info->tokens, env_mini))
 		return (1);
 	return (0);
 }
