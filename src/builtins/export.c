@@ -78,7 +78,10 @@ void	join_cmd_values(char **cmd, char **value)
 	else
 	{
 		if (cmd[2])
-			*value = ft_strdup(cmd[2]);
+    {
+      free(*value);
+      *value = ft_strdup(cmd[1]);
+    }
 	}
 }
 
@@ -101,30 +104,42 @@ void	add_new_variable(t_env *env_mini, char **cmd)
 	env_mini->next = new_var;
 }
 
+int is_valid_variable_name(char *name)
+{
+    int i;
+
+    if (name == NULL || name[0] == '\0')
+        return (0);
+    if (!(ft_isalpha(name[0]) || name[0] == '_'))
+        return (0);
+    i = 1;
+    while (name[i])
+    {
+        if (!(ft_isalpha(name[i]) || ft_isdigit(name[i]) || name[i] == '_'))
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 void	ft_export(t_env *env_mini, char **cmd)
 {
 	char	**tokens;
-	int		i;
 
 	if (!cmd || !cmd[1])
     return ;
   tokens = ft_split2(cmd[1], "=");
 	if (!tokens || !tokens[0])
 		return ;
-  i = 0;
-	while (tokens[0][i])
-	{
-		if (ft_isalpha(tokens[0][i]) != 1)
-		{
-			write(2, "export: ", 8);
-			write(2, tokens[0], ft_strlen(tokens[0]));
-			write(2, ": not a valid identifier\n", 25);
-			set_gcode(EXIT_FAILURE);
-			free_arr(tokens);
-			return ;
-		}
-		i++;
-	}
+	if (!is_valid_variable_name(tokens[0]))
+    {
+        write(2, "export: ", 8);
+        write(2, tokens[0], ft_strlen(tokens[0]));
+        write(2, ": not a valid identifier\n", 25);
+        set_gcode(EXIT_FAILURE);
+        free_arr(tokens);
+        return;
+    }
 	if (!update_existing_variable(env_mini, cmd))
 		add_new_variable(env_mini, cmd);
 	free_arr(tokens);
