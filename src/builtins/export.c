@@ -64,7 +64,7 @@ void	join_cmd_values(char **cmd, char **value)
 	char	*temp;
 
 	i = 2;
-	if ((*value)[0] == '"' || (*value)[0] == '\'')
+	if ((*value)[0] == '\"' || (*value)[0] == '\'')
 	{
 		while (cmd[i])
 		{
@@ -77,8 +77,8 @@ void	join_cmd_values(char **cmd, char **value)
 	}
 	else
 	{
-		if (cmd[1])
-			*value = ft_strdup(ft_strrchr(cmd[1], '=') + 1);
+		if (cmd[2])
+			*value = ft_strdup(cmd[2]);
 	}
 }
 
@@ -107,11 +107,11 @@ void	ft_export(t_env *env_mini, char **cmd)
 	int		i;
 
 	if (!cmd || !cmd[1])
-		return ;
-	tokens = ft_split2(cmd[1], "=");
+    return ;
+  tokens = ft_split2(cmd[1], "=");
 	if (!tokens || !tokens[0])
 		return ;
-	i = 0;
+  i = 0;
 	while (tokens[0][i])
 	{
 		if (ft_isalpha(tokens[0][i]) != 1)
