@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/15 11:53:54 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/15 19:21:14 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,18 @@ void		ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, \
 			char **path);
 //----export.c----
 void		ft_export(t_env *env_mini, char **cmd);
+void		join_quoted_values(char **cmd, char **value);
+void		assign_value(char **cmd, char **value);
 //----export_utils.c----
 void		init_new_variable(t_env **new_var, char **tokens);
+int			is_valid_variable_name(char *name);
+char		**check_split(char **cmd);
+char		**get_tokens(char **cmd);
+void		join_cmd_values(char **cmd, char **value);
+//----export_utils_update.c----
+int			handle_existing_variable(t_env *env_mini, char **cmd, \
+			char **tokens);
+int			update_existing_variable(t_env *env_mini, char **cmd);
 //----pwd.c----
 void		ft_our_pwd(t_env *env_mini);
 //----unset.c----
@@ -118,6 +128,9 @@ t_env		*initialize_environment(char **env, t_env *env_list);
 t_command	*get_input(t_env *env_mini, int mode);
 t_command	*make_good_cmd2(t_command *cmd_info);
 t_command	*make_good_cmd(t_command *cmd_info);
+void		count_redirections(char *cmd, t_command *cmd_info, int *i);
+//----get_input_utils.c----
+char		**ft_strjoin_arr(char *first, char **arr);
 void		count_redirections(char *cmd, t_command *cmd_info, int *i);
 //----handle_input.c----
 int			handle_input(t_command **cmd_info, t_env *env_mini, int mode);

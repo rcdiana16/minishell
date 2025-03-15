@@ -3,95 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/14 23:48:49 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/15 19:18:29 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	handle_existing_variable(t_env *env_mini, char **cmd, char **tokens)
+void	join_quoted_values(char **cmd, char **value)
 {
-	char	*value;
-	char	*temp;
 	int		i;
+	char	*temp;
 
-	free(env_mini->value);
-	if (tokens[1])
-		value = ft_strdup(tokens[1]);
-	else
-		value = ft_strdup("");
-	free_arr(tokens);
 	i = 2;
 	while (cmd[i])
 	{
-		temp = ft_strjoin(value, " ");
-		free(value);
-		value = ft_strjoin(temp, cmd[i]);
+		temp = ft_strjoin(*value, " ");
+		free(*value);
+		*value = ft_strjoin(temp, cmd[i]);
 		free(temp);
 		i++;
 	}
-	delete_quotes(value);
-	env_mini->value = value;
-	return (1);
 }
 
-int	update_existing_variable(t_env *env_mini, char **cmd)
+void	assign_value(char **cmd, char **value)
 {
-	char	**tokens;
-
-	if (!cmd || !cmd[1])
-		return (0);
-	tokens = ft_split2(cmd[1], "=");
-	if (!tokens || !tokens[0])
-		return (0);
-	while (env_mini)
-	{
-		if (ft_strncmp(tokens[0], env_mini->variable, \
-			ft_strlen(tokens[0])) == 0)
-			return (handle_existing_variable(env_mini, cmd, tokens));
-		env_mini = env_mini->next;
-	}
-	free_arr(tokens);
-	return (0);
-}
-
-void	join_cmd_values(char **cmd, char **value)
-{
-	int		i;
-	char	*temp;
-
-	i = 2;
-	if ((*value)[0] == '\"' || (*value)[0] == '\'')
-	{
-		while (cmd[i])
-		{
-			temp = ft_strjoin(*value, " ");
-			free(*value);
-			*value = ft_strjoin(temp, cmd[i]);
-			free(temp);
-			i++;
-		}
-	}
+	free(*value);
+	if (cmd[1][ft_strlen(cmd[1]) - 1] == '=')
+		*value = ft_strdup(cmd[2]);
 	else
-	{
-		if (cmd[2])
-    {
-      free(*value);
-      *value = ft_strdup(cmd[1]);
-    }
-	}
+		*value = ft_strdup(ft_strrchr(cmd[1], '=') + 1);
 }
 
 void	add_new_variable(t_env *env_mini, char **cmd)
 {
 	t_env	*new_var;
 	char	**tokens;
+	int		i;
 
 	if (!cmd || !cmd[1])
 		return ;
+	i = 0;
+	while (cmd[i])
+		i++;
+	i--;
+	if (i == 1)
+		tokens = ft_split2(cmd[1], "=");
+	else
+		tokens = ft_split2(cmd[2], " ");
 	tokens = ft_split2(cmd[1], "=");
 	if (!tokens || !tokens[0])
 		return ;
@@ -104,22 +65,19 @@ void	add_new_variable(t_env *env_mini, char **cmd)
 	env_mini->next = new_var;
 }
 
-int is_valid_variable_name(char *name)
+static int	is_invalid_identifier(char **tokens)
 {
-    int i;
-
-    if (name == NULL || name[0] == '\0')
-        return (0);
-    if (!(ft_isalpha(name[0]) || name[0] == '_'))
-        return (0);
-    i = 1;
-    while (name[i])
-    {
-        if (!(ft_isalpha(name[i]) || ft_isdigit(name[i]) || name[i] == '_'))
-            return (0);
-        i++;
-    }
-    return (1);
+	if (!tokens || !tokens[0] || !is_valid_variable_name(tokens[0]))
+	{
+		write(2, "export: ", 8);
+		if (tokens && tokens[0])
+			write(2, tokens[0], ft_strlen(tokens[0]));
+		write(2, ": not a valid identifier\n", 25);
+		set_gcode(EXIT_FAILURE);
+		free_arr(tokens);
+		return (1);
+	}
+	return (0);
 }
 
 void	ft_export(t_env *env_mini, char **cmd)
@@ -127,19 +85,10 @@ void	ft_export(t_env *env_mini, char **cmd)
 	char	**tokens;
 
 	if (!cmd || !cmd[1])
-    return ;
-  tokens = ft_split2(cmd[1], "=");
-	if (!tokens || !tokens[0])
 		return ;
-	if (!is_valid_variable_name(tokens[0]))
-    {
-        write(2, "export: ", 8);
-        write(2, tokens[0], ft_strlen(tokens[0]));
-        write(2, ": not a valid identifier\n", 25);
-        set_gcode(EXIT_FAILURE);
-        free_arr(tokens);
-        return;
-    }
+	tokens = get_tokens(cmd);
+	if (is_invalid_identifier(tokens))
+		return ;
 	if (!update_existing_variable(env_mini, cmd))
 		add_new_variable(env_mini, cmd);
 	free_arr(tokens);

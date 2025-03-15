@@ -6,7 +6,7 @@
 #    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/15 11:12:04 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/03/15 19:14:30 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS            = main.c \
 					src/path/path.c \
 					src/path/path_utils.c \
 					src/input/get_input.c \
+					src/input/get_input_utils.c \
 					src/input/utils_input.c \
 					src/input/rep_env_var.c \
 					src/input/handle_input.c \
@@ -44,6 +45,7 @@ SRCS            = main.c \
 					src/builtins/exit.c \
 					src/builtins/export.c \
 					src/builtins/export_utils.c \
+					src/builtins/export_utils_update.c \
 					src/builtins/unset.c \
 					src/signals/ctrl_c.c \
 					src/signals/ctrl_nothing.c \
