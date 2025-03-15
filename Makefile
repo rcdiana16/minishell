@@ -6,12 +6,11 @@
 #    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/15 11:07:45 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/03/15 11:12:04 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME            = minishell
-
 CC              = gcc
 CFLAGS          = -Wall -Wextra -Werror
 RD				= -lreadline -lhistory
@@ -57,12 +56,12 @@ LIBFT_PATH      = ./libft
 LIBFT           = $(LIBFT_PATH)/libft.a
 
 %.o: %.c
-				$(CC) $(CFLAGS)  -c $< -o $@
+				$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 all:            $(NAME)
 
 $(NAME):        $(LIBFT) $(OBJS)
-				@$(CC) $(CFLAGS)  $(OBJS) $(LIBFT) -o $(NAME) $(RD)
+				@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME) $(RD)
 
 $(LIBFT):
 				make -C $(LIBFT_PATH)

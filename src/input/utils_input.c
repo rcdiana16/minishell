@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/14 20:50:19 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/15 11:58:56 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_command	*initialize_command(void)
 	cmd_info->flag = 0;
 	cmd_info->c_red_i = 0;
 	cmd_info->c_red_o = 0;
+	cmd_info->quotes_s = 0;
+	cmd_info->quotes_d = 0;
 	return (cmd_info);
 }
 
@@ -33,7 +35,7 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini)
 
 	if (!cmd_info->tokens || !cmd_info->tokens[0])
 		return ;
-	if (has_enclosed_single_quotes(cmd_info))
+	if (cmd_info->quotes_s)
 		cmd_info->flag = 1;
 	i = 0;
 	if (cmd_info->flag != 0)
@@ -63,6 +65,10 @@ void	count_special_chars(char *cmd, t_command *cmd_info)
 	{
 		if (cmd[i] == '|')
 			cmd_info->c_pipe++;
+		else if (cmd[i] == '\'')
+			cmd_info->quotes_s++;
+		else if (cmd[i] == '\"')
+			cmd_info->quotes_d++;
 		else
 			count_redirections(cmd, cmd_info, &i);
 		i++;

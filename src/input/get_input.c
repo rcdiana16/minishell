@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/14 20:43:10 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/15 12:01:20 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,55 @@ t_command	*make_good_cmd2(t_command *cmd_info)
 	return (cmd_info);
 }
 
+char	**ft_strjoin_arr(char *first, char **arr)
+{
+	int		i;
+	int		len;
+	char	**new_arr;
+
+	len = 0;
+	while (arr && arr[len])
+		len++;
+	new_arr = malloc(sizeof(char *) * (len + 2));
+	if (!new_arr)
+		return (NULL);
+	new_arr[0] = ft_strdup(first);
+	i = 0;
+	while (i < len)
+	{
+		new_arr[i + 1] = ft_strdup(arr[i]);
+		i++;
+	}
+	new_arr[len + 1] = NULL;
+	free_arr(arr);
+	return (new_arr);
+}
+
+void	split_command(char *cmd, t_command *cmd_info)
+{
+	char	*first_space;
+	char	*first_part;
+	char	*rest;
+
+	first_space = ft_strchr(cmd, ' ');
+	if (first_space)
+	{
+		first_part = ft_substr(cmd, 0, first_space - cmd);
+		rest = first_space + 1;
+		cmd_info->tokens = ft_split2(rest, "\'\"");
+	}
+	else
+	{
+		first_part = ft_strdup(cmd);
+		cmd_info->tokens = NULL;
+	}
+	if (cmd_info->tokens)
+		cmd_info->tokens = ft_strjoin_arr(first_part, cmd_info->tokens);
+	else
+		cmd_info->tokens = ft_split2(first_part, "\'\"");
+	free(first_part);
+}
+
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 {
 	t_command	*cmd_info;
@@ -86,7 +135,10 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 	if (!cmd_info)
 		return (NULL);
 	count_special_chars(cmd, cmd_info);
-	cmd_info->tokens = ft_split2(cmd, " \t");
+	if (cmd_info->quotes_s != 0 || cmd_info->quotes_d != 0)
+		split_command(cmd, cmd_info);
+	else
+		cmd_info->tokens = ft_split2(cmd, " \t");
 	if (!cmd_info->tokens)
 	{
 		free_command(cmd_info);
