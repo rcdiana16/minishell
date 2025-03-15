@@ -43,26 +43,6 @@ int	is_valid_variable_name(char *name)
 	return (1);
 }
 
-char	**check_split(char **cmd)
-{
-	int		i;
-	char	**tokens;
-
-	if (!cmd || !cmd[1])
-		return (NULL);
-	i = 0;
-	while (cmd[i])
-		i++;
-	i--;
-	if (i == 1)
-		tokens = ft_split2(cmd[1], "=");
-	else
-		tokens = ft_split2(cmd[2], " ");
-	if (!tokens || !tokens[0])
-		return (NULL);
-	return (tokens);
-}
-
 char	**get_tokens(char **cmd)
 {
 	char	**tokens;

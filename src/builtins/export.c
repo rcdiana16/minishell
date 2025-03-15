@@ -41,18 +41,9 @@ void	add_new_variable(t_env *env_mini, char **cmd)
 {
 	t_env	*new_var;
 	char	**tokens;
-	int		i;
 
 	if (!cmd || !cmd[1])
 		return ;
-	i = 0;
-	while (cmd[i])
-		i++;
-	i--;
-	if (i == 1)
-		tokens = ft_split2(cmd[1], "=");
-	else
-		tokens = ft_split2(cmd[2], " ");
 	tokens = ft_split2(cmd[1], "=");
 	if (!tokens || !tokens[0])
 		return ;
