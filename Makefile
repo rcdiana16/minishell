@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+         #
+#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/14 23:04:36 by cosmos           ###   ########.fr        #
+#    Updated: 2025/03/15 11:07:45 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ NAME            = minishell
 CC              = gcc
 CFLAGS          = -Wall -Wextra -Werror
 RD				= -lreadline -lhistory
-#LDFLAGS			= -L/opt/homebrew/opt/readline/lib
-#CPPFLAGS		= -I/opt/homebrew/opt/readline/include
+LDFLAGS			= -L/opt/homebrew/opt/readline/lib
+CPPFLAGS		= -I/opt/homebrew/opt/readline/include
 RM              = rm -rf
 
 SRCS            = main.c \
