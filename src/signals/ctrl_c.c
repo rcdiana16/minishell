@@ -33,8 +33,8 @@ void	sigint(void)
 
 void	set_signals(void)
 {
-	sigint();
-	sigquit();
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
 }
 
 void	disable_echoctl(void)

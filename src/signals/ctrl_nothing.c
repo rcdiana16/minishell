@@ -14,10 +14,17 @@
 
 void	handle_sigquit(int sig)
 {
-	(void)sig;
-	set_gcode(131);
-	rl_on_new_line();
-	rl_redisplay();
+	if (sig == SIGQUIT)
+	{
+		write(2, "Quit (core dumped)\n", 19);
+		exit(1);
+	}
+	else
+	{
+		set_gcode(131);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
 void	sigquit(void)
@@ -26,7 +33,7 @@ void	sigquit(void)
 
 	ft_memset(&action, 0, sizeof(struct sigaction));
 	action.sa_handler = handle_sigquit;
-	//action.sa_mask;
+//	action.sa_mask;
 	action.sa_flags = 0;
 	sigaction(SIGQUIT, &action, NULL);
 }
