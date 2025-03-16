@@ -20,8 +20,8 @@ t_command	*make_good_cmd(t_command *cmd_info)
 	i = 1;
 	while (cmd_info->tokens[i])
 	{
-    if (cmd_info->quotes_d == 0)
-      remove_single_quotes(cmd_info->tokens[i]);
+		if (cmd_info->quotes_d == 0)
+			remove_single_quotes(cmd_info->tokens[i]);
 		tmp = realloc(cmd_info->tokens[i], ft_strlen(cmd_info->tokens[i]) + 1);
 		if (!tmp)
 		{
@@ -66,7 +66,7 @@ void	split_command(char *cmd, t_command *cmd_info)
 	{
 		first_part = ft_substr(cmd, 0, first_space - cmd);
 		rest = first_space + 1;
-    cmd_info->tokens = ft_split2(rest, "\"");
+		cmd_info->tokens = ft_split2(rest, "\"");
 	}
 	else
 	{
