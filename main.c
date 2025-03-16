@@ -12,8 +12,6 @@
 
 #include "include/minishell.h"
 
-int	g_code = 0;
-
 int	init_shell(char **env, t_env **env_list, char ***path_splitted, \
 	char ***path_sp_w_slash)
 {

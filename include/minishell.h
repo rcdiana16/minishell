@@ -29,8 +29,6 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
-extern int	g_code;
-
 typedef struct s_split_data
 {
 	char		**res;
