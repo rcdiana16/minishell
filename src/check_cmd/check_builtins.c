@@ -20,7 +20,7 @@ int	check_standard_builtins(char **command, t_env *env_mini, \
 	if ((ft_strncmp(command[0], "echo", ft_strlen(command[0]) + 1)) == 0)
 		return (ft_our_echo(command), 1);
 	else if ((ft_strncmp(command[0], "cd", ft_strlen(command[0]) + 1)) == 0)
-		return (is_valid_path(command[1], env_mini));
+		return (is_valid_path(command[1], env_mini, *cmd_info));
 	else if ((ft_strncmp(command[0], "pwd", ft_strlen(command[0]) + 1)) == 0)
 		return (ft_our_pwd(env_mini), 1);
 	else if ((ft_strncmp(command[0], "env", ft_strlen(command[0]) + 1)) == 0)
@@ -39,15 +39,9 @@ int	check_env_builtins(char **command, t_env *env_mini)
 	if ((ft_strncmp(command[0], "export", ft_strlen(command[0]) + 1)) == 0)
 	{
 		if (command[1] == NULL)
-		{
-			set_gcode(EXIT_SUCCESS);
 			return (ft_our_env(env_mini), 1);
-		}
 		else
-		{
 			ft_export(env_mini, command);
-			set_gcode(EXIT_SUCCESS);
-		}
 		return (1);
 	}
 	else if ((ft_strncmp(command[0], "unset", ft_strlen(command[0]) + 1)) == 0)

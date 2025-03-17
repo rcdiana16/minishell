@@ -58,7 +58,7 @@ LIBFT_PATH      = ./libft
 LIBFT           = $(LIBFT_PATH)/libft.a
 
 %.o: %.c
-				$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+				$(CC) $(CFLAGS) -c $< -o $@
 
 all:            $(NAME)
 

@@ -116,8 +116,9 @@ t_command	*get_input(t_env *env_mini, int mode)
 	if (!cmd_info)
 		return (NULL);
 	add_history(line);
-	append_history(1, ".minishell_history");
-	free(line);
 	write_history(".minishell_history");
+//	append_history(1, ".minishell_history");
+	free(line);
+	
 	return (cmd_info);
 }

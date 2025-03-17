@@ -21,7 +21,6 @@ void	handle_sigquit(int sig)
 	}
 	else
 	{
-		set_gcode(131);
 		rl_on_new_line();
 		rl_redisplay();
 	}

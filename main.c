@@ -12,10 +12,7 @@
 
 #include "include/minishell.h"
 
-int	g_code = 0;
-
-int	init_shell(char **env, t_env **env_list, char ***path_splitted, \
-	char ***path_sp_w_slash)
+int	init_shell(char **env, t_env **env_list, char ***path_splitted, char ***path_sp_w_slash)
 {
 	*path_splitted = NULL;
 	*path_sp_w_slash = NULL;
@@ -61,7 +58,7 @@ void	execute_shell_loop(t_env *env_list, char **env)
 
 	if (init_shell(env, &env_list, &path_splitted, &path_sp_w_slash) == 1)
 		return ;
-	read_history(".minishell_history");
+	read_history(".minishell_history");	
 	while (1)
 	{
 		input_status = handle_user_input(&cmd_info, env_list, \

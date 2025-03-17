@@ -30,7 +30,6 @@ int	print_cd_error(char *path)
 		write(2, path, ft_strlen(path));
 		write(2, ": No such file or directory\n", 29);
 	}
-	set_gcode(EXIT_FAILURE);
 	return (1);
 }
 
@@ -54,7 +53,7 @@ void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)
 	free(cwd);
 }
 
-int	is_valid_path(char *path, t_env *env_mini)
+int	is_valid_path(char *path, t_env *env_mini, t_command *cmd_info)
 {
 	char	*oldpwd;
 
@@ -68,8 +67,8 @@ int	is_valid_path(char *path, t_env *env_mini)
 	{
 		oldpwd = get_env_value(env_mini, "PWD");
 		update_pwd_env(env_mini, oldpwd, path);
-		set_gcode(EXIT_SUCCESS);
 		return (1);
 	}
+	cmd_info->exit_code = 1;
 	return (print_cd_error(path));
 }

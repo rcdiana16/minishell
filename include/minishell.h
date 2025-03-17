@@ -29,8 +29,6 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
-extern int	g_code;
-
 typedef struct s_split_data
 {
 	char		**res;
@@ -51,6 +49,7 @@ typedef struct s_command
 	int		flag;
 	int		quotes_s;
 	int		quotes_d;
+	int		exit_code;
 }	t_command;
 
 typedef struct s_env
@@ -71,7 +70,7 @@ typedef struct s_cmd_state
 void		update_env(t_env *env, char *new_path, \
 			char *env_to_update, int flag);
 //----cd.c---
-int			is_valid_path(char *path, t_env *env_mini);
+int			is_valid_path(char *path, t_env *env_mini, t_command *cmd_info);
 //----echo.c----
 void		ft_our_echo(char **cmd);
 //----env.c----
@@ -135,7 +134,7 @@ void		count_redirections(char *cmd, t_command *cmd_info, int *i);
 //----handle_input.c----
 int			handle_input(t_command **cmd_info, t_env *env_mini, int mode);
 //----rep_env_vars.c----
-char		*replace_env_vars(char *cmd, t_env *env_mini);
+char		*replace_env_vars(char *cmd, t_env *env_mini, t_command *cmd_info);
 //----utils_input.c----
 void		clean_quotes(char *token);
 void		remove_single_quotes(char *token);
@@ -176,7 +175,6 @@ char		**allocate_array(int word_count);
 //----------------------------utils----------------------------
 //----utils.c----
 char		*get_env_value(t_env *env_mini, const char *var);
-int			process_exit_code(char *result, int j);
-void		set_gcode(int val);
+int			process_exit_code(char *result, int j, t_command *cmd_info);
 
 #endif

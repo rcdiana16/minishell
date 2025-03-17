@@ -12,12 +12,12 @@
 
 #include "../../include/minishell.h"
 
-int	process_exit_code(char *result, int j)
+int	process_exit_code(char *result, int j, t_command *cmd_info)
 {
 	char	*var_value;
 	char	*tmp;
 
-	var_value = ft_itoa(g_code);
+	var_value = ft_itoa(cmd_info->exit_code);
 	tmp = var_value;
 	while (*tmp)
 		result[j++] = *tmp++;
@@ -40,12 +40,3 @@ char	*get_env_value(t_env *env_mini, const char *var)
 	return (NULL);
 }
 
-int	get_gcode(void)
-{
-	return (g_code);
-}
-
-void	set_gcode(int val)
-{
-	g_code = val;
-}
