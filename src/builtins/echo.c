@@ -35,13 +35,11 @@ void	ft_our_echo(char **cmd)
 	if (!cmd[1])
 	{
 		write(1, "\n", 1);
-		set_gcode(EXIT_SUCCESS);
 		return ;
 	}
 	else if (cmd[1][0] == '\0')
 	{
 		write(1, "\n", 1);
-		set_gcode(EXIT_SUCCESS);
 		return ;
 	}
 	if (ft_strncmp(cmd[1], "-n", ft_strlen(cmd[1])) == 0)
@@ -50,5 +48,4 @@ void	ft_our_echo(char **cmd)
 		i = 2;
 	}
 	print_echo(cmd, i, newline);
-	set_gcode(EXIT_SUCCESS);
 }

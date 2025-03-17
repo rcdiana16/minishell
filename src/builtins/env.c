@@ -19,5 +19,4 @@ void	ft_our_env(t_env *env_mini)
 		ft_printf("%s=%s\n", env_mini->variable, env_mini->value);
 		env_mini = env_mini->next;
 	}
-	set_gcode(EXIT_SUCCESS);
 }

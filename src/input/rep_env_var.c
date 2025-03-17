@@ -60,12 +60,12 @@ int	process_env_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
 	return (j);
 }
 
-int	process_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
+int	process_var(t_cmd_state *state, char *result, int j, t_env *env_mini, t_command *cmd_info)
 {
 	state->i++;
 	if (state->cmd[state->i] == '?')
 	{
-		j = process_exit_code(result, j);
+		j = process_exit_code(result, j, cmd_info);
 		state->i++;
 	}
 	else
@@ -80,7 +80,7 @@ int	copy_non_var_part(t_cmd_state *state, char *result, int j)
 	return (j);
 }
 
-char	*replace_env_vars(char *cmd, t_env *env_mini)
+char	*replace_env_vars(char *cmd, t_env *env_mini, t_command *cmd_info)
 {
 	int			i;
 	int			j;
@@ -97,7 +97,7 @@ char	*replace_env_vars(char *cmd, t_env *env_mini)
 	while (state.cmd[state.i])
 	{
 		if (state.cmd[state.i] == '$' && state.cmd[state.i + 1])
-			j = process_var(&state, result, j, env_mini);
+			j = process_var(&state, result, j, env_mini, cmd_info);
 		else
 			j = copy_non_var_part(&state, result, j);
 	}

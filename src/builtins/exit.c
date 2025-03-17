@@ -23,6 +23,5 @@ void	ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, \
 	free_env_list(env_mini);
 	free_command(cmd_info);
 	free_arr(path);
-	set_gcode(EXIT_SUCCESS);
 	exit (ex);
 }

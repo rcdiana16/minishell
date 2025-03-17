@@ -15,7 +15,6 @@
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	set_gcode(130);
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -33,8 +32,17 @@ void	sigint(void)
 
 void	set_signals(void)
 {
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	struct sigaction sa_int;
+	struct sigaction sa_quit;
+
+	memset(&sa_int, 0, sizeof(struct sigaction));
+	sa_int.sa_handler = handle_sigint;
+	sa_int.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa_int, NULL);
+	memset(&sa_quit, 0, sizeof(struct sigaction));
+	sa_quit.sa_handler = handle_sigquit;
+	sa_quit.sa_flags = SA_RESTART;
+	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
 void	disable_echoctl(void)

@@ -25,6 +25,7 @@ t_command	*initialize_command(void)
 	cmd_info->c_red_o = 0;
 	cmd_info->quotes_s = 0;
 	cmd_info->quotes_d = 0;
+	cmd_info->exit_code = 0;
 	return (cmd_info);
 }
 
@@ -44,7 +45,7 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini)
 	{
 		while (cmd_info->tokens[i])
 		{
-			tmp = replace_env_vars(cmd_info->tokens[i], env_mini);
+			tmp = replace_env_vars(cmd_info->tokens[i], env_mini, cmd_info);
 			if (tmp)
 			{
 				free(cmd_info->tokens[i]);

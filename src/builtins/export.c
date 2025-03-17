@@ -64,7 +64,6 @@ static int	is_invalid_identifier(char **tokens)
 		if (tokens && tokens[0])
 			write(2, tokens[0], ft_strlen(tokens[0]));
 		write(2, ": not a valid identifier\n", 25);
-		set_gcode(EXIT_FAILURE);
 		free_arr(tokens);
 		return (1);
 	}
