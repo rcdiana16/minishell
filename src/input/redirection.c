@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 16:41:38 by diana             #+#    #+#             */
+/*   Updated: 2025/03/18 16:41:54 by diana            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 void	count_input_redirections(char *cmd, t_command *cmd_info, int *i)
@@ -42,4 +54,3 @@ void	count_redirections(char *cmd, t_command *cmd_info)
 		i++;
 	}
 }
-
