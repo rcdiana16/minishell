@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/18 11:27:23 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 16:28:28 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ typedef struct s_cmd_state
 	int			i;
 	t_command	*cmd_info;
 }	t_cmd_state;
+
+typedef struct s_shell
+{
+	int	exit_code;
+}	t_shell;
 
 //----------------------------builtins---------------------------------
 //----cd_utils.c----
@@ -125,14 +130,17 @@ void		free_arr(char **tok);
 t_env		*initialize_environment(char **env, t_env *env_list);
 //----------------------------input----------------------------
 //----get_input.c----
-t_command	*get_input(t_env *env_mini, int mode);
+t_command	*get_input(t_env *env_mini, int mode, t_shell *shell);
 t_command	*make_good_cmd2(t_command *cmd_info);
 t_command	*make_good_cmd(t_command *cmd_info);
+t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
+			t_shell *shell);
 //----get_input_utils.c----
 char		**ft_strjoin_arr(char *first, char **arr);
 char		**tokenize_quotes(char *input);
 //----handle_input.c----
-int			handle_input(t_command **cmd_info, t_env *env_mini, int mode);
+int			handle_input(t_command **cmd_info, t_env *env_mini, int mode, \
+			t_shell *shell);
 //----rep_env_vars.c----
 char		*replace_env_vars(char *cmd, t_env *env_mini);
 int			process_env_var(t_cmd_state *state, char *result, \
@@ -141,8 +149,8 @@ int			process_env_var(t_cmd_state *state, char *result, \
 int			process_var(t_cmd_state *state, char *result, \
 			int j, t_env *env_mini);
 //----utils_input.c----
-t_command	*initialize_command(void);
 void		count_redirections(char *cmd, t_command *cmd_info);
+t_command	*initialize_command(t_shell *shell);
 void		count_special_chars(char *cmd, t_command *cmd_info);
 void		process_tokens(t_command *cmd_info, t_env *env_mini);
 //----quote.c----

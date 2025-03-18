@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 11:20:11 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 16:01:21 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_command	*initialize_command(void)
+t_command	*initialize_command(t_shell *shell)
 {
 	t_command	*cmd_info;
 
+	(void)shell;
 	cmd_info = malloc(sizeof(t_command));
 	if (!cmd_info)
 		return (NULL);
@@ -25,7 +26,7 @@ t_command	*initialize_command(void)
 	cmd_info->c_red_o = 0;
 	cmd_info->quotes_s = 0;
 	cmd_info->quotes_d = 0;
-	cmd_info->exit_code = 0;
+	cmd_info->exit_code = 42;
 	return (cmd_info);
 }
 

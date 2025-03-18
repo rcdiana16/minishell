@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/14 13:47:30 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/18 16:31:59 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	t_env *env_list)
 {
 	int	pid;
+	int	exit_status;
 
 	if (check_builtins(cmd_info->tokens, env_list, cmd_info, path_sp_w_slash))
 		return (1);
@@ -70,6 +71,10 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 		execute_child_process(cmd_info, path_sp_w_slash, env_list);
 	}
 	else
-		waitpid(pid, NULL, 0);
+	{
+		waitpid(pid, &exit_status, 0);
+		if (WIFEXITED(exit_status))
+			return (WEXITSTATUS(exit_status));
+	}
 	return (0);
 }
