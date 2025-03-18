@@ -60,6 +60,7 @@ t_command	*make_good_cmd2(t_command *cmd_info)
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 {
 	t_command	*cmd_info;
+	int			i;
 
 	cmd_info = initialize_command();
 	if (!cmd_info)
@@ -71,6 +72,13 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 		free_command(cmd_info);
 		return (NULL);
 	}
+	i = 0;
+	while (cmd_info->tokens[i])
+	{
+		count_redirections(cmd_info->tokens[i], cmd_info);
+		i++;
+	}
+	//printf("%d\n", cmd_info->c_pipe);
 	process_tokens(cmd_info, env_mini);
 	return (cmd_info);
 }
