@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/15 19:18:29 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 10:16:58 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	add_new_variable(t_env *env_mini, char **cmd)
 
 	if (!cmd || !cmd[1])
 		return ;
-	tokens = ft_split2(cmd[1], "=");
+	tokens = ft_split(cmd[1], '=');
 	if (!tokens || !tokens[0])
 		return ;
 	init_new_variable(&new_var, tokens);

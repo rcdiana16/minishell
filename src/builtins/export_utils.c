@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 23:03:53 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/15 19:17:39 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 10:17:51 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ char	**get_tokens(char **cmd)
 		i++;
 	i--;
 	if (i == 1)
-		tokens = ft_split2(cmd[1], "=");
+		tokens = ft_split(cmd[1], '=');
 	else
-		tokens = ft_split2(cmd[2], " ");
+		tokens = ft_split(cmd[2], ' ');
 	return (tokens);
 }
 

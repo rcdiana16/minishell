@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/15 11:58:56 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 11:20:11 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini)
 	{
 		while (cmd_info->tokens[i])
 		{
-			tmp = replace_env_vars(cmd_info->tokens[i], env_mini, cmd_info);
+			tmp = replace_env_vars(cmd_info->tokens[i], env_mini);
 			if (tmp)
 			{
 				free(cmd_info->tokens[i]);
@@ -54,6 +54,30 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini)
 			i++;
 		}
 		make_good_cmd2(cmd_info);
+	}
+}
+
+void	count_redirections(char *cmd, t_command *cmd_info, int *i)
+{
+	if (cmd[*i] == '<')
+	{
+		if (cmd[*i + 1] == '<')
+		{
+			cmd_info->here_doc++;
+			(*i)++;
+		}
+		else
+			cmd_info->c_red_i++;
+	}
+	else if (cmd[*i] == '>')
+	{
+		if (cmd[*i + 1] == '>')
+		{
+			cmd_info->c_append++;
+			(*i)++;
+		}
+		else
+			cmd_info->c_red_o++;
 	}
 }
 

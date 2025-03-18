@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   rep_env_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/13 18:10:16 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/18 11:22:39 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,6 @@ int	process_env_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
 	return (j);
 }
 
-int	process_var(t_cmd_state *state, char *result, int j, t_env *env_mini, t_command *cmd_info)
-{
-	state->i++;
-	if (state->cmd[state->i] == '?')
-	{
-		j = process_exit_code(result, j, cmd_info);
-		state->i++;
-	}
-	else
-		j = process_env_var(state, result, j, env_mini);
-	return (j);
-}
-
 int	copy_non_var_part(t_cmd_state *state, char *result, int j)
 {
 	result[j++] = state->cmd[state->i];
@@ -80,7 +67,7 @@ int	copy_non_var_part(t_cmd_state *state, char *result, int j)
 	return (j);
 }
 
-char	*replace_env_vars(char *cmd, t_env *env_mini, t_command *cmd_info)
+char	*replace_env_vars(char *cmd, t_env *env_mini)
 {
 	int			i;
 	int			j;
@@ -97,7 +84,7 @@ char	*replace_env_vars(char *cmd, t_env *env_mini, t_command *cmd_info)
 	while (state.cmd[state.i])
 	{
 		if (state.cmd[state.i] == '$' && state.cmd[state.i + 1])
-			j = process_var(&state, result, j, env_mini, cmd_info);
+			j = process_var(&state, result, j, env_mini);
 		else
 			j = copy_non_var_part(&state, result, j);
 	}

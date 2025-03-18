@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_c.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:35:08 by diana             #+#    #+#             */
-/*   Updated: 2025/03/14 13:33:55 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/18 10:52:29 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	sigint(void)
 
 void	set_signals(void)
 {
-	struct sigaction sa_int;
-	struct sigaction sa_quit;
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
 
-	memset(&sa_int, 0, sizeof(struct sigaction));
+	ft_memset(&sa_int, 0, sizeof(struct sigaction));
 	sa_int.sa_handler = handle_sigint;
 	sa_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa_int, NULL);

@@ -6,7 +6,7 @@
 #    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/15 19:14:30 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/03/18 11:25:58 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,9 @@ SRCS            = main.c \
 					src/input/get_input_utils.c \
 					src/input/utils_input.c \
 					src/input/rep_env_var.c \
+					src/input/rep_env_var_utils.c \
 					src/input/handle_input.c \
 					src/input/quote.c \
-					src/split/split_bis.c \
-					src/split/util_split.c \
-					src/split/util2.split.c \
 					src/execute/execute_utils.c \
 					src/execute/execute.c \
 					src/execute/execute_utils_env.c \
@@ -58,7 +56,7 @@ LIBFT_PATH      = ./libft
 LIBFT           = $(LIBFT_PATH)/libft.a
 
 %.o: %.c
-				$(CC) $(CFLAGS) -c $< -o $@
+				$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 all:            $(NAME)
 

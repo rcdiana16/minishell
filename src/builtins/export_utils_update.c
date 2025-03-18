@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 19:13:01 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/15 19:13:48 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 10:18:33 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	update_existing_variable(t_env *env_mini, char **cmd)
 
 	if (!cmd || !cmd[1])
 		return (0);
-	tokens = ft_split2(cmd[1], "=");
+	tokens = ft_split(cmd[1], '=');
 	if (!tokens || !tokens[0])
 		return (0);
 	while (env_mini)
