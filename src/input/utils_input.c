@@ -58,30 +58,6 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini)
 	}
 }
 
-void	count_redirections(char *cmd, t_command *cmd_info, int *i)
-{
-	if (cmd[*i] == '<')
-	{
-		if (cmd[*i + 1] == '<')
-		{
-			cmd_info->here_doc++;
-			(*i)++;
-		}
-		else
-			cmd_info->c_red_i++;
-	}
-	else if (cmd[*i] == '>')
-	{
-		if (cmd[*i + 1] == '>')
-		{
-			cmd_info->c_append++;
-			(*i)++;
-		}
-		else
-			cmd_info->c_red_o++;
-	}
-}
-
 void	count_special_chars(char *cmd, t_command *cmd_info)
 {
 	int	i;
@@ -89,14 +65,10 @@ void	count_special_chars(char *cmd, t_command *cmd_info)
 	i = 0;
 	while (cmd[i])
 	{
-		if (cmd[i] == '|')
-			cmd_info->c_pipe++;
-		else if (cmd[i] == '\'')
+		if (cmd[i] == '\'')
 			cmd_info->quotes_s++;
 		else if (cmd[i] == '\"')
 			cmd_info->quotes_d++;
-		else
-			count_redirections(cmd, cmd_info, &i);
 		i++;
 	}
 }

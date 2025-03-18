@@ -149,8 +149,8 @@ int			process_env_var(t_cmd_state *state, char *result, \
 int			process_var(t_cmd_state *state, char *result, \
 			int j, t_env *env_mini);
 //----utils_input.c----
+void		count_redirections(char *cmd, t_command *cmd_info);
 t_command	*initialize_command(t_shell *shell);
-void		count_redirections(char *cmd, t_command *cmd_info, int *i);
 void		count_special_chars(char *cmd, t_command *cmd_info);
 void		process_tokens(t_command *cmd_info, t_env *env_mini);
 //----quote.c----
@@ -158,6 +158,8 @@ bool		has_enclosed_single_quotes(char *token);
 void		delete_quotes(char *token);
 void		clean_quotes(char *token);
 void		remove_single_quotes(char *token);
+//----redirection.c----
+void		count_redirections(char *cmd, t_command *cmdf_info);
 //----------------------------path----------------------------
 //----path.c---
 void		handle_path(char ***path_splitted, char ***path_sp_w_slash, \

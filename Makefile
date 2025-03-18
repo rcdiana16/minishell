@@ -28,6 +28,7 @@ SRCS            = main.c \
 					src/input/rep_env_var_utils.c \
 					src/input/handle_input.c \
 					src/input/quote.c \
+					src/input/redirection.c \
 					src/execute/execute_utils.c \
 					src/execute/execute.c \
 					src/execute/execute_utils_env.c \
