@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:55:02 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/15 17:55:44 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 11:10:06 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,58 @@ char	**ft_strjoin_arr(char *first, char **arr)
 	return (new_arr);
 }
 
-void	count_redirections(char *cmd, t_command *cmd_info, int *i)
+static void	update_quote_flags(char c, bool *single, bool *double_q)
 {
-	if (cmd[*i] == '<')
+	if (c == '\'')
+		*single = !(*single);
+	else if (c == '"')
+		*double_q = !(*double_q);
+}
+
+static void	add_token(char ***tokens, char *start, int *count)
+{
+	*tokens = realloc(*tokens, sizeof(char *) * (*count + 2));
+	(*tokens)[*count] = strdup(start);
+	(*count)++;
+	(*tokens)[*count] = NULL;
+}
+
+static void	process2_tokens(char *input, char ***tokens, bool *s_q, bool *d_q)
+{
+	int		count;
+	char	*p;
+	char	*start;
+
+	count = 0;
+	start = input;
+	p = input;
+	while (*p)
 	{
-		if (cmd[*i + 1] == '<')
+		update_quote_flags(*p, s_q, d_q);
+		if ((*p == ' ' || *p == '\t') && !(*s_q) && !(*d_q))
 		{
-			cmd_info->here_doc++;
-			(*i)++;
+			if (p != start)
+			{
+				*p = '\0';
+				add_token(tokens, start, &count);
+			}
+			start = p + 1;
 		}
-		else
-			cmd_info->c_red_i++;
+		p++;
 	}
-	else if (cmd[*i] == '>')
-	{
-		if (cmd[*i + 1] == '>')
-		{
-			cmd_info->c_append++;
-			(*i)++;
-		}
-		else
-			cmd_info->c_red_o++;
-	}
+	if (*start)
+		add_token(tokens, start, &count);
+}
+
+char	**tokenize_quotes(char *input)
+{
+	char	**tokens;
+	bool	single_q;
+	bool	double_q;
+
+	tokens = NULL;
+	single_q = false;
+	double_q = false;
+	process2_tokens(input, &tokens, &single_q, &double_q);
+	return (tokens);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 20:11:15 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/14 23:13:48 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/18 10:57:07 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	get_token_count(t_command *cmd_info)
 	return (count);
 }
 
+/*
 int	has_enclosed_single_quotes(t_command *cmd_info)
 {
 	int	last_index;
@@ -36,6 +37,19 @@ int	has_enclosed_single_quotes(t_command *cmd_info)
 		[ft_strlen(cmd_info->tokens[last_index]) - 1] == '\'')
 		return (1);
 	return (0);
+}
+*/
+
+bool	has_enclosed_single_quotes(char *token)
+{
+	int	len;
+
+	if (token == NULL || ft_strlen(token) < 2)
+		return (false);
+	len = ft_strlen(token);
+	if (token[0] == '\'' && token[len - 1] == '\'')
+		return (true);
+	return (false);
 }
 
 void	clean_quotes(char *token)

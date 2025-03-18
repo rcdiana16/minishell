@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/15 19:21:14 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 11:10:47 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,23 +127,23 @@ t_env		*initialize_environment(char **env, t_env *env_list);
 t_command	*get_input(t_env *env_mini, int mode);
 t_command	*make_good_cmd2(t_command *cmd_info);
 t_command	*make_good_cmd(t_command *cmd_info);
-void		count_redirections(char *cmd, t_command *cmd_info, int *i);
 //----get_input_utils.c----
 char		**ft_strjoin_arr(char *first, char **arr);
-void		count_redirections(char *cmd, t_command *cmd_info, int *i);
+char		**tokenize_quotes(char *input);
 //----handle_input.c----
 int			handle_input(t_command **cmd_info, t_env *env_mini, int mode);
 //----rep_env_vars.c----
 char		*replace_env_vars(char *cmd, t_env *env_mini, t_command *cmd_info);
 //----utils_input.c----
-void		clean_quotes(char *token);
-void		remove_single_quotes(char *token);
 t_command	*initialize_command(void);
+void		count_redirections(char *cmd, t_command *cmd_info, int *i);
 void		count_special_chars(char *cmd, t_command *cmd_info);
 void		process_tokens(t_command *cmd_info, t_env *env_mini);
 //----quote.c----
-int			has_enclosed_single_quotes(t_command *cmd_info);
+bool		has_enclosed_single_quotes(char *token);
 void		delete_quotes(char *token);
+void		clean_quotes(char *token);
+void		remove_single_quotes(char *token);
 //----------------------------path----------------------------
 //----path.c---
 void		handle_path(char ***path_splitted, char ***path_sp_w_slash, \
@@ -160,18 +160,6 @@ void		handle_sigint(int sig);
 //----ctrl_nothing.c----
 void		sigquit(void);
 void		handle_sigquit(int sig);
-//----------------------------split----------------------------
-//----split_bis.c
-char		**ft_split2(const char *s, const char *delimiters);
-//----utils_split.c----
-char		*create_word(const char *str, int start, int end);
-int			get_end(const char *s, size_t i, const char *delimiters);
-void		initialize_vars(int *j, int *s_word);
-bool		is_delimiter(char c, const char *delimiters);
-void		free_array(char **strs, int count);
-//---utils2_split.c
-void		add_word_to_result(char **res, int j, char *word);
-char		**allocate_array(int word_count);
 //----------------------------utils----------------------------
 //----utils.c----
 char		*get_env_value(t_env *env_mini, const char *var);

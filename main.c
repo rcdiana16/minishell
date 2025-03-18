@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/14 21:20:22 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/18 11:01:58 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	init_shell(char **env, t_env **env_list, char ***path_splitted, char ***path_sp_w_slash)
+int	init_shell(char **env, t_env **env_list, char ***path_splitted, \
+	char ***path_sp_w_slash)
 {
 	*path_splitted = NULL;
 	*path_sp_w_slash = NULL;
@@ -58,7 +59,7 @@ void	execute_shell_loop(t_env *env_list, char **env)
 
 	if (init_shell(env, &env_list, &path_splitted, &path_sp_w_slash) == 1)
 		return ;
-	read_history(".minishell_history");	
+	read_history(".minishell_history");
 	while (1)
 	{
 		input_status = handle_user_input(&cmd_info, env_list, \

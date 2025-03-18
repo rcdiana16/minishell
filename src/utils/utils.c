@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 18:08:21 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/14 12:18:37 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/18 10:52:01 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ char	*get_env_value(t_env *env_mini, const char *var)
 	}
 	return (NULL);
 }
-
