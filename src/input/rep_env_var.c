@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 11:22:39 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 17:28:06 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,13 @@ int	copy_non_var_part(t_cmd_state *state, char *result, int j)
 	return (j);
 }
 
-char	*replace_env_vars(char *cmd, t_env *env_mini)
+char	*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell)
 {
 	int			i;
 	int			j;
 	char		*result;
 	t_cmd_state	state;
+	t_shell_env	shell_env;
 
 	i = 0;
 	j = 0;
@@ -81,10 +82,12 @@ char	*replace_env_vars(char *cmd, t_env *env_mini)
 		return (NULL);
 	state.cmd = cmd;
 	state.i = i;
+	shell_env.env_mini = env_mini;
+	shell_env.shell = shell;
 	while (state.cmd[state.i])
 	{
 		if (state.cmd[state.i] == '$' && state.cmd[state.i + 1])
-			j = process_var(&state, result, j, env_mini);
+			j = process_var(&state, result, j, &shell_env);
 		else
 			j = copy_non_var_part(&state, result, j);
 	}

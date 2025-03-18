@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/18 16:28:28 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/18 17:29:30 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ typedef struct s_shell
 	int	exit_code;
 }	t_shell;
 
+typedef struct s_shell_env
+{
+	t_env	*env_mini;
+	t_shell	*shell;
+}	t_shell_env;
 //----------------------------builtins---------------------------------
 //----cd_utils.c----
 void		update_env(t_env *env, char *new_path, \
@@ -142,17 +147,18 @@ char		**tokenize_quotes(char *input);
 int			handle_input(t_command **cmd_info, t_env *env_mini, int mode, \
 			t_shell *shell);
 //----rep_env_vars.c----
-char		*replace_env_vars(char *cmd, t_env *env_mini);
+char		*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell);
 int			process_env_var(t_cmd_state *state, char *result, \
 			int j, t_env *env_mini);
 //----rep_env_vars_utils.c----
 int			process_var(t_cmd_state *state, char *result, \
-			int j, t_env *env_mini);
+			int j, t_shell_env *shell_env);
 //----utils_input.c----
 void		count_redirections(char *cmd, t_command *cmd_info);
 t_command	*initialize_command(t_shell *shell);
 void		count_special_chars(char *cmd, t_command *cmd_info);
-void		process_tokens(t_command *cmd_info, t_env *env_mini);
+void		process_tokens(t_command *cmd_info, t_env *env_mini, \
+			t_shell *shell);
 //----quote.c----
 bool		has_enclosed_single_quotes(char *token);
 void		delete_quotes(char *token);
@@ -179,6 +185,6 @@ void		handle_sigquit(int sig);
 //----------------------------utils----------------------------
 //----utils.c----
 char		*get_env_value(t_env *env_mini, const char *var);
-int			process_exit_code(char *result, int j, t_command *cmd_info);
+int			process_exit_code(char *result, int j, t_shell *shell);
 
 #endif

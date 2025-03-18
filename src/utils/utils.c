@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 18:08:21 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 16:09:14 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/18 17:13:45 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	process_exit_code(char *result, int j, t_command *cmd_info)
+int	process_exit_code(char *result, int j, t_shell *shell)
 {
 	char	*var_value;
 	char	*tmp;
 
-	var_value = ft_itoa(cmd_info->exit_code);
+	var_value = ft_itoa(shell->exit_code);
 	//printf("%d\n", cmd_info->exit_code);
 	tmp = var_value;
 	while (*tmp)

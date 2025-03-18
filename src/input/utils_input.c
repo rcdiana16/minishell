@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 16:01:21 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/18 17:05:35 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_command	*initialize_command(t_shell *shell)
 	return (cmd_info);
 }
 
-void	process_tokens(t_command *cmd_info, t_env *env_mini)
+void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 {
 	int		i;
 	char	*tmp;
@@ -46,7 +46,7 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini)
 	{
 		while (cmd_info->tokens[i])
 		{
-			tmp = replace_env_vars(cmd_info->tokens[i], env_mini);
+			tmp = replace_env_vars(cmd_info->tokens[i], env_mini, shell);
 			if (tmp)
 			{
 				free(cmd_info->tokens[i]);
