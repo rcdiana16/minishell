@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/18 11:10:01 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 16:29:27 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ t_command	*make_good_cmd2(t_command *cmd_info)
 	return (cmd_info);
 }
 
-t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
+t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
+			t_shell *shell)
 {
 	t_command	*cmd_info;
 
-	cmd_info = initialize_command();
+	cmd_info = initialize_command(shell);
 	if (!cmd_info)
 		return (NULL);
 	count_special_chars(cmd, cmd_info);
@@ -75,7 +76,7 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini)
 	return (cmd_info);
 }
 
-t_command	*get_input(t_env *env_mini, int mode)
+t_command	*get_input(t_env *env_mini, int mode, t_shell *shell)
 {
 	char		*line;
 	t_command	*cmd_info;
@@ -86,7 +87,7 @@ t_command	*get_input(t_env *env_mini, int mode)
 		line = get_next_line(0);
 	if (!line)
 		return (NULL);
-	cmd_info = verify_and_split_command(line, env_mini);
+	cmd_info = verify_and_split_command(line, env_mini, shell);
 	if (!cmd_info)
 		return (NULL);
 	add_history(line);

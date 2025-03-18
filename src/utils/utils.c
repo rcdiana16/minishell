@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 18:08:21 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 10:52:01 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 16:09:14 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	process_exit_code(char *result, int j, t_command *cmd_info)
 	char	*tmp;
 
 	var_value = ft_itoa(cmd_info->exit_code);
+	//printf("%d\n", cmd_info->exit_code);
 	tmp = var_value;
 	while (*tmp)
 		result[j++] = *tmp++;
