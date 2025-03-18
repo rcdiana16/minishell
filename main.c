@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/18 16:25:34 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/18 17:32:42 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,11 @@ int	handle_user_input(t_command **cmd_info, t_env *env_list, \
 
 	input_status = 0;
 	set_signals();
-	//handle_path(path_splitted, path_sp_w_slash, env_list);
 	if (isatty(STDIN_FILENO))
 	{
 		input_status = handle_input(cmd_info, env_list, 0, shell);
 		if (input_status == -1)
-		{
 			return (-1);
-		}
 		if (input_status == 1)
 			return (0);
 	}
@@ -56,9 +53,9 @@ void	execute_shell_loop(t_env *env_list, char **env)
 	char		**path_sp_w_slash;
 	t_command	*cmd_info;
 	int			input_status;
-	t_shell		*shell = malloc(sizeof(t_shell));
+	t_shell		shell;
 
-	shell->exit_code = 0;
+	shell.exit_code = 0;
 	if (init_shell(env, &env_list, &path_splitted, &path_sp_w_slash) == 1)
 		return ;
 	read_history(".minishell_history");
@@ -66,7 +63,7 @@ void	execute_shell_loop(t_env *env_list, char **env)
 	{
 		handle_path(&path_splitted, &path_sp_w_slash, env_list);
 		input_status = handle_user_input(&cmd_info, env_list, \
-		shell);
+		&shell);
 		if (input_status == -1)
 		{
 			free_all(cmd_info, path_sp_w_slash, env_list);
@@ -75,8 +72,7 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		if (input_status == 0)
 			continue ;
 		signal(SIGINT, SIG_IGN);
-		shell->exit_code = execute_command(cmd_info, path_sp_w_slash, env_list);
-		printf("%d\n", shell->exit_code);
+		shell.exit_code = execute_command(cmd_info, path_sp_w_slash, env_list);
 		set_signals();
 		if (cmd_info)
 			free_command(cmd_info);

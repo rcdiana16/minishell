@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/18 16:29:27 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/18 17:05:11 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 		i++;
 	}
 	//printf("%d\n", cmd_info->c_pipe);
-	process_tokens(cmd_info, env_mini);
+	process_tokens(cmd_info, env_mini, shell);
 	return (cmd_info);
 }
 
