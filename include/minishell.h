@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/18 11:10:47 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/18 11:27:23 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ typedef struct s_env
 
 typedef struct s_cmd_state
 {
-	char	*cmd;
-	int		i;
+	char		*cmd;
+	int			i;
+	t_command	*cmd_info;
 }	t_cmd_state;
 
 //----------------------------builtins---------------------------------
@@ -133,7 +134,12 @@ char		**tokenize_quotes(char *input);
 //----handle_input.c----
 int			handle_input(t_command **cmd_info, t_env *env_mini, int mode);
 //----rep_env_vars.c----
-char		*replace_env_vars(char *cmd, t_env *env_mini, t_command *cmd_info);
+char		*replace_env_vars(char *cmd, t_env *env_mini);
+int			process_env_var(t_cmd_state *state, char *result, \
+			int j, t_env *env_mini);
+//----rep_env_vars_utils.c----
+int			process_var(t_cmd_state *state, char *result, \
+			int j, t_env *env_mini);
 //----utils_input.c----
 t_command	*initialize_command(void);
 void		count_redirections(char *cmd, t_command *cmd_info, int *i);
