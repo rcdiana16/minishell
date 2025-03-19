@@ -47,11 +47,14 @@ char	*read_command_line(int mode)
 		return (get_next_line(0));
 }
 
-void	handle_eof_or_empty(char *line, t_shell *shell)
+void	handle_eof_or_empty(char *line, t_shell *shell, t_env *env_mini, \
+		char **path)
 {
 	if (!line)
 	{
 		write(1, "exit\n", 5);
+		free_env_list(env_mini);
+		free_arr(path);
 		exit(shell->exit_code);
 	}
 	if (*line == '\0')
@@ -69,21 +72,22 @@ t_command	*parse_and_store_command(char *line, t_env *env_mini, \
 		free(line);
 		return (NULL);
 	}
-	add_history(line);
-	write_history(".minishell_history");
 	free(line);
 	return (cmd_info);
 }
 
-t_command	*get_input(t_env *env_mini, int mode, t_shell *shell)
+t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
+			char **path)
 {
 	char	*line;
 
 	line = read_command_line(mode);
 	if (!line || *line == '\0')
 	{
-		handle_eof_or_empty(line, shell);
+		handle_eof_or_empty(line, shell, env_mini, path);
 		return (NULL);
 	}
+	add_history(line);
+	write_history(".minishell_history");
 	return (parse_and_store_command(line, env_mini, shell));
 }
