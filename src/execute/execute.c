@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 16:31:59 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/19 13:15:36 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,15 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		execute_child_process(cmd_info, path_sp_w_slash, env_list);
 	}
 	else
 	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid, &exit_status, 0);
+		set_signals();
 		if (WIFEXITED(exit_status))
 			return (WEXITSTATUS(exit_status));
 	}

@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:22:04 by diana             #+#    #+#             */
-/*   Updated: 2025/03/11 19:48:14 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/19 12:50:58 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,10 @@
 
 void	handle_sigquit(int sig)
 {
-	if (sig == SIGQUIT)
-	{
-		write(2, "Quit (core dumped)\n", 19);
-		exit(1);
-	}
-	else
-	{
-		rl_on_new_line();
-		rl_redisplay();
-	}
+	(void)sig;
+	write(2, "Quit (core dumped)\n", 19);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 void	sigquit(void)

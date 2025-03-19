@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/18 17:29:30 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/19 13:31:05 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,16 +136,14 @@ t_env		*initialize_environment(char **env, t_env *env_list);
 //----------------------------input----------------------------
 //----get_input.c----
 t_command	*get_input(t_env *env_mini, int mode, t_shell *shell);
-t_command	*make_good_cmd2(t_command *cmd_info);
-t_command	*make_good_cmd(t_command *cmd_info);
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 			t_shell *shell);
 //----get_input_utils.c----
 char		**ft_strjoin_arr(char *first, char **arr);
 char		**tokenize_quotes(char *input);
 //----handle_input.c----
-int			handle_input(t_command **cmd_info, t_env *env_mini, int mode, \
-			t_shell *shell);
+t_command	*make_good_cmd2(t_command *cmd_info);
+t_command	*make_good_cmd(t_command *cmd_info);
 //----rep_env_vars.c----
 char		*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell);
 int			process_env_var(t_cmd_state *state, char *result, \

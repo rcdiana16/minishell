@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/18 17:32:42 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/19 13:32:48 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,17 @@ int	init_shell(char **env, t_env **env_list, char ***path_splitted, \
 int	handle_user_input(t_command **cmd_info, t_env *env_list, \
 	t_shell *shell)
 {
-	int	input_status;
-
-	input_status = 0;
 	set_signals();
 	if (isatty(STDIN_FILENO))
 	{
-		input_status = handle_input(cmd_info, env_list, 0, shell);
-		if (input_status == -1)
-			return (-1);
-		if (input_status == 1)
+		*cmd_info = get_input(env_list, 0, shell);
+		if (!*cmd_info)
 			return (0);
 	}
 	else
 	{
-		if (handle_input(cmd_info, env_list, 1, shell))
+		*cmd_info = get_input(env_list, 1, shell);
+		if (!*cmd_info)
 			return (0);
 	}
 	return (1);
@@ -60,18 +56,12 @@ void	execute_shell_loop(t_env *env_list, char **env)
 	while (1)
 	{
 		handle_path(&path_splitted, &path_sp_w_slash, env_list);
+		set_signals();
 		input_status = handle_user_input(&cmd_info, env_list, \
 		&shell);
-		if (input_status == -1)
-		{
-			free_all(cmd_info, path_sp_w_slash, env_list);
-			exit(0);
-		}
-		if (input_status == 0)
-			continue ;
-		signal(SIGINT, SIG_IGN);
-		shell.exit_code = execute_command(cmd_info, path_sp_w_slash, env_list);
-		set_signals();
+		if (input_status != 0)
+			shell.exit_code = execute_command(cmd_info, \
+				path_sp_w_slash, env_list);
 		if (cmd_info)
 			free_command(cmd_info);
 	}

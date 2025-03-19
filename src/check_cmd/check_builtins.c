@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:38:03 by diana             #+#    #+#             */
-/*   Updated: 2025/03/14 22:28:59 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/19 12:19:06 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	check_env_builtins(char **command, t_env *env_mini)
 	int	exit;
 
 	exit = 0;
-
 	if (!command)
 		return (0);
 	if ((ft_strncmp(command[0], "export", ft_strlen(command[0]) + 1)) == 0)

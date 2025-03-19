@@ -6,56 +6,11 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/18 17:05:11 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/19 13:30:29 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-t_command	*make_good_cmd(t_command *cmd_info)
-{
-	int		i;
-	char	*tmp;
-
-	i = 1;
-	while (cmd_info->tokens[i])
-	{
-		if (has_enclosed_single_quotes(cmd_info->tokens[i]))
-			remove_single_quotes(cmd_info->tokens[i]);
-		else
-			clean_quotes(cmd_info->tokens[i]);
-		tmp = realloc(cmd_info->tokens[i], ft_strlen(cmd_info->tokens[i]) + 1);
-		if (!tmp)
-		{
-			perror("realloc failed");
-			return (cmd_info);
-		}
-		cmd_info->tokens[i] = tmp;
-		i++;
-	}
-	return (cmd_info);
-}
-
-t_command	*make_good_cmd2(t_command *cmd_info)
-{
-	int		i;
-	char	*tmp;
-
-	i = 1;
-	while (cmd_info->tokens[i])
-	{
-		clean_quotes(cmd_info->tokens[i]);
-		tmp = realloc(cmd_info->tokens[i], ft_strlen(cmd_info->tokens[i]) + 1);
-		if (!tmp)
-		{
-			perror("realloc failed");
-			return (cmd_info);
-		}
-		cmd_info->tokens[i] = tmp;
-		i++;
-	}
-	return (cmd_info);
-}
 
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 			t_shell *shell)
@@ -84,23 +39,51 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 	return (cmd_info);
 }
 
-t_command	*get_input(t_env *env_mini, int mode, t_shell *shell)
+char	*read_command_line(int mode)
 {
-	char		*line;
+	if (mode == 0)
+		return (readline("\033[1;32mCBS$ \033[0m"));
+	else
+		return (get_next_line(0));
+}
+
+void	handle_eof_or_empty(char *line, t_shell *shell)
+{
+	if (!line)
+	{
+		write(1, "exit\n", 5);
+		exit(shell->exit_code);
+	}
+	if (*line == '\0')
+		free(line);
+}
+
+t_command	*parse_and_store_command(char *line, t_env *env_mini, \
+			t_shell *shell)
+{
 	t_command	*cmd_info;
 
-	if (mode == 0)
-		line = readline("\033[1;32mCBS$ \033[0m");
-	else
-		line = get_next_line(0);
-	if (!line)
-		return (NULL);
 	cmd_info = verify_and_split_command(line, env_mini, shell);
 	if (!cmd_info)
+	{
+		free(line);
 		return (NULL);
+	}
 	add_history(line);
 	write_history(".minishell_history");
-//	append_history(1, ".minishell_history");
 	free(line);
 	return (cmd_info);
+}
+
+t_command	*get_input(t_env *env_mini, int mode, t_shell *shell)
+{
+	char	*line;
+
+	line = read_command_line(mode);
+	if (!line || *line == '\0')
+	{
+		handle_eof_or_empty(line, shell);
+		return (NULL);
+	}
+	return (parse_and_store_command(line, env_mini, shell));
 }

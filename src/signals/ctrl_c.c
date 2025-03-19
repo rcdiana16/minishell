@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:35:08 by diana             #+#    #+#             */
-/*   Updated: 2025/03/18 10:52:29 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/19 13:15:54 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ void	set_signals(void)
 	sa_int.sa_handler = handle_sigint;
 	sa_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa_int, NULL);
-	memset(&sa_quit, 0, sizeof(struct sigaction));
-	sa_quit.sa_handler = handle_sigquit;
-	sa_quit.sa_flags = SA_RESTART;
+	ft_memset(&sa_quit, 0, sizeof(struct sigaction));
+	sa_quit.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
