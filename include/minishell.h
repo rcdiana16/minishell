@@ -85,12 +85,12 @@ int			is_valid_path(char *path, t_env *env_mini, t_command *cmd_info);
 //----echo.c----
 void		ft_our_echo(char **cmd);
 //----env.c----
-void		ft_our_env(t_env *env_mini);
+int			ft_our_env(t_env *env_mini, char **cmd);
 //----exit.c----
 void		ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, \
 			char **path);
 //----export.c----
-void		ft_export(t_env *env_mini, char **cmd);
+int			ft_export(t_env *env_mini, char **cmd);
 void		join_quoted_values(char **cmd, char **value);
 void		assign_value(char **cmd, char **value);
 //----export_utils.c----

@@ -18,8 +18,6 @@ int	init_shell(char **env, t_env **env_list, char ***path_splitted, \
 	*path_splitted = NULL;
 	*path_sp_w_slash = NULL;
 	*env_list = initialize_environment(env, *env_list);
-	if (!*env_list)
-		return (1);
 	disable_echoctl();
 	return (0);
 }

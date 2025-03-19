@@ -61,9 +61,12 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 {
 	int	pid;
 	int	exit_status;
+	int	exit_builtin;
 
-	if (check_builtins(cmd_info->tokens, env_list, cmd_info, path_sp_w_slash))
-		return (1);
+	exit_builtin = check_builtins(cmd_info->tokens, env_list, cmd_info, \
+					path_sp_w_slash);
+	if (exit_builtin != -1)
+		return (exit_builtin);
 	pid = fork();
 	if (pid == 0)
 	{

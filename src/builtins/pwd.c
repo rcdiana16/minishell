@@ -15,11 +15,14 @@
 void	ft_our_pwd(t_env *env_mini)
 {
 	char	*pwd;
+	char	*cwd;
 
 	pwd = NULL;
+	cwd = calloc(256, 4);
 	pwd = get_env_value(env_mini, "PWD");
 	if (pwd)
 		ft_printf("%s\n", pwd);
 	else
-		perror("pwd: no such variable");
+		ft_printf("%s\n", getcwd(cwd, 1024));
+	free(cwd);
 }

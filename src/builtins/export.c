@@ -70,16 +70,17 @@ static int	is_invalid_identifier(char **tokens)
 	return (0);
 }
 
-void	ft_export(t_env *env_mini, char **cmd)
+int	ft_export(t_env *env_mini, char **cmd)
 {
 	char	**tokens;
 
 	if (!cmd || !cmd[1])
-		return ;
+		return (1);
 	tokens = get_tokens(cmd);
 	if (is_invalid_identifier(tokens))
-		return ;
+		return (1);
 	if (!update_existing_variable(env_mini, cmd))
 		add_new_variable(env_mini, cmd);
 	free_arr(tokens);
+	return (0);
 }

@@ -39,7 +39,10 @@ void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)
 
 	cwd = calloc(256, 4);
 	if (!oldpwd | !path | !cwd)
+	{
+		free(cwd);
 		return ;
+	}
 	if (path[0] == '/')
 	{
 		update_env(env_mini, oldpwd, "OLDPWD", 3);
@@ -67,7 +70,7 @@ int	is_valid_path(char *path, t_env *env_mini, t_command *cmd_info)
 	{
 		oldpwd = get_env_value(env_mini, "PWD");
 		update_pwd_env(env_mini, oldpwd, path);
-		return (1);
+		return (0);
 	}
 	cmd_info->exit_code = 1;
 	return (print_cd_error(path));
