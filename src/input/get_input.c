@@ -32,9 +32,9 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 	while (cmd_info->tokens[i])
 	{
 		count_redirections(cmd_info->tokens[i], cmd_info);
+		remove_newline(cmd_info->tokens[i]);
 		i++;
 	}
-	//printf("%d\n", cmd_info->c_pipe);
 	process_tokens(cmd_info, env_mini, shell);
 	return (cmd_info);
 }
@@ -47,11 +47,14 @@ char	*read_command_line(int mode)
 		return (get_next_line(0));
 }
 
-void	handle_eof_or_empty(char *line, t_shell *shell)
+void	handle_eof_or_empty(char *line, t_shell *shell, t_env *env_mini, \
+		int mode)
 {
 	if (!line)
 	{
-		write(1, "exit\n", 5);
+		if (mode == 0)
+			write(1, "exit\n", 5);
+		free_env_list(env_mini);
 		exit(shell->exit_code);
 	}
 	if (*line == '\0')
@@ -69,21 +72,24 @@ t_command	*parse_and_store_command(char *line, t_env *env_mini, \
 		free(line);
 		return (NULL);
 	}
-	add_history(line);
-	write_history(".minishell_history");
 	free(line);
 	return (cmd_info);
 }
 
-t_command	*get_input(t_env *env_mini, int mode, t_shell *shell)
+t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
+			char **path)
 {
 	char	*line;
 
 	line = read_command_line(mode);
 	if (!line || *line == '\0')
 	{
-		handle_eof_or_empty(line, shell);
+		if (!line && path)
+			free_arr(path);
+		handle_eof_or_empty(line, shell, env_mini, mode);
 		return (NULL);
 	}
+	add_history(line);
+	write_history(".minishell_history");
 	return (parse_and_store_command(line, env_mini, shell));
 }

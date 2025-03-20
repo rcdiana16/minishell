@@ -135,7 +135,8 @@ void		free_arr(char **tok);
 t_env		*initialize_environment(char **env, t_env *env_list);
 //----------------------------input----------------------------
 //----get_input.c----
-t_command	*get_input(t_env *env_mini, int mode, t_shell *shell);
+t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
+			char **path);
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 			t_shell *shell);
 //----get_input_utils.c----
@@ -157,6 +158,7 @@ t_command	*initialize_command(t_shell *shell);
 void		count_special_chars(char *cmd, t_command *cmd_info);
 void		process_tokens(t_command *cmd_info, t_env *env_mini, \
 			t_shell *shell);
+void		remove_newline(char *str);
 //----quote.c----
 bool		has_enclosed_single_quotes(char *token);
 void		delete_quotes(char *token);

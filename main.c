@@ -23,18 +23,18 @@ int	init_shell(char **env, t_env **env_list, char ***path_splitted, \
 }
 
 int	handle_user_input(t_command **cmd_info, t_env *env_list, \
-	t_shell *shell)
+	t_shell *shell, char **path)
 {
 	set_signals();
 	if (isatty(STDIN_FILENO))
 	{
-		*cmd_info = get_input(env_list, 0, shell);
+		*cmd_info = get_input(env_list, 0, shell, path);
 		if (!*cmd_info)
 			return (0);
 	}
 	else
 	{
-		*cmd_info = get_input(env_list, 1, shell);
+		*cmd_info = get_input(env_list, 1, shell, path);
 		if (!*cmd_info)
 			return (0);
 	}
@@ -58,7 +58,7 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		handle_path(&path_splitted, &path_sp_w_slash, env_list);
 		set_signals();
 		input_status = handle_user_input(&cmd_info, env_list, \
-		&shell);
+		&shell, path_sp_w_slash);
 		if (input_status != 0)
 			shell.exit_code = execute_command(cmd_info, \
 				path_sp_w_slash, env_list);
