@@ -158,6 +158,7 @@ t_command	*initialize_command(t_shell *shell);
 void		count_special_chars(char *cmd, t_command *cmd_info);
 void		process_tokens(t_command *cmd_info, t_env *env_mini, \
 			t_shell *shell);
+void		remove_newline(char *str);
 //----quote.c----
 bool		has_enclosed_single_quotes(char *token);
 void		delete_quotes(char *token);

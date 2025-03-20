@@ -37,12 +37,7 @@ void	ft_our_echo(char **cmd)
 		write(1, "\n", 1);
 		return ;
 	}
-	else if (cmd[1][0] == '\0')
-	{
-		write(1, "\n", 1);
-		return ;
-	}
-	if (ft_strncmp(cmd[1], "-n", ft_strlen(cmd[1])) == 0)
+	if (ft_strncmp(cmd[1], "-n", 2) == 0)
 	{
 		newline = 0;
 		i = 2;

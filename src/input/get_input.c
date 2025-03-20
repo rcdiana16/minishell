@@ -32,9 +32,9 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 	while (cmd_info->tokens[i])
 	{
 		count_redirections(cmd_info->tokens[i], cmd_info);
+		remove_newline(cmd_info->tokens[i]);
 		i++;
 	}
-	//printf("%d\n", cmd_info->c_pipe);
 	process_tokens(cmd_info, env_mini, shell);
 	return (cmd_info);
 }
@@ -48,13 +48,13 @@ char	*read_command_line(int mode)
 }
 
 void	handle_eof_or_empty(char *line, t_shell *shell, t_env *env_mini, \
-		char **path)
+		int mode)
 {
 	if (!line)
 	{
-		write(1, "exit\n", 5);
+		if (mode == 0)
+			write(1, "exit\n", 5);
 		free_env_list(env_mini);
-		free_arr(path);
 		exit(shell->exit_code);
 	}
 	if (*line == '\0')
@@ -84,7 +84,9 @@ t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
 	line = read_command_line(mode);
 	if (!line || *line == '\0')
 	{
-		handle_eof_or_empty(line, shell, env_mini, path);
+		if (!line && path)
+			free_arr(path);
+		handle_eof_or_empty(line, shell, env_mini, mode);
 		return (NULL);
 	}
 	add_history(line);
