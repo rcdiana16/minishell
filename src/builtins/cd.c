@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/03/14 09:22:53 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/21 19:16:57 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	print_cd_error(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd != -1)
 	{
-		write(2, "minishell: cd: ",16);
+		write(2, "minishell: cd: ", 16);
 		write(2, path, ft_strlen(path));
 		write(2, ": Not a directory\n", 18);
 		close(fd);
@@ -72,7 +72,8 @@ int	is_valid_path(char *path, t_env *env_mini, t_command *cmd_info)
 		i++;
 	if (i > 2)
 	{
-		write(2, "cd: too many arguments\n", ft_strlen("cd: too many arguments\n"));
+		write(2, "cd: too many arguments\n", \
+		ft_strlen("cd: too many arguments\n"));
 		cmd_info->exit_code = 1;
 		return (1);
 	}

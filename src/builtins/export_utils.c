@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 23:03:53 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 10:17:51 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/21 19:13:44 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char  *clean_space(char *token)
+char	*clean_space(char *token)
 {
-	int	  j;
-	int	  k;
-	int	  space_found;
-	char  *cleaned_token;
+	int		j;
+	int		k;
+	int		space_found;
+	char	*cleaned_token;
 
 	j = 0;
 	k = 0;
@@ -27,25 +27,25 @@ char  *clean_space(char *token)
 		return (NULL);
 	while (token[j])
 	{
-        if (token[j] != ' ')
-        {
-            cleaned_token[k++] = token[j];
-            space_found = 0;
-        }
-        else if (!space_found)
-        {
-            cleaned_token[k++] = ' ';
-            space_found = 1;
-        }
-        j++;
-    }
-    cleaned_token[k] = '\0';
-    return (cleaned_token);
+		if (token[j] != ' ')
+		{
+			cleaned_token[k++] = token[j];
+			space_found = 0;
+		}
+		else if (!space_found)
+		{
+			cleaned_token[k++] = ' ';
+			space_found = 1;
+		}
+		j++;
+	}
+	cleaned_token[k] = '\0';
+	return (cleaned_token);
 }
 
-void init_new_variable(t_env **new_var, char **tokens)
+void	init_new_variable(t_env **new_var, char **tokens)
 {
-	char  *cleaned_value;
+	char	*cleaned_value;
 
 	*new_var = malloc(sizeof(t_env));
 	if (!*new_var)
