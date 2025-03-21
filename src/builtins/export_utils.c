@@ -12,6 +12,57 @@
 
 #include "../../include/minishell.h"
 
+char  *clean_space(char *token)
+{
+	int	  j;
+	int	  k;
+	int	  space_found;
+	char  *cleaned_token;
+
+	j = 0;
+	k = 0;
+	space_found = 0;
+	cleaned_token = malloc(strlen(token) + 1);
+	if (!cleaned_token)
+		return (NULL);
+	while (token[j])
+	{
+        if (token[j] != ' ')
+        {
+            cleaned_token[k++] = token[j];
+            space_found = 0;
+        }
+        else if (!space_found)
+        {
+            cleaned_token[k++] = ' ';
+            space_found = 1;
+        }
+        j++;
+    }
+    cleaned_token[k] = '\0';
+    return (cleaned_token);
+}
+
+void init_new_variable(t_env **new_var, char **tokens)
+{
+	char  *cleaned_value;
+
+	*new_var = malloc(sizeof(t_env));
+	if (!*new_var)
+		return ;
+	(*new_var)->variable = ft_strdup(tokens[0]);
+	if (tokens[1])
+	{
+		cleaned_value = clean_space(tokens[1]);
+		(*new_var)->value = ft_strdup(cleaned_value);
+		free(cleaned_value);
+	}
+	else
+		(*new_var)->value = ft_strdup("");
+	free_arr(tokens);
+}
+
+/*
 void	init_new_variable(t_env **new_var, char **tokens)
 {
 	*new_var = malloc(sizeof(t_env));
@@ -19,11 +70,11 @@ void	init_new_variable(t_env **new_var, char **tokens)
 		return ;
 	(*new_var)->variable = ft_strdup(tokens[0]);
 	if (tokens[1])
-		(*new_var)->value = ft_strdup(tokens[1]);
+		(*new_var)->value = ft_strdup(clean_space(tokens[1]));
 	else
 		(*new_var)->value = ft_strdup("");
 	free_arr(tokens);
-}
+}*/
 
 int	is_valid_variable_name(char *name)
 {

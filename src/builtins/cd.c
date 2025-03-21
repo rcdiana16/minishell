@@ -19,14 +19,14 @@ int	print_cd_error(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd != -1)
 	{
-		write(2, "cd: ", 4);
+		write(2, "minishell: cd: ",16);
 		write(2, path, ft_strlen(path));
 		write(2, ": Not a directory\n", 18);
 		close(fd);
 	}
 	else
 	{
-		write(2, "cd: ", 4);
+		write(2, "minishell: cd: ", 16);
 		write(2, path, ft_strlen(path));
 		write(2, ": No such file or directory\n", 29);
 	}
@@ -59,12 +59,22 @@ void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)
 int	is_valid_path(char *path, t_env *env_mini, t_command *cmd_info)
 {
 	char	*oldpwd;
+	int		i;
 
+	i = 0;
 	if (!path)
 	{
 		path = get_env_value(env_mini, "HOME");
 		if (!path)
 			return (0);
+	}
+	while (cmd_info->tokens[i])
+		i++;
+	if (i > 2)
+	{
+		write(2, "cd: too many arguments\n", ft_strlen("cd: too many arguments\n"));
+		cmd_info->exit_code = 1;
+		return (1);
 	}
 	if (chdir(path) == 0)
 	{

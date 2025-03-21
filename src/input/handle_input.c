@@ -12,47 +12,31 @@
 
 #include "../../include/minishell.h"
 
-t_command	*make_good_cmd(t_command *cmd_info)
+char	*make_good_cmd(char *cmd)
 {
-	int		i;
 	char	*tmp;
 
-	i = 1;
-	while (cmd_info->tokens[i])
+	remove_single_quotes(cmd);
+	tmp = realloc(cmd, ft_strlen(cmd) + 1);
+	if (!tmp)
 	{
-		if (has_enclosed_single_quotes(cmd_info->tokens[i]))
-			remove_single_quotes(cmd_info->tokens[i]);
-		else
-			clean_quotes(cmd_info->tokens[i]);
-		tmp = realloc(cmd_info->tokens[i], ft_strlen(cmd_info->tokens[i]) + 1);
-		if (!tmp)
-		{
-			perror("realloc failed");
-			return (cmd_info);
-		}
-		cmd_info->tokens[i] = tmp;
-		i++;
+		perror("realloc failed");
+		return (cmd);
 	}
-	return (cmd_info);
+	cmd = tmp;
+	return (cmd);
 }
 
-t_command	*make_good_cmd2(t_command *cmd_info)
+char	*make_good_cmd2(char *cmd)
 {
-	int		i;
 	char	*tmp;
 
-	i = 1;
-	while (cmd_info->tokens[i])
+	clean_quotes(cmd);
+	tmp = realloc(cmd, ft_strlen(cmd) + 1);
+	if (!tmp)
 	{
-		clean_quotes(cmd_info->tokens[i]);
-		tmp = realloc(cmd_info->tokens[i], ft_strlen(cmd_info->tokens[i]) + 1);
-		if (!tmp)
-		{
-			perror("realloc failed");
-			return (cmd_info);
-		}
-		cmd_info->tokens[i] = tmp;
-		i++;
+		perror("realloc failed");
+		return (cmd);
 	}
-	return (cmd_info);
+	return (tmp);
 }

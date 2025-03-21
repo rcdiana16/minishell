@@ -92,5 +92,10 @@ char	*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell)
 			j = copy_non_var_part(&state, result, j);
 	}
 	result[j] = '\0';
+	if (j == 0)
+	{
+		free(result);
+		return (NULL);
+	}
 	return (result);
 }
