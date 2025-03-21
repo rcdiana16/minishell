@@ -143,8 +143,8 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 char		**ft_strjoin_arr(char *first, char **arr);
 char		**tokenize_quotes(char *input);
 //----handle_input.c----
-t_command	*make_good_cmd2(t_command *cmd_info);
-t_command	*make_good_cmd(t_command *cmd_info);
+char		*make_good_cmd2(char *cmd);
+char		*make_good_cmd(char *cmd);
 //----rep_env_vars.c----
 char		*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell);
 int			process_env_var(t_cmd_state *state, char *result, \
@@ -161,6 +161,7 @@ void		process_tokens(t_command *cmd_info, t_env *env_mini, \
 void		remove_newline(char *str);
 //----quote.c----
 bool		has_enclosed_single_quotes(char *token);
+bool		has_enclosed_double_quotes(char *token);
 void		delete_quotes(char *token);
 void		clean_quotes(char *token);
 void		remove_single_quotes(char *token);

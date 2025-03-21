@@ -15,7 +15,7 @@
 int	check_standard_builtins(char **command, t_env *env_mini, \
 	t_command **cmd_info, char **path)
 {
-	if (!command)
+	if (!command || !command[0])
 		return (0);
 	if ((ft_strncmp(command[0], "echo", ft_strlen(command[0]) + 1)) == 0)
 		return (ft_our_echo(command), 0);
@@ -37,7 +37,7 @@ int	check_env_builtins(char **command, t_env *env_mini)
 	int	exit;
 
 	exit = 0;
-	if (!command)
+	if (!command || !command[0])
 		return (0);
 	if ((ft_strncmp(command[0], "export", ft_strlen(command[0]) + 1)) == 0)
 	{

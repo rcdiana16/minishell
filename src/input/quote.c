@@ -22,24 +22,6 @@ int	get_token_count(t_command *cmd_info)
 	return (count);
 }
 
-/*
-int	has_enclosed_single_quotes(t_command *cmd_info)
-{
-	int	last_index;
-
-	if (!cmd_info->tokens[1])
-		return (0);
-	last_index = get_token_count(cmd_info) - 1;
-	if (last_index < 0)
-		return (0);
-	if (cmd_info->tokens[1][0] == '\'' &&
-		cmd_info->tokens[last_index] \
-		[ft_strlen(cmd_info->tokens[last_index]) - 1] == '\'')
-		return (1);
-	return (0);
-}
-*/
-
 bool	has_enclosed_single_quotes(char *token)
 {
 	int	len;
@@ -48,6 +30,18 @@ bool	has_enclosed_single_quotes(char *token)
 		return (false);
 	len = ft_strlen(token);
 	if (token[0] == '\'' && token[len - 1] == '\'')
+		return (true);
+	return (false);
+}
+
+bool	has_enclosed_double_quotes(char *token)
+{
+	int	len;
+
+	if (token == NULL || ft_strlen(token) < 2)
+		return (false);
+	len = ft_strlen(token);
+	if (token[0] == '\"' && token[len - 1] == '\"')
 		return (true);
 	return (false);
 }

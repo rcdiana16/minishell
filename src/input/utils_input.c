@@ -33,28 +33,43 @@ t_command	*initialize_command(t_shell *shell)
 void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 {
 	int		i;
+	int		j;
 	char	*tmp;
+	char	*new_cmd;
 
 	if (!cmd_info->tokens || !cmd_info->tokens[0])
 		return ;
-	if (cmd_info->quotes_s)
-		cmd_info->flag = 1;
 	i = 0;
-	if (cmd_info->flag != 0)
-		make_good_cmd(cmd_info);
-	else
+	while (cmd_info->tokens[i])
 	{
-		while (cmd_info->tokens[i])
+		if (has_enclosed_single_quotes(cmd_info->tokens[i]))
+			make_good_cmd(cmd_info->tokens[i]);
+		else
 		{
+			new_cmd = make_good_cmd2(cmd_info->tokens[i]);
+			if (new_cmd)
+				cmd_info->tokens[i] = new_cmd;
 			tmp = replace_env_vars(cmd_info->tokens[i], env_mini, shell);
-			if (tmp)
+			if (tmp && tmp[0] != '\0')
 			{
 				free(cmd_info->tokens[i]);
 				cmd_info->tokens[i] = tmp;
 			}
-			i++;
+			else
+			{
+				free(cmd_info->tokens[i]);
+				free(tmp);
+				j = i;
+				while (cmd_info->tokens[j])
+				{
+					cmd_info->tokens[j] = cmd_info->tokens[j + 1];
+					j++;
+				}
+				cmd_info->tokens[j] = NULL;
+				continue ;
+			}
 		}
-		make_good_cmd2(cmd_info);
+		i++;
 	}
 }
 

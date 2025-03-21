@@ -15,9 +15,9 @@
 void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
 		t_env *env_list, char **path_sp_w_slash)
 {
-	write(2, "Command not found: ", ft_strlen("Command not found: "));
+	write(2, "minishell: ", ft_strlen("minishell: "));
 	write(2, command, ft_strlen(command));
-	write(2, "\n", 1);
+	write(2, ": command not found\n", ft_strlen(": command not found\n"));
 	free_all(cmd_info, path_sp_w_slash, env_list);
 	exit(127);
 }
@@ -41,6 +41,8 @@ int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+	if (!cmd_info->tokens[0])
+		return (0);
 	if (cmd_info->tokens[0][0] == '/' || \
 	ft_strchr(cmd_info->tokens[0], '/') != NULL)
 	{
