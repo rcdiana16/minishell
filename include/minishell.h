@@ -41,6 +41,8 @@ typedef struct s_split_data
 typedef struct s_command
 {
 	char	**tokens;
+	char	*file_out;
+	int		fd_out;
 	int		c_pipe;
 	int		c_red_i;
 	int		c_red_o;

@@ -28,6 +28,7 @@ void	free_command(t_command *cmd_info)
 		}
 		free(cmd_info->tokens);
 	}
+	free(cmd_info->file_out);
 	free(cmd_info);
 }
 
