@@ -26,7 +26,9 @@ t_command	*initialize_command(t_shell *shell)
 	cmd_info->c_red_o = 0;
 	cmd_info->quotes_s = 0;
 	cmd_info->quotes_d = 0;
-	cmd_info->exit_code = 42;
+	cmd_info->exit_code = 0;
+	cmd_info->file_out = NULL;
+	cmd_info->c_append = 0;
 	return (cmd_info);
 }
 

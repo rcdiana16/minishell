@@ -48,7 +48,9 @@ void	execute_shell_loop(t_env *env_list, char **env)
 	t_command	*cmd_info;
 	int			input_status;
 	t_shell		shell;
+	int			original_stdout;
 
+	original_stdout = dup(STDOUT_FILENO);
 	shell.exit_code = 0;
 	if (init_shell(env, &env_list, &path_splitted, &path_sp_w_slash) == 1)
 		return ;
@@ -62,6 +64,8 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		if (input_status != 0)
 			shell.exit_code = execute_command(cmd_info, \
 				path_sp_w_slash, env_list);
+		if (cmd_info->c_red_o == 1 || cmd_info->c_append == 1)
+			dup2(original_stdout, STDOUT_FILENO);
 		if (cmd_info)
 			free_command(cmd_info);
 	}
