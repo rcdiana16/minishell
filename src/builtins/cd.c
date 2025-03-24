@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/03/21 19:16:57 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/24 14:22:54 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,35 @@ void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)
 	free(cwd);
 }
 
+int	handle_cd_arguments(t_command *cmd_info)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_info->tokens[i])
+		i++;
+	if (i > 2)
+	{
+		write(2, "cd: too many arguments\n", \
+			ft_strlen("cd: too many arguments\n"));
+		cmd_info->exit_code = 1;
+		return (1);
+	}
+	return (0);
+}
+
 int	is_valid_path(char *path, t_env *env_mini, t_command *cmd_info)
 {
 	char	*oldpwd;
-	int		i;
 
-	i = 0;
 	if (!path)
 	{
 		path = get_env_value(env_mini, "HOME");
 		if (!path)
 			return (0);
 	}
-	while (cmd_info->tokens[i])
-		i++;
-	if (i > 2)
-	{
-		write(2, "cd: too many arguments\n", \
-		ft_strlen("cd: too many arguments\n"));
-		cmd_info->exit_code = 1;
+	if (handle_cd_arguments(cmd_info) != 0)
 		return (1);
-	}
 	if (chdir(path) == 0)
 	{
 		oldpwd = get_env_value(env_mini, "PWD");

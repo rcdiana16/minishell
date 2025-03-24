@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 17:24:49 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/11 16:06:37 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/23 17:09:42 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	free_command(t_command *cmd_info)
 		}
 		free(cmd_info->tokens);
 	}
-	free(cmd_info->file_out);
+	if (cmd_info->file_out)
+		free(cmd_info->file_out);
 	free(cmd_info);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 17:28:06 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/24 14:59:38 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,29 +67,29 @@ int	copy_non_var_part(t_cmd_state *state, char *result, int j)
 	return (j);
 }
 
-char	*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell)
+char	*initialize_replace_env_vars(t_cmd_state *state)
 {
-	int			i;
-	int			j;
-	char		*result;
-	t_cmd_state	state;
-	t_shell_env	shell_env;
+	char	*result;
 
-	i = 0;
-	j = 0;
 	result = malloc(256);
 	if (!result)
 		return (NULL);
-	state.cmd = cmd;
-	state.i = i;
-	shell_env.env_mini = env_mini;
-	shell_env.shell = shell;
-	while (state.cmd[state.i])
+	state->i = 0;
+	return (result);
+}
+
+char	*process_replace_env_vars(t_cmd_state *state, \
+	char *result, t_shell_env *shell_env)
+{
+	int	j;
+
+	j = 0;
+	while (state->cmd[state->i])
 	{
-		if (state.cmd[state.i] == '$' && state.cmd[state.i + 1])
-			j = process_var(&state, result, j, &shell_env);
+		if (state->cmd[state->i] == '$' && state->cmd[state->i + 1])
+			j = process_var(state, result, j, shell_env);
 		else
-			j = copy_non_var_part(&state, result, j);
+			j = copy_non_var_part(state, result, j);
 	}
 	result[j] = '\0';
 	if (j == 0)
@@ -98,4 +98,21 @@ char	*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell)
 		return (NULL);
 	}
 	return (result);
+}
+
+char	*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell)
+{
+	t_cmd_state	state;
+	t_shell_env	shell_env;
+	char		*result;
+
+	state.cmd = cmd;
+	state.i = 0;
+	state.cmd_info = NULL;
+	shell_env.env_mini = env_mini;
+	shell_env.shell = shell;
+	result = initialize_replace_env_vars(&state);
+	if (!result)
+		return (NULL);
+	return (process_replace_env_vars(&state, result, &shell_env));
 }

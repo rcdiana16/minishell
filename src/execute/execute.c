@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/19 13:15:36 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/24 15:29:00 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 	return (0);
 }
 
-char  **check_redir(t_command *cmd_info)
+char	**check_redir(t_command *cmd_info)
 {
 	int	i;
 
@@ -82,6 +82,7 @@ int	open_file(char *file, int mode)
 {
 	int	fd;
 
+	fd = 0;
 	if (mode == 1)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (mode == 2)
@@ -96,14 +97,8 @@ int	open_file(char *file, int mode)
 	return (fd);
 }
 
-int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
-	t_env *env_list)
+int	manage_redirection(t_command *cmd_info)
 {
-	int	pid;
-	int	exit_status;
-	int	exit_builtin;
-
-	cmd_info->tokens = check_redir(cmd_info);
 	if (cmd_info->c_red_o == 1 || cmd_info->c_append == 1)
 	{
 		if (cmd_info->c_red_o == 1)
@@ -115,17 +110,47 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 		dup2(cmd_info->fd_out, STDOUT_FILENO);
 		close(cmd_info->fd_out);
 	}
-	exit_builtin = check_builtins(cmd_info->tokens, env_list, cmd_info, \
-					path_sp_w_slash);
+	return (1);
+}
+
+int	execute_builtin(t_command *cmd_info, t_env *env_list, \
+	char **path_sp_w_slash)
+{
+	int	exit_builtin;
+
+	exit_builtin = check_builtins(cmd_info->tokens, env_list, \
+		cmd_info, path_sp_w_slash);
+	if (exit_builtin != -1)
+		return (exit_builtin);
+	return (-1);
+}
+
+void	execute_in_child(t_command *cmd_info, \
+	char **path_sp_w_slash, t_env *env_list)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	execute_child_process(cmd_info, path_sp_w_slash, env_list);
+}
+
+int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
+	t_env *env_list)
+{
+	int	pid;
+	int	exit_status;
+	int	exit_builtin;
+
+	if (cmd_info->c_pipe >= 1)
+		return (execute_pipes(cmd_info, path_sp_w_slash, env_list));
+	cmd_info->tokens = check_redir(cmd_info);
+	if (!manage_redirection(cmd_info))
+		return (0);
+	exit_builtin = execute_builtin(cmd_info, env_list, path_sp_w_slash);
 	if (exit_builtin != -1)
 		return (exit_builtin);
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		execute_child_process(cmd_info, path_sp_w_slash, env_list);
-	}
+		execute_in_child(cmd_info, path_sp_w_slash, env_list);
 	else
 	{
 		signal(SIGINT, SIG_IGN);

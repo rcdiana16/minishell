@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/19 13:31:05 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/24 15:05:34 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,24 @@ typedef struct s_shell_env
 	t_env	*env_mini;
 	t_shell	*shell;
 }	t_shell_env;
+
+typedef struct s_shell_data
+{
+	char	**path_splitted;
+	char	**path_sp_w_slash;
+	t_shell	shell;
+	int		original_stdout;
+}	t_shell_data;
+typedef struct s_pipe_exec_info
+{
+	int			prev_pipe_fd;
+	int			pipe_fd[2];
+	int			i;
+	char		**current_command;
+	char		**path_sp_w_slash;
+	t_env		*env_list;
+	t_command	*cmd_info;
+}	t_pipe_exec_info;
 //----------------------------builtins---------------------------------
 //----cd_utils.c----
 void		update_env(t_env *env, char *new_path, \
@@ -117,10 +135,24 @@ int			check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info, \
 //----execute.c----
 int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
+int			open_file(char *file, int mode);
 //----execute_utils.c----
 char		*find_no_builtin(char **good_path, char **command);
 //----execute_utils_env.c
 char		**convert_env_to_array(t_env *env_mini);
+//----execute_pipe.c----
+char		**clean_redir(char **cmd_tokens, t_command *cmd_info);
+int			execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
+			t_env *env_list, t_command *stru);
+void		exec_builtin_or_exit_pipe(char *command, t_command *cmd_info, \
+			t_env *env_list, char **path_sp_w_slash);
+char		*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
+			t_env *env_list);
+//----execute_pipe_utils.c----
+int			execute_pipes(t_command *cmd_info, \
+			char **path_sp_w_slash, t_env *env_list);
+char		**get_pipe_command(t_command *cmd_info, int i);
+int			get_pipe_bounds(t_command *cmd_info, int i, int *start, int *end);
 //----------------------------free----------------------------
 //----free.c---
 void		free_command(t_command *cmd_info);

@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 17:05:35 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/24 14:35:34 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,44 @@ t_command	*initialize_command(t_shell *shell)
 	return (cmd_info);
 }
 
+void	handle_single_quotes(t_command *cmd_info, int i)
+{
+	make_good_cmd(cmd_info->tokens[i]);
+}
+
+void	handle_double_quotes_and_env_vars(t_command *cmd_info, t_env *env_mini, \
+	t_shell *shell, int i)
+{
+	char	*new_cmd;
+	char	*tmp;
+	int		j;
+
+	new_cmd = make_good_cmd2(cmd_info->tokens[i]);
+	if (new_cmd)
+		cmd_info->tokens[i] = new_cmd;
+	tmp = replace_env_vars(cmd_info->tokens[i], env_mini, shell);
+	if (tmp && tmp[0] != '\0')
+	{
+		free(cmd_info->tokens[i]);
+		cmd_info->tokens[i] = tmp;
+	}
+	else
+	{
+		free(cmd_info->tokens[i]);
+		free(tmp);
+		j = i;
+		while (cmd_info->tokens[j])
+		{
+			cmd_info->tokens[j] = cmd_info->tokens[j + 1];
+			j++;
+		}
+		cmd_info->tokens[j] = NULL;
+	}
+}
+
 void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 {
-	int		i;
-	int		j;
-	char	*tmp;
-	char	*new_cmd;
+	int	i;
 
 	if (!cmd_info->tokens || !cmd_info->tokens[0])
 		return ;
@@ -45,32 +77,9 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 	while (cmd_info->tokens[i])
 	{
 		if (has_enclosed_single_quotes(cmd_info->tokens[i]))
-			make_good_cmd(cmd_info->tokens[i]);
+			handle_single_quotes(cmd_info, i);
 		else
-		{
-			new_cmd = make_good_cmd2(cmd_info->tokens[i]);
-			if (new_cmd)
-				cmd_info->tokens[i] = new_cmd;
-			tmp = replace_env_vars(cmd_info->tokens[i], env_mini, shell);
-			if (tmp && tmp[0] != '\0')
-			{
-				free(cmd_info->tokens[i]);
-				cmd_info->tokens[i] = tmp;
-			}
-			else
-			{
-				free(cmd_info->tokens[i]);
-				free(tmp);
-				j = i;
-				while (cmd_info->tokens[j])
-				{
-					cmd_info->tokens[j] = cmd_info->tokens[j + 1];
-					j++;
-				}
-				cmd_info->tokens[j] = NULL;
-				continue ;
-			}
-		}
+			handle_double_quotes_and_env_vars(cmd_info, env_mini, shell, i);
 		i++;
 	}
 }
