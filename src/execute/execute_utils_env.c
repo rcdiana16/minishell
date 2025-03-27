@@ -38,9 +38,9 @@ char	*allocate_env_entry(const char *variable, const char *value)
 	entry = malloc(total_len);
 	if (!entry)
 		return (NULL);
-	ft_strlcpy(entry, variable, ft_strlen(variable));
+	ft_strlcpy(entry, variable, var_len + 1);
 	entry[var_len] = '=';
-	ft_strlcpy(entry + var_len + 1, value, ft_strlen(value));
+	ft_strlcpy(entry + var_len + 1, value, val_len + 1);
 	return (entry);
 }
 

@@ -45,6 +45,11 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd_info[0])
 		return (0);
+	if ((stru->c_append || stru->c_red_o) && stru->file_out)
+	{
+		if (!manage_redirection(stru))
+			exit(1);
+	}
 	if (cmd_info[0][0] == '/' || \
 	ft_strchr(cmd_info[0], '/') != NULL)
 	{

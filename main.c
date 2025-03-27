@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/24 15:38:05 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/19 13:32:48 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	initialize_shell(t_env **env_list, char **env, t_shell_data *data)
 	if (init_shell(env, env_list, &data->path_splitted, \
 		&data->path_sp_w_slash) == 1)
 		exit(EXIT_FAILURE);
-	read_history(".minishell_history");
+	//read_history(".minishell_history");
 }
 
 void	execute_shell_loop(t_env *env_list, char **env)
@@ -67,8 +67,8 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		if (input_status != 0)
 			data.shell.exit_code = \
 			execute_command(cmd_info, data.path_sp_w_slash, env_list);
-		if (cmd_info->c_red_o == 1 || \
-			cmd_info->c_append == 1 || cmd_info->c_pipe >= 1)
+		if ((input_status != 0) && (cmd_info->c_red_o >= 1 || \
+			cmd_info->c_append >= 1 || cmd_info->c_append >= 1) && (cmd_info->c_pipe == 0))
 			dup2(data.original_stdout, STDOUT_FILENO);
 		if (cmd_info)
 			free_command(cmd_info);

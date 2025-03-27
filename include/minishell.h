@@ -90,6 +90,7 @@ typedef struct s_pipe_exec_info
 {
 	int			prev_pipe_fd;
 	int			pipe_fd[2];
+	int			fd_redir_out;
 	int			i;
 	char		**current_command;
 	char		**path_sp_w_slash;
@@ -136,6 +137,8 @@ int			check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info, \
 int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
 int			open_file(char *file, int mode);
+int			manage_redirection(t_command *cmd_info);
+char		**check_redir(t_command *cmd_info);
 //----execute_utils.c----
 char		*find_no_builtin(char **good_path, char **command);
 //----execute_utils_env.c
@@ -153,6 +156,7 @@ int			execute_pipes(t_command *cmd_info, \
 			char **path_sp_w_slash, t_env *env_list);
 char		**get_pipe_command(t_command *cmd_info, int i);
 int			get_pipe_bounds(t_command *cmd_info, int i, int *start, int *end);
+void		child_process_handle_redirection(t_pipe_exec_info pipe_exec_info);
 //----------------------------free----------------------------
 //----free.c---
 void		free_command(t_command *cmd_info);

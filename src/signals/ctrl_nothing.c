@@ -26,7 +26,6 @@ void	sigquit(void)
 
 	ft_memset(&action, 0, sizeof(struct sigaction));
 	action.sa_handler = handle_sigquit;
-//	action.sa_mask;
 	action.sa_flags = 0;
 	sigaction(SIGQUIT, &action, NULL);
 }

@@ -47,6 +47,7 @@ void	handle_path(char ***path_splitted, char ***path_sp_w_slash, \
 		exit(1);
 	}
 	*path_sp_w_slash = add_slash(*path_splitted);
+	//if (path_splitted)
 	free_arr(*path_splitted);
 	if (!*path_sp_w_slash)
 	{

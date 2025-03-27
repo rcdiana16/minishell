@@ -48,12 +48,8 @@ void	update_env(t_env *env, char *new_path, char *env_to_update, int flag)
 		{
 			if (flag == 1)
 				handle_flag_1(env, new_path);
-			//else if (flag == 0)
-				//handle_flag_0(env, new_path);
 			else if (flag == 3)
 				handle_flag_3(env, new_path);
-			//else if (flag == 4)
-				//handle_flag_4(env, new_path);
 			return ;
 		}
 		env = env->next;

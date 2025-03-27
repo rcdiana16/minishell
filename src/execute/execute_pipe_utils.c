@@ -81,7 +81,7 @@ void	child_process_setup_io(t_pipe_exec_info pipe_exec_info)
 		close(pipe_exec_info.pipe_fd[0]);
 	}
 }
-
+/*
 void	child_process_handle_redirection(t_pipe_exec_info pipe_exec_info)
 {
 	int	open_mode;
@@ -99,7 +99,7 @@ void	child_process_handle_redirection(t_pipe_exec_info pipe_exec_info)
 		dup2(pipe_exec_info.cmd_info->fd_out, STDOUT_FILENO);
 		close(pipe_exec_info.cmd_info->fd_out);
 	}
-}
+}*/
 
 int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 {
@@ -121,8 +121,6 @@ int	execute_child_process_pipe_helper(t_pipe_exec_info pipe_exec_info)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	child_process_setup_io(pipe_exec_info);
-	if (pipe_exec_info.i >= pipe_exec_info.cmd_info->c_pipe)
-		child_process_handle_redirection(pipe_exec_info);
 	return (child_process_execute_command(pipe_exec_info));
 }
 
@@ -150,7 +148,10 @@ int	execute_pipes_child_process(t_pipe_exec_info *pipe_exec_info, \
 
 	pid = fork();
 	if (pid == 0)
-		return (execute_child_process_pipe_helper(*pipe_exec_info));
+	{
+		execute_child_process_pipe_helper(*pipe_exec_info);
+		exit(0);
+	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);
@@ -161,6 +162,7 @@ int	execute_pipes_child_process(t_pipe_exec_info *pipe_exec_info, \
 		if (i < pipe_exec_info->cmd_info->c_pipe)
 			pipe_exec_info->prev_pipe_fd = pipe_exec_info->pipe_fd[0];
 		close(pipe_exec_info->pipe_fd[1]);
+		free_arr(pipe_exec_info->current_command);
 		return (0);
 	}
 }
