@@ -31,7 +31,7 @@ void	child_process_handle_redirection(t_pipe_exec_info pipe_exec_info)
 		close(pipe_exec_info.cmd_info->fd_out);
 	}
 }*/
-
+/*
 int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 {
 	int	exit_builtin;
@@ -40,15 +40,58 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 	clean_redir(pipe_exec_info.current_command, pipe_exec_info.cmd_info);
 	if (pipe_exec_info.cmd_info->file_out)
 		if (!manage_redirection(pipe_exec_info.cmd_info))
-			exit(0);
+		{
+			free_arr(pipe_exec_info.current_command);
+			exit (0);
+		}
+		//	exit(0);
 	exit_builtin = check_builtins(pipe_exec_info.current_command, \
 		pipe_exec_info.env_list, pipe_exec_info.cmd_info, \
 		pipe_exec_info.path_sp_w_slash);
 	if (exit_builtin != -1)
+	{
+		free_all(pipe_exec_info.cmd_info, pipe_exec_info.path_sp_w_slash, pipe_exec_info.env_list);
+		free_arr(pipe_exec_info.current_command);
 		return (exit_builtin);
+	}
+		//return (exit_builtin);
 	execute_child_process_pipe(pipe_exec_info.current_command, \
 		pipe_exec_info.path_sp_w_slash, pipe_exec_info.env_list, \
 		pipe_exec_info.cmd_info);
+	return (127);
+}
+*/
+
+int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
+{
+	int	  exit_builtin;
+	char  **tmp_command;
+	char  **old_command;
+
+	old_command = pipe_exec_info.current_command;
+	tmp_command = clean_redir(pipe_exec_info.current_command, pipe_exec_info.cmd_info);
+	if (!tmp_command)
+		return (1);
+	free_arr(old_command);
+	pipe_exec_info.current_command = tmp_command;
+	if (pipe_exec_info.cmd_info->file_out)
+	{
+		if (!manage_redirection(pipe_exec_info.cmd_info))
+		{
+			free_arr(pipe_exec_info.current_command);
+			exit(0);
+		}
+	}
+	exit_builtin = check_builtins(pipe_exec_info.current_command, pipe_exec_info.env_list, \
+				pipe_exec_info.cmd_info, pipe_exec_info.path_sp_w_slash);
+	if (exit_builtin != -1)
+	{
+		free_all(pipe_exec_info.cmd_info, pipe_exec_info.path_sp_w_slash, pipe_exec_info.env_list);
+		free_arr(pipe_exec_info.current_command);
+		return (exit_builtin);
+	}
+	execute_child_process_pipe(pipe_exec_info.current_command, pipe_exec_info.path_sp_w_slash, \
+			pipe_exec_info.env_list, pipe_exec_info.cmd_info);
 	return (127);
 }
 
@@ -105,14 +148,22 @@ int	execute_pipes_loop(t_pipe_exec_info *pipe_exec_info, \
 	{
 		pipe_exec_info->current_command = get_pipe_command(cmd_info, i);
 		if (!pipe_exec_info->current_command)
+		{
+			free(pids);
 			return (1);
+		}
 		if (i < cmd_info->c_pipe)
 			create_pipe(pipe_exec_info->pipe_fd);
 		pipe_exec_info->i = i;
 		if (execute_pipes_child_process(pipe_exec_info, pids, i) != 0)
+		{
+			free(pids);
+			free_arr(pipe_exec_info->current_command);
 			return (1);
+		}
 		i++;
 	}
+	pipe_exec_info->current_command = NULL;
 	return (0);
 }
 
