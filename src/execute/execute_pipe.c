@@ -45,11 +45,14 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd_info[0])
 		return (0);
-	if ((stru->c_append || stru->c_red_o) && stru->file_out)
+	/*cmd_info = \
+			clean_redir(cmd_info, stru);
+	ft_putstr_fd(stru->file_out, 2);
+	if (stru->file_out)
 	{
 		if (!manage_redirection(stru))
 			exit(1);
-	}
+	}*/
 	if (cmd_info[0][0] == '/' || \
 	ft_strchr(cmd_info[0], '/') != NULL)
 	{
@@ -66,6 +69,7 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	return (0);
 }
 
+/*
 void	handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
 {
 	if (ft_strncmp(cmd_tokens[*i], ">", 1) == 0 || \
@@ -99,6 +103,74 @@ char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
 	{
 		if (ft_strncmp(cmd_tokens[i], ">", 1) == 0 || \
 		ft_strncmp(cmd_tokens[i], ">>", 2) == 0)
+			handle_redirection(cmd_tokens, cmd_info, &i);
+		else
+		{
+			cleaned_cmd[j++] = ft_strdup(cmd_tokens[i]);
+			i++;
+		}
+	}
+	cleaned_cmd[j] = NULL;
+	return (cleaned_cmd);
+}*/
+
+void  handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
+{
+	if (strstr(cmd_tokens[*i], ">") != NULL)
+	{
+		if (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0) 
+		{
+			if (cmd_tokens[*i][2] != '\0')
+			{
+				cmd_info->file_out = ft_strdup(cmd_tokens[*i] + 2);
+				cmd_info->c_red_o = 0;
+				cmd_info->c_append = 1;
+			}
+			else if (cmd_tokens[*i + 1])
+			{
+				cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
+				cmd_info->c_red_o = 0;
+				cmd_info->c_append = 1;
+				*i += 1;
+			}
+		}
+		else
+		{
+			if (cmd_tokens[*i][1] != '\0')
+			{
+				cmd_info->file_out = ft_strdup(cmd_tokens[*i] + 1);
+				cmd_info->c_red_o = 1;
+				cmd_info->c_append = 0;
+			}
+			else if (cmd_tokens[*i + 1])
+			{
+				cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
+				cmd_info->c_red_o = 1;
+				cmd_info->c_append = 0;
+				*i += 1;
+			}
+		}
+		*i += 1;
+	}
+}
+
+char  **clean_redir(char **cmd_tokens, t_command *cmd_info)
+{
+	int	  i;
+    int	  j;
+	char  **cleaned_cmd;
+
+	i = 0;
+	j = 0;
+	while (cmd_tokens[i])
+		i++;
+	cleaned_cmd = malloc(sizeof(char *) * (i + 1));
+	if (!cleaned_cmd)
+		return (NULL);
+	i = 0;
+	while (cmd_tokens[i])
+	{
+		if (strstr(cmd_tokens[i], ">") != NULL)
 			handle_redirection(cmd_tokens, cmd_info, &i);
 		else
 		{

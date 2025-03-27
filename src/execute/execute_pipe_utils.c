@@ -100,11 +100,14 @@ void	child_process_handle_redirection(t_pipe_exec_info pipe_exec_info)
 		close(pipe_exec_info.cmd_info->fd_out);
 	}
 }*/
-
 int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 {
 	int	exit_builtin;
 
+	pipe_exec_info.current_command = clean_redir(pipe_exec_info.current_command, pipe_exec_info.cmd_info);
+	if (pipe_exec_info.cmd_info->file_out)
+		if (!manage_redirection(pipe_exec_info.cmd_info))
+			exit(0);
 	exit_builtin = check_builtins(pipe_exec_info.current_command, \
 		pipe_exec_info.env_list, pipe_exec_info.cmd_info, \
 		pipe_exec_info.path_sp_w_slash);
@@ -178,9 +181,9 @@ int	execute_pipes_loop(t_pipe_exec_info *pipe_exec_info, \
 		pipe_exec_info->current_command = get_pipe_command(cmd_info, i);
 		if (!pipe_exec_info->current_command)
 			return (1);
-		if (cmd_info->c_red_o || cmd_info->c_append)
+		/*if (cmd_info->c_red_o || cmd_info->c_append)
 			pipe_exec_info->current_command = \
-			clean_redir(pipe_exec_info->current_command, cmd_info);
+			clean_redir(pipe_exec_info->current_command, cmd_info);*/
 		if (i < cmd_info->c_pipe)
 			create_pipe(pipe_exec_info->pipe_fd);
 		pipe_exec_info->i = i;
