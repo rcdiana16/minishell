@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:59:48 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/24 11:31:52 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/27 15:49:52 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,6 @@ char	*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
 	return (built_in_path);
 }
 
-void	exec_builtin_or_exit_pipe(char *command, t_command *cmd_info, \
-	t_env *env_list, char **path_sp_w_slash)
-{
-	write(2, "minishell: ", ft_strlen("minishell: "));
-	write(2, command, ft_strlen(command));
-	write(2, ": command not found\n", ft_strlen(": command not found\n"));
-	free_all(cmd_info, path_sp_w_slash, env_list);
-	exit(127);
-}
-
 int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	t_env *env_list, t_command *stru)
 {
@@ -45,14 +35,6 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd_info[0])
 		return (0);
-	/*cmd_info = \
-			clean_redir(cmd_info, stru);
-	ft_putstr_fd(stru->file_out, 2);
-	if (stru->file_out)
-	{
-		if (!manage_redirection(stru))
-			exit(1);
-	}*/
 	if (cmd_info[0][0] == '/' || \
 	ft_strchr(cmd_info[0], '/') != NULL)
 	{
@@ -114,51 +96,47 @@ char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
 	return (cleaned_cmd);
 }*/
 
-void  handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
+void	handle_output_redirection(char **cmd_tokens, \
+	t_command *cmd_info, int *i)
 {
-	if (strstr(cmd_tokens[*i], ">") != NULL)
+	if (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0)
 	{
-		if (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0) 
+		cmd_info->c_red_o = 0;
+		cmd_info->c_append = 1;
+		if (cmd_tokens[*i][2] != '\0')
+			cmd_info->file_out = ft_strdup(cmd_tokens[*i] + 2);
+		else if (cmd_tokens[*i + 1])
 		{
-			if (cmd_tokens[*i][2] != '\0')
-			{
-				cmd_info->file_out = ft_strdup(cmd_tokens[*i] + 2);
-				cmd_info->c_red_o = 0;
-				cmd_info->c_append = 1;
-			}
-			else if (cmd_tokens[*i + 1])
-			{
-				cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
-				cmd_info->c_red_o = 0;
-				cmd_info->c_append = 1;
-				*i += 1;
-			}
+			cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
+			*i += 1;
 		}
-		else
-		{
-			if (cmd_tokens[*i][1] != '\0')
-			{
-				cmd_info->file_out = ft_strdup(cmd_tokens[*i] + 1);
-				cmd_info->c_red_o = 1;
-				cmd_info->c_append = 0;
-			}
-			else if (cmd_tokens[*i + 1])
-			{
-				cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
-				cmd_info->c_red_o = 1;
-				cmd_info->c_append = 0;
-				*i += 1;
-			}
-		}
-		*i += 1;
 	}
+	else
+	{
+		cmd_info->c_red_o = 1;
+		cmd_info->c_append = 0;
+		if (cmd_tokens[*i][1] != '\0')
+			cmd_info->file_out = ft_strdup(cmd_tokens[*i] + 1);
+		else if (cmd_tokens[*i + 1])
+		{
+			cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
+			*i += 1;
+		}
+	}
+	*i += 1;
 }
 
-char  **clean_redir(char **cmd_tokens, t_command *cmd_info)
+void	handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
 {
-	int	  i;
-    int	  j;
-	char  **cleaned_cmd;
+	if (ft_strnstr(cmd_tokens[*i], ">", ft_strlen(cmd_tokens[*i])) != NULL)
+		handle_output_redirection(cmd_tokens, cmd_info, i);
+}
+
+char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
+{
+	int		i;
+	int		j;
+	char	**cleaned_cmd;
 
 	i = 0;
 	j = 0;
@@ -170,7 +148,7 @@ char  **clean_redir(char **cmd_tokens, t_command *cmd_info)
 	i = 0;
 	while (cmd_tokens[i])
 	{
-		if (strstr(cmd_tokens[i], ">") != NULL)
+		if (ft_strnstr(cmd_tokens[i], ">", ft_strlen(cmd_tokens[i])) != NULL)
 			handle_redirection(cmd_tokens, cmd_info, &i);
 		else
 		{

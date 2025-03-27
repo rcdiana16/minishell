@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/24 14:59:38 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/27 15:17:59 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,6 @@ int	process_env_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
 			result[j++] = *tmp++;
 		free(var_name);
 	}
-	return (j);
-}
-
-int	copy_non_var_part(t_cmd_state *state, char *result, int j)
-{
-	result[j++] = state->cmd[state->i];
-	(state->i)++;
 	return (j);
 }
 

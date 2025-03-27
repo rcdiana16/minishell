@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 20:11:15 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 10:57:07 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/27 15:17:23 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,6 @@ bool	has_enclosed_single_quotes(char *token)
 		return (false);
 	len = ft_strlen(token);
 	if (token[0] == '\'' && token[len - 1] == '\'')
-		return (true);
-	return (false);
-}
-
-bool	has_enclosed_double_quotes(char *token)
-{
-	int	len;
-
-	if (token == NULL || ft_strlen(token) < 2)
-		return (false);
-	len = ft_strlen(token);
-	if (token[0] == '\"' && token[len - 1] == '\"')
 		return (true);
 	return (false);
 }

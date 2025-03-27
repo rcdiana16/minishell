@@ -6,7 +6,7 @@
 #    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/24 11:32:26 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/03/27 15:14:06 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,9 @@ SRCS            = main.c \
 					src/execute/execute_utils_env.c \
 					src/execute/execute_pipe.c \
 					src/execute/execute_pipe_utils.c \
+					src/execute/utils_pipe.c \
+					src/execute/util.c \
+					src/execute/check_redir.c \
 					src/check_cmd/check_builtins.c \
 					src/ft_list/list.c \
 					src/free/free.c \
@@ -46,6 +49,7 @@ SRCS            = main.c \
 					src/builtins/exit.c \
 					src/builtins/export.c \
 					src/builtins/export_utils.c \
+					src/builtins/export_utils_bis.c \
 					src/builtins/export_utils_update.c \
 					src/builtins/unset.c \
 					src/signals/ctrl_c.c \

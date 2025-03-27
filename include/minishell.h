@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/24 15:05:34 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/27 15:18:22 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,9 @@ void		join_cmd_values(char **cmd, char **value);
 int			handle_existing_variable(t_env *env_mini, char **cmd, \
 			char **tokens);
 int			update_existing_variable(t_env *env_mini, char **cmd);
+//----export_utils_bis.c----
+void		join_cmd_values(char **cmd, char **value);
+char		**get_tokens(char **cmd);
 //----pwd.c----
 void		ft_our_pwd(t_env *env_mini);
 //----unset.c----
@@ -139,6 +142,8 @@ int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 int			open_file(char *file, int mode);
 int			manage_redirection(t_command *cmd_info);
 char		**check_redir(t_command *cmd_info);
+int			execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
+			t_env *env_list);
 //----execute_utils.c----
 char		*find_no_builtin(char **good_path, char **command);
 //----execute_utils_env.c
@@ -154,9 +159,23 @@ char		*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
 //----execute_pipe_utils.c----
 int			execute_pipes(t_command *cmd_info, \
 			char **path_sp_w_slash, t_env *env_list);
-char		**get_pipe_command(t_command *cmd_info, int i);
-int			get_pipe_bounds(t_command *cmd_info, int i, int *start, int *end);
+int			child_process_execute_command(t_pipe_exec_info pipe_exec_info);
 void		child_process_handle_redirection(t_pipe_exec_info pipe_exec_info);
+//----utils_pipe.c----
+int			get_pipe_bounds(t_command *cmd_info, int i, int *start, int *end);
+char		**get_pipe_command(t_command *cmd_info, int i);
+int			create_pipe(int *pipe_fd);
+void		child_process_setup_io(t_pipe_exec_info pipe_exec_info);
+int			execute_child_process_pipe_helper(t_pipe_exec_info pipe_exec_info);
+//----utils.c----
+void		exec_builtin_or_exit_pipe(char *command, t_command *cmd_info, \
+			t_env *env_list, char **path_sp_w_slash);
+//----check_redir.c----
+int			open_file(char *file, int mode);
+char		**check_redir(t_command *cmd_info);
+int			manage_redirection(t_command *cmd_info);
+void		execute_in_child(t_command *cmd_info, char **path_sp_w_slash, \
+			t_env *env_list);
 //----------------------------free----------------------------
 //----free.c---
 void		free_command(t_command *cmd_info);
@@ -183,6 +202,8 @@ char		**tokenize_quotes(char *input);
 //----handle_input.c----
 char		*make_good_cmd2(char *cmd);
 char		*make_good_cmd(char *cmd);
+void		remove_newline(char *str);
+int			copy_non_var_part(t_cmd_state *state, char *result, int j);
 //----rep_env_vars.c----
 char		*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell);
 int			process_env_var(t_cmd_state *state, char *result, \

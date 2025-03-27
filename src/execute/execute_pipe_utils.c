@@ -6,81 +6,12 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:32:31 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/24 14:18:28 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/27 14:55:16 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	get_pipe_bounds(t_command *cmd_info, int i, int *start, int *end)
-{
-	int	j;
-	int	count;
-
-	j = 0;
-	count = 0;
-	*start = 0;
-	while (cmd_info->tokens[j])
-	{
-		if (ft_strncmp(cmd_info->tokens[j], "|", 1) == 0)
-		{
-			count++;
-			if (count == i)
-				*start = j + 1;
-		}
-		j++;
-	}
-	if (count < i)
-		return (0);
-	*end = *start;
-	while (cmd_info->tokens[*end] && \
-		ft_strncmp(cmd_info->tokens[*end], "|", 1) != 0)
-		(*end)++;
-	return (1);
-}
-
-char	**get_pipe_command(t_command *cmd_info, int i)
-{
-	int		start;
-	int		end;
-	int		j;
-	char	**pipe_command;
-
-	if (!get_pipe_bounds(cmd_info, i, &start, &end))
-		return (NULL);
-	pipe_command = malloc(sizeof(char *) * (end - start + 1));
-	if (!pipe_command)
-		return (NULL);
-	j = 0;
-	while (start < end)
-	{
-		pipe_command[j] = ft_strdup(cmd_info->tokens[start]);
-		start++;
-		j++;
-	}
-	pipe_command[j] = NULL;
-	return (pipe_command);
-}
-
-int	create_pipe(int *pipe_fd)
-{
-	return (pipe(pipe_fd));
-}
-
-void	child_process_setup_io(t_pipe_exec_info pipe_exec_info)
-{
-	if (pipe_exec_info.prev_pipe_fd != -1)
-	{
-		dup2(pipe_exec_info.prev_pipe_fd, STDIN_FILENO);
-		close(pipe_exec_info.prev_pipe_fd);
-	}
-	if (pipe_exec_info.i < pipe_exec_info.cmd_info->c_pipe)
-	{
-		dup2(pipe_exec_info.pipe_fd[1], STDOUT_FILENO);
-		close(pipe_exec_info.pipe_fd[1]);
-		close(pipe_exec_info.pipe_fd[0]);
-	}
-}
 /*
 void	child_process_handle_redirection(t_pipe_exec_info pipe_exec_info)
 {
@@ -100,11 +31,13 @@ void	child_process_handle_redirection(t_pipe_exec_info pipe_exec_info)
 		close(pipe_exec_info.cmd_info->fd_out);
 	}
 }*/
+
 int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 {
 	int	exit_builtin;
 
-	pipe_exec_info.current_command = clean_redir(pipe_exec_info.current_command, pipe_exec_info.cmd_info);
+	pipe_exec_info.current_command = \
+	clean_redir(pipe_exec_info.current_command, pipe_exec_info.cmd_info);
 	if (pipe_exec_info.cmd_info->file_out)
 		if (!manage_redirection(pipe_exec_info.cmd_info))
 			exit(0);
@@ -117,14 +50,6 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 		pipe_exec_info.path_sp_w_slash, pipe_exec_info.env_list, \
 		pipe_exec_info.cmd_info);
 	return (127);
-}
-
-int	execute_child_process_pipe_helper(t_pipe_exec_info pipe_exec_info)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	child_process_setup_io(pipe_exec_info);
-	return (child_process_execute_command(pipe_exec_info));
 }
 
 int	wait_for_child_processes(int *pids, int pipe_count)
@@ -181,9 +106,6 @@ int	execute_pipes_loop(t_pipe_exec_info *pipe_exec_info, \
 		pipe_exec_info->current_command = get_pipe_command(cmd_info, i);
 		if (!pipe_exec_info->current_command)
 			return (1);
-		/*if (cmd_info->c_red_o || cmd_info->c_append)
-			pipe_exec_info->current_command = \
-			clean_redir(pipe_exec_info->current_command, cmd_info);*/
 		if (i < cmd_info->c_pipe)
 			create_pipe(pipe_exec_info->pipe_fd);
 		pipe_exec_info->i = i;

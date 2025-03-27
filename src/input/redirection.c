@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:41:38 by diana             #+#    #+#             */
-/*   Updated: 2025/03/18 16:41:54 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/27 14:48:02 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	count_redirections(char *cmd, t_command *cmd_info)
 	{
 		if (!has_enclosed_double_quotes(cmd))
 			count_input_redirections(cmd, cmd_info, &i);
-		//if (!has_enclosed_double_quotes(cmd))
 		count_output_redirections(cmd, cmd_info, &i);
 		i++;
 	}

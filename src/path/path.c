@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:45:02 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/14 12:04:03 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/27 14:47:43 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	handle_path(char ***path_splitted, char ***path_sp_w_slash, \
 		exit(1);
 	}
 	*path_sp_w_slash = add_slash(*path_splitted);
-	//if (path_splitted)
-	free_arr(*path_splitted);
+	if (path_splitted)
+		free_arr(*path_splitted);
 	if (!*path_sp_w_slash)
 	{
 		write(2, "Error: add_slash() returned NULL\n", \
