@@ -18,7 +18,6 @@ int	process_exit_code(char *result, int j, t_shell *shell)
 	char	*tmp;
 
 	var_value = ft_itoa(shell->exit_code);
-	//printf("%d\n", cmd_info->exit_code);
 	tmp = var_value;
 	while (*tmp)
 		result[j++] = *tmp++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils_env.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:45:08 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/14 11:45:25 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:28:35 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ char	*allocate_env_entry(const char *variable, const char *value)
 	entry = malloc(total_len);
 	if (!entry)
 		return (NULL);
-	ft_strlcpy(entry, variable, ft_strlen(variable));
+	ft_strlcpy(entry, variable, var_len + 1);
 	entry[var_len] = '=';
-	ft_strlcpy(entry + var_len + 1, value, ft_strlen(value));
+	ft_strlcpy(entry + var_len + 1, value, val_len + 1);
 	return (entry);
 }
 

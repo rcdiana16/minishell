@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_nothing.c                                     :+:      :+:    :+:   */
+/*   export_utils_bis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 11:22:04 by diana             #+#    #+#             */
-/*   Updated: 2025/03/19 12:50:58 by maximemarti      ###   ########.fr       */
+/*   Created: 2025/03/27 15:13:48 by maximemarti       #+#    #+#             */
+/*   Updated: 2025/03/27 15:15:21 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	handle_sigquit(int sig)
+char	**get_tokens(char **cmd)
 {
-	(void)sig;
-	write(2, "Quit (core dumped)\n", 19);
-	rl_on_new_line();
-	rl_redisplay();
+	char	**tokens;
+	int		i;
+
+	i = 0;
+	while (cmd[i])
+		i++;
+	i--;
+	if (i == 1)
+		tokens = ft_split(cmd[1], '=');
+	else
+		tokens = ft_split(cmd[2], ' ');
+	return (tokens);
 }
 
-void	sigquit(void)
+void	join_cmd_values(char **cmd, char **value)
 {
-	struct sigaction	action;
-
-	ft_memset(&action, 0, sizeof(struct sigaction));
-	action.sa_handler = handle_sigquit;
-	action.sa_flags = 0;
-	sigaction(SIGQUIT, &action, NULL);
+	if (!cmd || !cmd[1])
+		return ;
+	if (cmd[1][0] == '\"' || cmd[1][0] == '\'')
+		join_quoted_values(cmd, value);
+	else if (cmd[2])
+		assign_value(cmd, value);
 }

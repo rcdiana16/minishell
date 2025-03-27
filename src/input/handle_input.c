@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:21:28 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/19 13:31:23 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/27 15:18:30 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,34 @@ char	*make_good_cmd2(char *cmd)
 		return (cmd);
 	}
 	return (tmp);
+}
+
+void	remove_newline(char *str)
+{
+	int	len;
+
+	if (!str)
+		return ;
+	len = ft_strlen(str);
+	if (len > 0 && str[len - 1] == '\n')
+		str[len - 1] = '\0';
+}
+
+bool	has_enclosed_double_quotes(char *token)
+{
+	int	len;
+
+	if (token == NULL || ft_strlen(token) < 2)
+		return (false);
+	len = ft_strlen(token);
+	if (token[0] == '\"' && token[len - 1] == '\"')
+		return (true);
+	return (false);
+}
+
+int	copy_non_var_part(t_cmd_state *state, char *result, int j)
+{
+	result[j++] = state->cmd[state->i];
+	(state->i)++;
+	return (j);
 }

@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 23:03:53 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/21 19:13:44 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/27 15:14:23 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	*allocate_cleaned_token(char *token)
+{
+	char	*cleaned_token;
+
+	cleaned_token = malloc(strlen(token) + 1);
+	if (!cleaned_token)
+		return (NULL);
+	return (cleaned_token);
+}
+
+void	copy_char_or_space(char *cleaned_token, char token_char, \
+	int *k, int *space_found)
+{
+	if (token_char != ' ')
+	{
+		cleaned_token[*k] = token_char;
+		(*k)++;
+		*space_found = 0;
+	}
+	else if (!(*space_found))
+	{
+		cleaned_token[*k] = ' ';
+		(*k)++;
+		*space_found = 1;
+	}
+}
 
 char	*clean_space(char *token)
 {
@@ -22,21 +49,12 @@ char	*clean_space(char *token)
 	j = 0;
 	k = 0;
 	space_found = 0;
-	cleaned_token = malloc(strlen(token) + 1);
+	cleaned_token = allocate_cleaned_token(token);
 	if (!cleaned_token)
 		return (NULL);
 	while (token[j])
 	{
-		if (token[j] != ' ')
-		{
-			cleaned_token[k++] = token[j];
-			space_found = 0;
-		}
-		else if (!space_found)
-		{
-			cleaned_token[k++] = ' ';
-			space_found = 1;
-		}
+		copy_char_or_space(cleaned_token, token[j], &k, &space_found);
 		j++;
 	}
 	cleaned_token[k] = '\0';
@@ -92,30 +110,4 @@ int	is_valid_variable_name(char *name)
 		i++;
 	}
 	return (1);
-}
-
-char	**get_tokens(char **cmd)
-{
-	char	**tokens;
-	int		i;
-
-	i = 0;
-	while (cmd[i])
-		i++;
-	i--;
-	if (i == 1)
-		tokens = ft_split(cmd[1], '=');
-	else
-		tokens = ft_split(cmd[2], ' ');
-	return (tokens);
-}
-
-void	join_cmd_values(char **cmd, char **value)
-{
-	if (!cmd || !cmd[1])
-		return ;
-	if (cmd[1][0] == '\"' || cmd[1][0] == '\'')
-		join_quoted_values(cmd, value);
-	else if (cmd[2])
-		assign_value(cmd, value);
 }
