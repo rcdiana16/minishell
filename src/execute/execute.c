@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/27 15:06:35 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/28 16:36:19 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 
 	if (cmd_info->c_pipe >= 1)
 		return (execute_pipes(cmd_info, path_sp_w_slash, env_list));
-	cmd_info->tokens = check_redir(cmd_info);
+	cmd_info->tokens = clean_redir(cmd_info->tokens, cmd_info);
 	if (!manage_redirection(cmd_info))
 		return (0);
 	exit_builtin = execute_builtin(cmd_info, env_list, path_sp_w_slash);

@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:32:31 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/27 14:55:16 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/28 16:34:51 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,19 +167,99 @@ int	execute_pipes_loop(t_pipe_exec_info *pipe_exec_info, \
 	return (0);
 }
 
+void insert_token(char ***tokens, int *size, int pos, const char *new_token) {
+    *size += 1;
+    *tokens = realloc(*tokens, (*size) * sizeof(char *));
+    if (*tokens == NULL) {
+        perror("Reallocation failed");
+        exit(1);
+    }
+    
+    // Shift tokens to the right to make space for the new token
+    for (int i = *size - 1; i > pos; i--) {
+        (*tokens)[i] = (*tokens)[i - 1];
+    }
+
+    // Insert new token
+    (*tokens)[pos] = strdup(new_token);
+    if ((*tokens)[pos] == NULL) {
+        perror("Memory allocation for token failed");
+        exit(1);
+    }
+}
+
+// Function to process tokens and split any token containing '|'
+void split_pipe_tokens(char ***tokens, int *size) {
+    int i = 0; // Use a normal index to manage shifting
+
+    while (i < *size) {
+        char *token = (*tokens)[i];
+
+        // Skip if token is exactly "|", since it's already a separate token
+        if (strcmp(token, "|") == 0) {
+            i++;
+            continue;
+        }
+
+        // Find '|' inside the token
+        char *pipe_pos = strchr(token, '|');
+
+        if (pipe_pos) {
+            int index = pipe_pos - token; // Position of '|'
+
+            // Only split if `|` is not the only character
+            if (strlen(token) > 1) {
+                char *before_pipe = strndup(token, index); // Part before '|'
+                char *after_pipe = strdup(pipe_pos + 1);   // Part after '|'
+
+                if (before_pipe == NULL || after_pipe == NULL) {
+                    perror("Memory allocation failed during token split");
+                    exit(1);
+                }
+
+                // Insert '|' as a separate token
+                insert_token(tokens, size, i + 1, "|");
+
+                // Replace original token with part before '|'
+                free((*tokens)[i]);
+                (*tokens)[i] = before_pipe;
+
+                // If after_pipe is NOT empty, insert it as a separate token
+                if (strlen(after_pipe) > 0) {
+                    insert_token(tokens, size, i + 2, after_pipe);
+                }
+
+                free(after_pipe);
+
+                // Move `i` forward to **skip newly inserted tokens** and prevent infinite loops
+                i += 2;
+            }
+        }
+        else {
+            i++; // Only move forward if no split happened
+        }
+    }
+}
+
+
 int	execute_pipes(t_command *cmd_info, char **path_sp_w_slash, t_env *env_list)
 {
 	t_pipe_exec_info	pipe_exec_info;
 	int					pids[26];
 	int					return_value;
-
+	int i = 0;
 	//pids = malloc(sizeof(int) * (cmd_info->c_pipe + 1));
 	//if (!pids)
 	//	return (1);
+	while (cmd_info->tokens[i])
+		i++;
+	
 	pipe_exec_info.prev_pipe_fd = -1;
 	pipe_exec_info.path_sp_w_slash = path_sp_w_slash;
 	pipe_exec_info.env_list = env_list;
+	split_pipe_tokens(&cmd_info->tokens, &i);
 	pipe_exec_info.cmd_info = cmd_info;
+	
 	if (execute_pipes_loop(&pipe_exec_info, pids, cmd_info) != 0)
 	{
 	//	free(pids);
