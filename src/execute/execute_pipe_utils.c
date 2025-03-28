@@ -170,22 +170,22 @@ int	execute_pipes_loop(t_pipe_exec_info *pipe_exec_info, \
 int	execute_pipes(t_command *cmd_info, char **path_sp_w_slash, t_env *env_list)
 {
 	t_pipe_exec_info	pipe_exec_info;
-	int					*pids;
+	int					pids[26];
 	int					return_value;
 
-	pids = malloc(sizeof(int) * (cmd_info->c_pipe + 1));
-	if (!pids)
-		return (1);
+	//pids = malloc(sizeof(int) * (cmd_info->c_pipe + 1));
+	//if (!pids)
+	//	return (1);
 	pipe_exec_info.prev_pipe_fd = -1;
 	pipe_exec_info.path_sp_w_slash = path_sp_w_slash;
 	pipe_exec_info.env_list = env_list;
 	pipe_exec_info.cmd_info = cmd_info;
 	if (execute_pipes_loop(&pipe_exec_info, pids, cmd_info) != 0)
 	{
-		free(pids);
+	//	free(pids);
 		return (1);
 	}
 	return_value = wait_for_child_processes(pids, cmd_info->c_pipe);
-	free(pids);
+	//free(pids);
 	return (return_value);
 }
