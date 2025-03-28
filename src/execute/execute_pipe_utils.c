@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:32:31 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/27 14:55:16 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/28 14:57:47 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 		return (1);
 	free_arr(old_command);
 	pipe_exec_info.current_command = tmp_command;
+	// add condition in if to check if file in 
 	if (pipe_exec_info.cmd_info->file_out)
 	{
 		if (!manage_redirection(pipe_exec_info.cmd_info))

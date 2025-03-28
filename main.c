@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/27 14:48:29 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/28 17:19:08 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	handle_user_input(t_command **cmd_info, t_env *env_list, \
 void	initialize_shell(t_env **env_list, char **env, t_shell_data *data)
 {
 	data->original_stdout = dup(STDOUT_FILENO);
+	data->original_stdin = dup(STDIN_FILENO);//data original stdin
 	data->shell.exit_code = 0;
 	if (init_shell(env, env_list, &data->path_splitted, \
 		&data->path_sp_w_slash) == 1)
@@ -70,6 +71,9 @@ void	execute_shell_loop(t_env *env_list, char **env)
 			cmd_info->c_append >= 1 || cmd_info->c_append >= 1) \
 			&& (cmd_info->c_pipe == 0))
 			dup2(data.original_stdout, STDOUT_FILENO);
+		// add condition if we need to dup2 stdin
+		if ((input_status != 0) && cmd_info->c_red_i == 1 && (cmd_info->c_pipe == 0))
+			dup2(data.original_stdin, STDIN_FILENO);
 		if (cmd_info)
 			free_command(cmd_info);
 	}

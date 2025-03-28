@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:59:48 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/27 15:49:52 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/28 17:32:32 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	return (0);
 }
 
-/*
+
 void	handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
 {
 	if (ft_strncmp(cmd_tokens[*i], ">", 1) == 0 || \
@@ -62,6 +62,16 @@ void	handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
 			cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
 			cmd_info->c_red_o = (ft_strncmp(cmd_tokens[*i], ">", 1) == 0);
 			cmd_info->c_append = (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0);
+			*i += 2;
+		}
+	}
+	//add else if for the redirection <
+	else if (ft_strncmp(cmd_tokens[*i], "<", 1) == 0)
+	{
+		if (cmd_tokens[*i + 1])
+		{
+			cmd_info->file_in = ft_strdup(cmd_tokens[*i + 1]);
+			cmd_info->c_red_i = 1;
 			*i += 2;
 		}
 	}
@@ -83,8 +93,10 @@ char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
 	i = 0;
 	while (cmd_tokens[i])
 	{
+		//add comparaison for "<""
 		if (ft_strncmp(cmd_tokens[i], ">", 1) == 0 || \
-		ft_strncmp(cmd_tokens[i], ">>", 2) == 0)
+		ft_strncmp(cmd_tokens[i], ">>", 2) == 0 || \
+		ft_strncmp(cmd_tokens[i], "<", 1) == 0)
 			handle_redirection(cmd_tokens, cmd_info, &i);
 		else
 		{
@@ -94,7 +106,7 @@ char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
 	}
 	cleaned_cmd[j] = NULL;
 	return (cleaned_cmd);
-}*/
+}/*
 
 void	handle_output_redirection(char **cmd_tokens, \
 	t_command *cmd_info, int *i)
@@ -159,3 +171,4 @@ char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
 	cleaned_cmd[j] = NULL;
 	return (cleaned_cmd);
 }
+*/
