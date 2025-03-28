@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/19 13:30:29 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/26 11:26:38 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,33 @@ t_command	*parse_and_store_command(char *line, t_env *env_mini, \
 	return (cmd_info);
 }
 
+void add_to_history(t_shell *shell, char *command)
+{
+    t_history *new_entry = malloc(sizeof(t_history));
+    if (!new_entry)
+        return;
+    new_entry->command = ft_strdup(command);
+    new_entry->next = NULL;
+    new_entry->prev = NULL;
+
+    if (!shell->history)
+        shell->history = new_entry;
+    else
+    {
+        t_history *last = shell->history;
+        while (last->next)
+            last = last->next;
+        last->next = new_entry;
+        new_entry->prev = last;
+    }
+}
+
+
 t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
 			char **path)
 {
 	char	*line;
-
+	
 	line = read_command_line(mode);
 	if (!line || *line == '\0')
 	{
@@ -89,7 +111,15 @@ t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
 		handle_eof_or_empty(line, shell, env_mini, mode);
 		return (NULL);
 	}
-	add_history(line);
-	write_history(".minishell_history");
+	//add_to_history(shell, line);
+	if (line && *line != '\0') {
+        add_history(line);  // 📌 Add to Readline's history
+    }
+	/*if (line) {
+        // If you're navigating UP in the history, you'd get the previous command
+        rl_replace_line(line, 0);  // Replace the current line with the history command
+        rl_point = strlen(line);   // Move the cursor to the end of the line
+        rl_redisplay();            // Redraw the terminal with the new line
+    }*/
 	return (parse_and_store_command(line, env_mini, shell));
 }
