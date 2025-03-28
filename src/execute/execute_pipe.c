@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:59:48 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/28 17:32:32 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/28 19:02:08 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,27 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 
 void	handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
 {
-	if (ft_strncmp(cmd_tokens[*i], ">", 1) == 0 || \
-	ft_strncmp(cmd_tokens[*i], ">>", 2) == 0)
+	//originalif (ft_strncmp(cmd_tokens[*i], ">", 1) == 0 || 
+	//ft_strncmp(cmd_tokens[*i], ">>", 2) == 0)
+	if (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0)
 	{
 		if (cmd_tokens[*i + 1])
 		{
 			cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
-			cmd_info->c_red_o = (ft_strncmp(cmd_tokens[*i], ">", 1) == 0);
-			cmd_info->c_append = (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0);
+			cmd_info->c_append = 1; // Solo marcar "append"
+			cmd_info->c_red_o = 0;
+			//cmd_info->c_red_o = (ft_strncmp(cmd_tokens[*i], ">", 1) == 0);
+			//cmd_info->c_append = (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0);
+			*i += 2;
+		}
+	}
+	else if (ft_strncmp(cmd_tokens[*i], ">", 1) == 0)
+	{
+		if (cmd_tokens[*i + 1])
+		{
+			cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
+			cmd_info->c_red_o = 1; // Marcar ">" normal
+			cmd_info->c_append = 0; // Asegurar que ">>" no interfiera
 			*i += 2;
 		}
 	}

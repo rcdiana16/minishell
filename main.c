@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/28 17:19:08 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/28 18:53:07 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	execute_shell_loop(t_env *env_list, char **env)
 			&& (cmd_info->c_pipe == 0))
 			dup2(data.original_stdout, STDOUT_FILENO);
 		// add condition if we need to dup2 stdin
-		if ((input_status != 0) && cmd_info->c_red_i == 1 && (cmd_info->c_pipe == 0))
+		if ((input_status != 0) && cmd_info->c_red_i == 1)
 			dup2(data.original_stdin, STDIN_FILENO);
 		if (cmd_info)
 			free_command(cmd_info);
