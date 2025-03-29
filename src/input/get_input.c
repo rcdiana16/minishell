@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/19 13:30:29 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/28 14:42:54 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
 		return (NULL);
 	}
 	add_history(line);
-	write_history(".minishell_history");
+	//write_history(".minishell_history");
 	return (parse_and_store_command(line, env_mini, shell));
 }

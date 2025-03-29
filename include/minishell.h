@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/27 15:18:22 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/28 16:03:21 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ typedef struct s_command
 {
 	char	**tokens;
 	char	*file_out;
+	char	*file_in;
 	int		fd_out;
+	int		fd_in;
 	int		c_pipe;
 	int		c_red_i;
 	int		c_red_o;
@@ -85,6 +87,7 @@ typedef struct s_shell_data
 	char	**path_sp_w_slash;
 	t_shell	shell;
 	int		original_stdout;
+	int		original_stdin;
 }	t_shell_data;
 typedef struct s_pipe_exec_info
 {
