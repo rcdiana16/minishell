@@ -30,6 +30,8 @@ void	free_command(t_command *cmd_info)
 	}
 	if (cmd_info->file_out)
 		free(cmd_info->file_out);
+	if (cmd_info->file_in)
+		free(cmd_info->file_in);
 	free(cmd_info);
 }
 

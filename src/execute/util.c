@@ -12,12 +12,13 @@
 
 #include "../../include/minishell.h"
 
-void	exec_builtin_or_exit_pipe(char *command, t_command *cmd_info, \
+void	exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 	t_env *env_list, char **path_sp_w_slash)
 {
 	write(2, "minishell: ", ft_strlen("minishell: "));
-	write(2, command, ft_strlen(command));
+	write(2, command[0], ft_strlen(command[0]));
 	write(2, ": command not found\n", ft_strlen(": command not found\n"));
 	free_all(cmd_info, path_sp_w_slash, env_list);
+	free_arr(command);
 	exit(127);
 }

@@ -155,10 +155,8 @@ char		**convert_env_to_array(t_env *env_mini);
 char		**clean_redir(char **cmd_tokens, t_command *cmd_info);
 int			execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 			t_env *env_list, t_command *stru);
-void		exec_builtin_or_exit_pipe(char *command, t_command *cmd_info, \
-			t_env *env_list, char **path_sp_w_slash);
 char		*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
-			t_env *env_list);
+			t_env *env_list, t_command *stru);
 //----execute_pipe_utils.c----
 int			execute_pipes(t_command *cmd_info, \
 			char **path_sp_w_slash, t_env *env_list);
@@ -171,7 +169,7 @@ int			create_pipe(int *pipe_fd);
 void		child_process_setup_io(t_pipe_exec_info pipe_exec_info);
 int			execute_child_process_pipe_helper(t_pipe_exec_info pipe_exec_info);
 //----utils.c----
-void		exec_builtin_or_exit_pipe(char *command, t_command *cmd_info, \
+void		exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 			t_env *env_list, char **path_sp_w_slash);
 //----check_redir.c----
 int			open_file(char *file, int mode);

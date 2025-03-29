@@ -66,13 +66,13 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 {
 	int	  exit_builtin;
 	char  **tmp_command;
-	char  **old_command;
+//	char  **old_command;
 
-	old_command = pipe_exec_info.current_command;
+	//old_command = pipe_exec_info.current_command;
 	tmp_command = clean_redir(pipe_exec_info.current_command, pipe_exec_info.cmd_info);
 	if (!tmp_command)
 		return (1);
-	free_arr(old_command);
+	//free_arr(old_command);
 	pipe_exec_info.current_command = tmp_command;
 	if (pipe_exec_info.cmd_info->file_out || pipe_exec_info.cmd_info->file_in)
 	{
