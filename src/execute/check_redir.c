@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:04:23 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/28 17:11:23 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/31 16:15:33 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ int	manage_redirection(t_command *cmd_info)
 	else if ((cmd_info->c_red_o == 1 || cmd_info->c_append == 1))
 	{
 		if (!cmd_info->file_out || cmd_info->file_out[0] == '\0')
-		{
 			return (-1);
-		}
 		if (cmd_info->c_red_o == 1)
 			cmd_info->fd_out = open_file(cmd_info->file_out, 1);
 		else if (cmd_info->c_append == 1)

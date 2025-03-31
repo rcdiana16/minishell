@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/28 14:42:54 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/31 17:26:39 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
 int	check_syntax(char **cmd)
 {
 	int	i;
@@ -23,15 +24,20 @@ int	check_syntax(char **cmd)
 		return (0);
 	while (cmd[i] && cmd[i + 1])
 	{
-		if (ft_strncmp(cmd[i], ">", 1) == 0 && ft_strncmp(cmd[i + 1], ">", 1) == 0)
+		if (ft_strncmp(cmd[i], ">", 1) == 0 && \
+		(cmd[i + 1], ">", 1) == 0)
 			return (0);
-		if (ft_strncmp(cmd[i], ">>", 2) == 0 && ft_strncmp(cmd[i + 1], ">>", 2) == 0)
+		if (ft_strncmp(cmd[i], ">>", 2) == 0 && \
+		ft_strncmp(cmd[i + 1], ">>", 2) == 0)
 			return (0);
-		if (ft_strncmp(cmd[i], ">", 1) == 0 && ft_strncmp(cmd[i + 1], "|", 1) == 0)
+		if (ft_strncmp(cmd[i], ">", 1) == 0 && \
+		ft_strncmp(cmd[i + 1], "|", 1) == 0)
 			return (0);
-		if (ft_strncmp(cmd[i], ">>", 2) == 0 && ft_strncmp(cmd[i + 1], "|", 1) == 0)
+		if (ft_strncmp(cmd[i], ">>", 2) == 0 && \
+		ft_strncmp(cmd[i + 1], "|", 1) == 0)
 			return (0);
-		if (ft_strncmp(cmd[i], "|", 1) == 0 && ft_strncmp(cmd[i + 1], "|", 1) == 0)
+		if (ft_strncmp(cmd[i], "|", 1) == 0 && \
+		ft_strncmp(cmd[i + 1], "|", 1) == 0)
 			return (0);
 		i++;
 	}
@@ -40,8 +46,9 @@ int	check_syntax(char **cmd)
 	if (ft_strncmp(cmd[i], ">>", 2) == 0 && cmd[i + 1] == NULL)
 		return (0);
 	return (1);
-}
+}*/
 
+/*
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 			t_shell *shell)
 {
@@ -93,7 +100,7 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 	}
 	process_tokens(cmd_info, env_mini, shell);
 	return (cmd_info);
-}
+}*/
 
 char	*read_command_line(int mode)
 {

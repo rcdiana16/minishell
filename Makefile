@@ -6,7 +6,7 @@
 #    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/27 15:14:06 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/03/31 17:39:14 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,9 @@ SRCS            = main.c \
 					src/input/handle_input.c \
 					src/input/quote.c \
 					src/input/redirection.c \
+					src/input/verify_and_split_cmd.c \
+					src/input/check_syntax.c \
+					src/input/count_sp_ch.c \
 					src/execute/execute_utils.c \
 					src/execute/execute.c \
 					src/execute/execute_utils_env.c \
@@ -37,6 +40,8 @@ SRCS            = main.c \
 					src/execute/utils_pipe.c \
 					src/execute/util.c \
 					src/execute/check_redir.c \
+					src/execute/here_doc.c \
+					src/execute/redir.c \
 					src/check_cmd/check_builtins.c \
 					src/ft_list/list.c \
 					src/free/free.c \
@@ -54,7 +59,6 @@ SRCS            = main.c \
 					src/builtins/unset.c \
 					src/signals/ctrl_c.c \
 					src/signals/ctrl_nothing.c \
-					src/signals/signal_pipex.c \
 					src/utils/utils.c \
 
 OBJS            = $(SRCS:.c=.o)

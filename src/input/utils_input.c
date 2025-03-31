@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/27 15:16:25 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/31 17:29:27 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 	}
 }
 
+/*
 void	count_special_chars(char *cmd, t_command *cmd_info)
 {
 	int		i;
@@ -126,4 +127,4 @@ void	count_special_chars(char *cmd, t_command *cmd_info)
 		i++;
 	}
 	cmd[j] = '\0';
-}
+}*/

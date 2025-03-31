@@ -6,12 +6,12 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:32:31 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/31 12:58:49 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/31 17:20:31 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
+/*
 int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 {
 	int		exit_builtin;
@@ -44,23 +44,52 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 							pipe_exec_info.path_sp_w_slash, \
 			pipe_exec_info.env_list, pipe_exec_info.cmd_info);
 	return (127);
+}*/
+
+int	handle_redirection_and_builtins(t_pipe_exec_info *pipe_exec_info)
+{
+	int	exit_builtin;
+
+	if (pipe_exec_info->cmd_info->file_out || pipe_exec_info->cmd_info->file_in)
+	{
+		if (!manage_redirection(pipe_exec_info->cmd_info))
+		{
+			free_arr(pipe_exec_info->current_command);
+			exit(0);
+		}
+	}
+	exit_builtin = check_builtins(pipe_exec_info->current_command, \
+					pipe_exec_info->env_list, \
+					pipe_exec_info->cmd_info, \
+					pipe_exec_info->path_sp_w_slash);
+	if (exit_builtin != -1)
+	{
+		free_all(pipe_exec_info->cmd_info, pipe_exec_info->path_sp_w_slash, \
+			pipe_exec_info->env_list);
+		free_arr(pipe_exec_info->current_command);
+		return (exit_builtin);
+	}
+	return (-1);
 }
 
-int	wait_for_child_processes(int *pids, int pipe_count)
+int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 {
-	int	i;
-	int	exit_status;
+	char	**tmp_command;
+	int		exit_builtin;
 
-	i = 0;
-	while (i <= pipe_count)
-	{
-		waitpid(pids[i], &exit_status, 0);
-		i++;
-	}
-	set_signals();
-	if (WIFEXITED(exit_status))
-		return (WEXITSTATUS(exit_status));
-	return (0);
+	tmp_command = clean_redir(pipe_exec_info.current_command, \
+		pipe_exec_info.cmd_info);
+	if (!tmp_command)
+		return (1);
+	pipe_exec_info.current_command = tmp_command;
+	exit_builtin = handle_redirection_and_builtins(&pipe_exec_info);
+	if (exit_builtin != -1)
+		return (exit_builtin);
+	execute_child_process_pipe(pipe_exec_info.current_command, \
+					pipe_exec_info.path_sp_w_slash, \
+					pipe_exec_info.env_list, \
+					pipe_exec_info.cmd_info);
+	return (127);
 }
 
 int	execute_pipes_child_process(t_pipe_exec_info *pipe_exec_info, \

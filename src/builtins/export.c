@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:40 by diana             #+#    #+#             */
-/*   Updated: 2025/03/18 10:16:58 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/31 16:12:02 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	join_quoted_values(char **cmd, char **value)
 
 void	assign_value(char **cmd, char **value)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = ft_strdup(cmd[1]);
 	*value = tmp;

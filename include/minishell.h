@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/31 12:45:14 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/03/31 17:39:41 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,12 @@ void		assign_value(char **cmd, char **value);
 //----export_utils.c----
 void		init_new_variable(t_env *new_var, char **tokens);
 int			is_valid_variable_name(char *name);
-char		**check_split(char **cmd);
-char		**get_tokens(char *cmd);
-void		join_cmd_values(char **cmd, char **value);
 //----export_utils_update.c----
 int			handle_existing_variable(t_env *env_mini, char **cmd);
 int			update_existing_variable(t_env *env_mini, char **cmd);
 //----export_utils_bis.c----
+char		**get_tokens(char *cmd);
+void		join_cmd_values(char **cmd, char **value);
 //----pwd.c----
 void		ft_our_pwd(t_env *env_mini);
 //----unset.c----
@@ -137,20 +136,24 @@ void		ft_unset(t_env *env_mini, char **cmd);
 //----check_builtins.c----
 int			check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info, \
 			char **path);
-void		add_new_variable(t_env *env_mini, char **tokens, t_env *new_var);
+//void		add_new_variable(t_env *env_mini, char **tokens, t_env *new_var);
 //----------------------------execute----------------------------
 //----execute.c----
 int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
-int			open_file(char *file, int mode);
-int			manage_redirection(t_command *cmd_info);
-char		**check_redir(t_command *cmd_info);
 int			execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
 //----execute_utils.c----
 char		*find_no_builtin(char **good_path, char **command);
+int			wait_for_child_processes(int *pids, int pipe_count);
 //----execute_utils_env.c
 char		**convert_env_to_array(t_env *env_mini);
+//----here_doc.c----
+void		here_doc(char *limiter, int *fd);
+void		handle_heredoc_redirection(char **cmd_tokens, t_command *cmd_info, \
+			int *i);
+//----redir.c----
+void		handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i);
 //----execute_pipe.c----
 char		**clean_redir(char **cmd_tokens, t_command *cmd_info);
 int			execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
@@ -161,7 +164,7 @@ char		*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
 int			execute_pipes(t_command *cmd_info, \
 			char **path_sp_w_slash, t_env *env_list);
 int			child_process_execute_command(t_pipe_exec_info pipe_exec_info);
-void		child_process_handle_redirection(t_pipe_exec_info pipe_exec_info);
+//void		child_process_handle_redirection(t_pipe_exec_info pipe_exec_info);
 //----utils_pipe.c----
 int			get_pipe_bounds(t_command *cmd_info, int i, int *start, int *end);
 char		**get_pipe_command(t_command *cmd_info, int i);
@@ -173,7 +176,6 @@ void		exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 			t_env *env_list, char **path_sp_w_slash);
 //----check_redir.c----
 int			open_file(char *file, int mode);
-char		**check_redir(t_command *cmd_info);
 int			manage_redirection(t_command *cmd_info);
 void		execute_in_child(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
@@ -205,6 +207,14 @@ char		*make_good_cmd2(char *cmd);
 char		*make_good_cmd(char *cmd);
 void		remove_newline(char *str);
 int			copy_non_var_part(t_cmd_state *state, char *result, int j);
+bool		has_enclosed_double_quotes(char *token);
+//----verify_and_split_cmd.c----
+t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
+			t_shell *shell);
+//---check_syntax.c----
+int			check_syntax(char **cmd);
+//----count_sp_ch.c----
+void		count_special_chars(char *cmd, t_command *cmd_info);
 //----rep_env_vars.c----
 char		*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell);
 int			process_env_var(t_cmd_state *state, char *result, \
@@ -213,15 +223,12 @@ int			process_env_var(t_cmd_state *state, char *result, \
 int			process_var(t_cmd_state *state, char *result, \
 			int j, t_shell_env *shell_env);
 //----utils_input.c----
-void		count_redirections(char *cmd, t_command *cmd_info);
 t_command	*initialize_command(t_shell *shell);
 void		count_special_chars(char *cmd, t_command *cmd_info);
 void		process_tokens(t_command *cmd_info, t_env *env_mini, \
 			t_shell *shell);
-void		remove_newline(char *str);
 //----quote.c----
 bool		has_enclosed_single_quotes(char *token);
-bool		has_enclosed_double_quotes(char *token);
 void		delete_quotes(char *token);
 void		clean_quotes(char *token);
 void		remove_single_quotes(char *token);
