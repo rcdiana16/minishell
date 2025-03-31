@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/29 11:24:38 by diana            ###   ########.fr       */
+/*   Updated: 2025/03/31 12:36:23 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		if ((input_status != 0) && (cmd_info->c_red_o >= 1 || \
 			cmd_info->c_append >= 1) && (cmd_info->c_pipe == 0))
 			dup2(data.original_stdout, STDOUT_FILENO);
-		if ((input_status != 0) && cmd_info->c_red_i == 1)
+		if ((input_status != 0) && (cmd_info->c_red_i == 1 || cmd_info->here_doc == 1) && (cmd_info->c_pipe == 0))
 			dup2(data.original_stdin, STDIN_FILENO);
 		if (cmd_info)
 			free_command(cmd_info);
