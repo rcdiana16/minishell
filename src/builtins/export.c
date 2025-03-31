@@ -17,7 +17,7 @@ void	join_quoted_values(char **cmd, char **value)
 	int		i;
 	char	*temp;
 
-	i = 2;
+	i = 0;
 	while (cmd[i])
 	{
 		temp = ft_strjoin(*value, " ");
@@ -30,25 +30,18 @@ void	join_quoted_values(char **cmd, char **value)
 
 void	assign_value(char **cmd, char **value)
 {
-	free(*value);
-	if (cmd[1][ft_strlen(cmd[1]) - 1] == '=')
-		*value = ft_strdup(cmd[2]);
-	else
-		*value = ft_strdup(ft_strrchr(cmd[1], '=') + 1);
+	char *tmp;
+
+	tmp = ft_strdup(cmd[1]);
+	*value = tmp;
+	free(tmp);
 }
 
-void	add_new_variable(t_env *env_mini, char **cmd)
+void	add_new_variable(t_env *env_mini, char **tokens, t_env *new_var)
 {
-	t_env	*new_var;
-	char	**tokens;
-
-	if (!cmd || !cmd[1])
-		return ;
-	tokens = ft_split(cmd[1], '=');
 	if (!tokens || !tokens[0])
 		return ;
-	init_new_variable(&new_var, tokens);
-	join_cmd_values(cmd, &new_var->value);
+	join_cmd_values(tokens, &new_var->value);
 	delete_quotes(new_var->value);
 	new_var->next = NULL;
 	while (env_mini->next)
@@ -67,20 +60,38 @@ static int	is_invalid_identifier(char **tokens)
 		free_arr(tokens);
 		return (1);
 	}
+	if (!tokens[1])
+	{
+		free_arr(tokens);
+		return (1);
+	}
 	return (0);
 }
 
 int	ft_export(t_env *env_mini, char **cmd)
 {
 	char	**tokens;
+	int		i;
+	t_env	*new_var;
 
+	i = 1;
 	if (!cmd || !cmd[1])
 		return (1);
-	tokens = get_tokens(cmd);
-	if (is_invalid_identifier(tokens))
-		return (1);
-	if (!update_existing_variable(env_mini, cmd))
-		add_new_variable(env_mini, cmd);
-	free_arr(tokens);
+	while (cmd[i])
+	{
+		tokens = get_tokens(cmd[i]);
+		if (is_invalid_identifier(tokens))
+			return (1);
+		if (!update_existing_variable(env_mini, tokens))
+		{
+			new_var = malloc(sizeof(t_env));
+			if (!new_var)
+				return (1);
+			init_new_variable(new_var, tokens);
+			add_new_variable(env_mini, tokens, new_var);
+		}
+		free_arr(tokens);
+		i++;
+	}
 	return (0);
 }

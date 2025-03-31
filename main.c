@@ -44,7 +44,7 @@ int	handle_user_input(t_command **cmd_info, t_env *env_list, \
 void	initialize_shell(t_env **env_list, char **env, t_shell_data *data)
 {
 	data->original_stdout = dup(STDOUT_FILENO);
-	data->original_stdin = dup(STDIN_FILENO);//data original stdin
+	data->original_stdin = dup(STDIN_FILENO);
 	data->shell.exit_code = 0;
 	if (init_shell(env, env_list, &data->path_splitted, \
 		&data->path_sp_w_slash) == 1)
@@ -70,7 +70,6 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		if ((input_status != 0) && (cmd_info->c_red_o >= 1 || \
 			cmd_info->c_append >= 1) && (cmd_info->c_pipe == 0))
 			dup2(data.original_stdout, STDOUT_FILENO);
-		// add condition if we need to dup2 stdin
 		if ((input_status != 0) && cmd_info->c_red_i == 1)
 			dup2(data.original_stdin, STDIN_FILENO);
 		if (cmd_info)

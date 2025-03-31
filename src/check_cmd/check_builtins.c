@@ -20,14 +20,14 @@ int	check_standard_builtins(char **command, t_env *env_mini, \
 	if ((ft_strncmp(command[0], "echo", ft_strlen(command[0]) + 1)) == 0)
 		return (ft_our_echo(command), 0);
 	else if ((ft_strncmp(command[0], "cd", ft_strlen(command[0]) + 1)) == 0)
-		return (is_valid_path(command[1], env_mini, *cmd_info));
+		return (is_valid_path(command[1], env_mini, *cmd_info, command));
 	else if ((ft_strncmp(command[0], "pwd", ft_strlen(command[0]) + 1)) == 0)
 		return (ft_our_pwd(env_mini), 0);
 	else if ((ft_strncmp(command[0], "env", ft_strlen(command[0]) + 1)) == 0)
 		return ((ft_our_env(env_mini, command)));
 	else if ((ft_strncmp(command[0], "exit", ft_strlen(command[0]) + 1)) == 0)
 		return ((ft_our_exit(env_mini, (*cmd_info)->tokens, \
-		*cmd_info, path)), 1);
+		*cmd_info, path)), 2);
 	else
 		return (-1);
 }
@@ -69,7 +69,7 @@ int	check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info, \
 	exit = check_standard_builtins(cmd, env_mini, &cmd_info, path);
 	if (exit != -1)
 		return (exit);
-	exit = check_env_builtins(cmd_info->tokens, env_mini);
+	exit = check_env_builtins(cmd, env_mini);
 	if (exit != -1)
 		return (exit);
 	return (-1);

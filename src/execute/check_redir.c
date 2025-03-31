@@ -36,12 +36,12 @@ int	open_file(char *file, int mode)
 {
 	int	fd;
 
-	fd = 0;
+	fd = -1;
 	if (mode == 1)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (mode == 2)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (mode == 3)//Maxime comment 
+	else if (mode == 3)
 		fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
@@ -55,21 +55,26 @@ int	open_file(char *file, int mode)
 
 int	manage_redirection(t_command *cmd_info)
 {
-	if (cmd_info->c_red_i == 1) //test para ver si aqui funciona
+	if (cmd_info->c_red_i == 1)
 	{
+		if (!cmd_info->file_in || cmd_info->file_in[0] == '\0')
+			return (2);
 		cmd_info->fd_in = open_file(cmd_info->file_in, 3);
 		if (cmd_info->fd_in == -1)
 			return (0);
 		dup2(cmd_info->fd_in, STDIN_FILENO);
 		close(cmd_info->fd_in);
 	}
-	if (cmd_info->c_red_o == 1 || cmd_info->c_append == 1)
+	else if ((cmd_info->c_red_o == 1 || cmd_info->c_append == 1))
 	{
+		if (!cmd_info->file_out || cmd_info->file_out[0] == '\0')
+		{
+			return (-1);
+		}
 		if (cmd_info->c_red_o == 1)
 			cmd_info->fd_out = open_file(cmd_info->file_out, 1);
 		else if (cmd_info->c_append == 1)
 			cmd_info->fd_out = open_file(cmd_info->file_out, 2);
-		// add for redir in 
 		if (cmd_info->fd_out == -1)
 			return (0);
 		dup2(cmd_info->fd_out, STDOUT_FILENO);

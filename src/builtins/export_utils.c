@@ -61,38 +61,20 @@ char	*clean_space(char *token)
 	return (cleaned_token);
 }
 
-void	init_new_variable(t_env **new_var, char **tokens)
+void	init_new_variable(t_env *new_var, char **tokens)
 {
 	char	*cleaned_value;
 
-	*new_var = malloc(sizeof(t_env));
-	if (!*new_var)
-		return ;
-	(*new_var)->variable = ft_strdup(tokens[0]);
+	new_var->variable = ft_strdup(tokens[0]);
 	if (tokens[1])
 	{
 		cleaned_value = clean_space(tokens[1]);
-		(*new_var)->value = ft_strdup(cleaned_value);
+		new_var->value = cleaned_value;
 		free(cleaned_value);
 	}
 	else
-		(*new_var)->value = ft_strdup("");
-	free_arr(tokens);
+		new_var->value = ft_strdup("");
 }
-
-/*
-void	init_new_variable(t_env **new_var, char **tokens)
-{
-	*new_var = malloc(sizeof(t_env));
-	if (!*new_var)
-		return ;
-	(*new_var)->variable = ft_strdup(tokens[0]);
-	if (tokens[1])
-		(*new_var)->value = ft_strdup(clean_space(tokens[1]));
-	else
-		(*new_var)->value = ft_strdup("");
-	free_arr(tokens);
-}*/
 
 int	is_valid_variable_name(char *name)
 {

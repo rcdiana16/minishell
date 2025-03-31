@@ -56,12 +56,12 @@ void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)
 	free(cwd);
 }
 
-int	handle_cd_arguments(t_command *cmd_info)
+int	handle_cd_arguments(char **cmd, t_command *cmd_info)
 {
 	int	i;
 
 	i = 0;
-	while (cmd_info->tokens[i])
+	while (cmd[i])
 		i++;
 	if (i > 2)
 	{
@@ -73,7 +73,7 @@ int	handle_cd_arguments(t_command *cmd_info)
 	return (0);
 }
 
-int	is_valid_path(char *path, t_env *env_mini, t_command *cmd_info)
+int	is_valid_path(char *path, t_env *env_mini, t_command *cmd_info, char **cmd)
 {
 	char	*oldpwd;
 
@@ -83,7 +83,7 @@ int	is_valid_path(char *path, t_env *env_mini, t_command *cmd_info)
 		if (!path)
 			return (0);
 	}
-	if (handle_cd_arguments(cmd_info) != 0)
+	if (handle_cd_arguments(cmd, cmd_info) != 0)
 		return (1);
 	if (chdir(path) == 0)
 	{

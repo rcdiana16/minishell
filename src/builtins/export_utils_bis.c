@@ -12,28 +12,26 @@
 
 #include "../../include/minishell.h"
 
-char	**get_tokens(char **cmd)
+char	**get_tokens(char *cmd)
 {
 	char	**tokens;
-	int		i;
 
-	i = 0;
-	while (cmd[i])
-		i++;
-	i--;
-	if (i == 1)
-		tokens = ft_split(cmd[1], '=');
-	else
-		tokens = ft_split(cmd[2], ' ');
+	tokens = ft_split(cmd, '=');
 	return (tokens);
 }
 
 void	join_cmd_values(char **cmd, char **value)
 {
+	char	*temp;
+
 	if (!cmd || !cmd[1])
 		return ;
-	if (cmd[1][0] == '\"' || cmd[1][0] == '\'')
-		join_quoted_values(cmd, value);
-	else if (cmd[2])
-		assign_value(cmd, value);
+	if (cmd[0][0] == '\"' || cmd[0][0] == '\'')
+	{
+		temp = ft_strjoin(*value, " ");
+		*value = ft_strjoin(temp, cmd[1]);
+		free(temp);
+	}
+	else
+		*value = ft_strdup(cmd[1]);
 }

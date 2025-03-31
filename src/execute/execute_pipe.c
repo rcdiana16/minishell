@@ -49,40 +49,38 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	return (0);
 }
 
-
 void	handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
 {
-	//originalif (ft_strncmp(cmd_tokens[*i], ">", 1) == 0 || 
-	//ft_strncmp(cmd_tokens[*i], ">>", 2) == 0)
 	if (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0)
 	{
 		if (cmd_tokens[*i + 1])
 		{
 			cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
-			cmd_info->c_append = 1; // Solo marcar "append"
+			cmd_info->c_append = 1;
 			cmd_info->c_red_o = 0;
-			//cmd_info->c_red_o = (ft_strncmp(cmd_tokens[*i], ">", 1) == 0);
-			//cmd_info->c_append = (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0);
+			cmd_info->c_red_i = 0;
 			*i += 2;
 		}
 	}
 	else if (ft_strncmp(cmd_tokens[*i], ">", 1) == 0)
 	{
-		if (cmd_tokens[*i + 1])
+		if (cmd_tokens[*i + 1] && cmd_tokens[*i + 1][0] != '\0')
 		{
 			cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
-			cmd_info->c_red_o = 1; // Marcar ">" normal
-			cmd_info->c_append = 0; // Asegurar que ">>" no interfiera
+			cmd_info->c_red_o = 1;
+			cmd_info->c_append = 0;
+			cmd_info->c_red_i = 0;
 			*i += 2;
 		}
 	}
-	//add else if for the redirection <
 	else if (ft_strncmp(cmd_tokens[*i], "<", 1) == 0)
 	{
 		if (cmd_tokens[*i + 1])
 		{
 			cmd_info->file_in = ft_strdup(cmd_tokens[*i + 1]);
 			cmd_info->c_red_i = 1;
+			cmd_info->c_append = 0;
+			cmd_info->c_red_o = 0;
 			*i += 2;
 		}
 	}
@@ -104,10 +102,9 @@ char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
 	i = 0;
 	while (cmd_tokens[i])
 	{
-		//add comparaison for "<""
-		if (ft_strncmp(cmd_tokens[i], ">", 1) == 0 || \
+		if ((ft_strncmp(cmd_tokens[i], ">", 1) == 0 || \
 		ft_strncmp(cmd_tokens[i], ">>", 2) == 0 || \
-		ft_strncmp(cmd_tokens[i], "<", 1) == 0)
+		ft_strncmp(cmd_tokens[i], "<", 1) == 0) && (cmd_tokens[i + 1]))
 			handle_redirection(cmd_tokens, cmd_info, &i);
 		else
 		{
@@ -118,69 +115,4 @@ char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
 	cleaned_cmd[j] = NULL;
 	free_arr(cmd_tokens);
 	return (cleaned_cmd);
-}/*
-
-void	handle_output_redirection(char **cmd_tokens, \
-	t_command *cmd_info, int *i)
-{
-	if (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0)
-	{
-		cmd_info->c_red_o = 0;
-		cmd_info->c_append = 1;
-		if (cmd_tokens[*i][2] != '\0')
-			cmd_info->file_out = ft_strdup(cmd_tokens[*i] + 2);
-		else if (cmd_tokens[*i + 1])
-		{
-			cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
-			*i += 1;
-		}
-	}
-	else
-	{
-		cmd_info->c_red_o = 1;
-		cmd_info->c_append = 0;
-		if (cmd_tokens[*i][1] != '\0')
-			cmd_info->file_out = ft_strdup(cmd_tokens[*i] + 1);
-		else if (cmd_tokens[*i + 1])
-		{
-			cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
-			*i += 1;
-		}
-	}
-	*i += 1;
 }
-
-void	handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
-{
-	if (ft_strnstr(cmd_tokens[*i], ">", ft_strlen(cmd_tokens[*i])) != NULL)
-		handle_output_redirection(cmd_tokens, cmd_info, i);
-}
-
-char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
-{
-	int		i;
-	int		j;
-	char	**cleaned_cmd;
-
-	i = 0;
-	j = 0;
-	while (cmd_tokens[i])
-		i++;
-	cleaned_cmd = malloc(sizeof(char *) * (i + 1));
-	if (!cleaned_cmd)
-		return (NULL);
-	i = 0;
-	while (cmd_tokens[i])
-	{
-		if (ft_strnstr(cmd_tokens[i], ">", ft_strlen(cmd_tokens[i])) != NULL)
-			handle_redirection(cmd_tokens, cmd_info, &i);
-		else
-		{
-			cleaned_cmd[j++] = ft_strdup(cmd_tokens[i]);
-			i++;
-		}
-	}
-	cleaned_cmd[j] = NULL;
-	return (cleaned_cmd);
-}
-*/

@@ -105,7 +105,8 @@ typedef struct s_pipe_exec_info
 void		update_env(t_env *env, char *new_path, \
 			char *env_to_update, int flag);
 //----cd.c---
-int			is_valid_path(char *path, t_env *env_mini, t_command *cmd_info);
+int			is_valid_path(char *path, t_env *env_mini, \
+			t_command *cmd_info, char **cmd);
 //----echo.c----
 void		ft_our_echo(char **cmd);
 //----env.c----
@@ -118,18 +119,15 @@ int			ft_export(t_env *env_mini, char **cmd);
 void		join_quoted_values(char **cmd, char **value);
 void		assign_value(char **cmd, char **value);
 //----export_utils.c----
-void		init_new_variable(t_env **new_var, char **tokens);
+void		init_new_variable(t_env *new_var, char **tokens);
 int			is_valid_variable_name(char *name);
 char		**check_split(char **cmd);
-char		**get_tokens(char **cmd);
+char		**get_tokens(char *cmd);
 void		join_cmd_values(char **cmd, char **value);
 //----export_utils_update.c----
-int			handle_existing_variable(t_env *env_mini, char **cmd, \
-			char **tokens);
+int			handle_existing_variable(t_env *env_mini, char **cmd);
 int			update_existing_variable(t_env *env_mini, char **cmd);
 //----export_utils_bis.c----
-void		join_cmd_values(char **cmd, char **value);
-char		**get_tokens(char **cmd);
 //----pwd.c----
 void		ft_our_pwd(t_env *env_mini);
 //----unset.c----
@@ -138,6 +136,7 @@ void		ft_unset(t_env *env_mini, char **cmd);
 //----check_builtins.c----
 int			check_builtins(char **cmd, t_env *env_mini, t_command *cmd_info, \
 			char **path);
+void		add_new_variable(t_env *env_mini, char **tokens, t_env *new_var);
 //----------------------------execute----------------------------
 //----execute.c----
 int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
