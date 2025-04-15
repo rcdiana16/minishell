@@ -17,12 +17,14 @@ t_command	*initialize_command(t_shell *shell)
 	t_command	*cmd_info;
 
 	(void)shell;
+	cmd_info = NULL;
 	cmd_info = malloc(sizeof(t_command));
 	if (!cmd_info)
 		return (NULL);
 	cmd_info->c_pipe = 0;
 	cmd_info->flag = 0;
 	cmd_info->c_red_i = 0;
+	cmd_info->here_doc = 0;
 	cmd_info->c_red_o = 0;
 	cmd_info->quotes_s = 0;
 	cmd_info->quotes_d = 0;
@@ -30,6 +32,7 @@ t_command	*initialize_command(t_shell *shell)
 	cmd_info->file_out = NULL;
 	cmd_info->file_in = NULL;
 	cmd_info->c_append = 0;
+	cmd_info->flag_test = 0;
 	return (cmd_info);
 }
 
@@ -48,7 +51,17 @@ void	handle_double_quotes_and_env_vars(t_command *cmd_info, t_env *env_mini, \
 	new_cmd = make_good_cmd2(cmd_info->tokens[i]);
 	if (new_cmd)
 		cmd_info->tokens[i] = new_cmd;
+	if (cmd_info->tokens[i][0] == '$' && cmd_info->tokens[i][1] == ' ')
+		return ;
 	tmp = replace_env_vars(cmd_info->tokens[i], env_mini, shell);
+	if (tmp == NULL && cmd_info->c_red_o > 0)
+	{
+		cmd_info->flag_test = 1;
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd_info->tokens[i], 2);
+		ft_putstr_fd(": ambiguous redirect\n", 2);
+		return ;
+	}
 	if (tmp && tmp[0] != '\0')
 	{
 		free(cmd_info->tokens[i]);

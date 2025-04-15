@@ -47,7 +47,9 @@ int	open_file(char *file, int mode)
 	{
 		write(2, "minishell: ", ft_strlen("minishell: "));
 		write(2, file, ft_strlen(file));
-		write(2, ": Permission denied\n", ft_strlen(": Permission denied\n"));
+		//write(2, ": Permission denied\n", ft_strlen(": Permission denied\n"));
+		ft_putstr_fd(": ", 2);
+		perror("");
 		return (-1);
 	}
 	return (fd);

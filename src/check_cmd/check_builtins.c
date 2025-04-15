@@ -27,7 +27,7 @@ int	check_standard_builtins(char **command, t_env *env_mini, \
 		return ((ft_our_env(env_mini, command)));
 	else if ((ft_strncmp(command[0], "exit", ft_strlen(command[0]) + 1)) == 0)
 		return ((ft_our_exit(env_mini, (*cmd_info)->tokens, \
-		*cmd_info, path)), 2);
+		*cmd_info, path)));
 	else
 		return (-1);
 }

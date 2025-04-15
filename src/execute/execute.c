@@ -76,12 +76,18 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	int	pid;
 	int	exit_status;
 	int	exit_builtin;
+	//int	ret;
 
+	
 	if (cmd_info->c_pipe >= 1)
 		return (execute_pipes(cmd_info, path_sp_w_slash, env_list));
 	cmd_info->tokens = clean_redir(cmd_info->tokens, cmd_info);
 	if (!manage_redirection(cmd_info))
-		return (0);
+		return (1);
+	//if (ret != 1)
+	//	return (0);
+	if (cmd_info->flag_test ==1)
+		return 1;
 	exit_builtin = execute_builtin(cmd_info, env_list, path_sp_w_slash);
 	if (exit_builtin != -1)
 		return (exit_builtin);

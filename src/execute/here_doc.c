@@ -49,7 +49,7 @@ void	here_doc(char *limiter, int *fd)
 		ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
 			free(line);
-			close(fd[1]);
+			//close(fd[1]);
 			break ;
 		}
 		write(fd[1], line, ft_strlen(line));

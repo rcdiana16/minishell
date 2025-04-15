@@ -26,7 +26,7 @@ int	get_pipe_bounds(t_command *cmd_info, int i, int *start, int *end)
 		{
 			count++;
 			if (count == i)
-				*start = j + 1;
+				*start = j + 1;	
 		}
 		j++;
 	}
@@ -48,6 +48,7 @@ char	**get_pipe_command(t_command *cmd_info, int i)
 
 	if (!get_pipe_bounds(cmd_info, i, &start, &end))
 		return (NULL);
+
 	pipe_command = malloc(sizeof(char *) * (end - start + 1));
 	if (!pipe_command)
 		return (NULL);

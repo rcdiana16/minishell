@@ -42,7 +42,14 @@ static void	update_quote_flags(char c, bool *single, bool *double_q)
 		*single = !(*single);
 	else if (c == '"')
 		*double_q = !(*double_q);
-}
+}/*
+static void	update_quote_flags(char c, bool *single, bool *double_q, char prev)
+{
+    if (c == '\'' && prev != '\'')
+        *single = !(*single);
+    else if (c == '"' && prev != '"') 
+        *double_q = !(*double_q);
+}*/
 
 static void	add_token(char ***tokens, char *start, int *count)
 {
@@ -79,6 +86,7 @@ static void	process2_tokens(char *input, char ***tokens, bool *s_q, bool *d_q)
 		add_token(tokens, start, &count);
 }
 
+
 char	**tokenize_quotes(char *input)
 {
 	char	**tokens;
@@ -88,6 +96,7 @@ char	**tokenize_quotes(char *input)
 	tokens = NULL;
 	single_q = false;
 	double_q = false;
+	//printf("%s\n", input);
 	process2_tokens(input, &tokens, &single_q, &double_q);
 	return (tokens);
 }

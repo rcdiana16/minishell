@@ -56,9 +56,18 @@ void	remove_variable(t_env *env_mini, char *var)
 
 void	ft_unset(t_env *env_mini, char **cmd)
 {
+	int	i;
+
+	i = 1;
 	if (!cmd || !cmd[1])
 		return ;
-	if (remove_first_node(env_mini, cmd[1]))
-		return ;
-	remove_variable(env_mini, cmd[1]);
+	while (cmd[i])
+	{
+		if (remove_first_node(env_mini, cmd[i]))
+			return ;
+		remove_variable(env_mini, cmd[i]);
+
+		i++;
+	}
 }
+

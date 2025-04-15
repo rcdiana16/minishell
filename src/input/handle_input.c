@@ -30,7 +30,6 @@ char	*make_good_cmd(char *cmd)
 char	*make_good_cmd2(char *cmd)
 {
 	char	*tmp;
-
 	clean_quotes(cmd);
 	tmp = realloc(cmd, ft_strlen(cmd) + 1);
 	if (!tmp)

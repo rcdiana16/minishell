@@ -62,8 +62,8 @@ static int	is_invalid_identifier(char **tokens)
 	}
 	if (!tokens[1])
 	{
-		free_arr(tokens);
-		return (1);
+		//free_arr(tokens);
+		return (0);
 	}
 	return (0);
 }

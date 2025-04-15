@@ -14,10 +14,12 @@
 
 int	check_initial_syntax(char **cmd)
 {
-	if (ft_strncmp(cmd[0], ">>", 4) == 0)
+	if (ft_strncmp(cmd[0], ">>", 3) == 0)
 		return (2);
 	if (ft_strncmp(cmd[0], "|", 1) == 0)
 		return (0);
+	//if (ft_strncmp(cmd[0], "<<", 3) == 0)
+		//return (2);
 	return (-1);
 }
 
@@ -50,9 +52,13 @@ int	check_middle_syntax(char **cmd)
 
 int	check_final_syntax(char **cmd, int i)
 {
-	if ((ft_strncmp(cmd[i], ">", 1) == 0 || \
-	ft_strncmp(cmd[i], ">>", 2) == 0) && cmd[i + 1] == NULL)
-		return (0);
+	while (cmd[i])
+	{
+		if ((ft_strncmp(cmd[i], ">", 1) == 0 || \
+		ft_strncmp(cmd[i], ">>", 2) == 0) && cmd[i + 1] == NULL)
+			return (0);
+		i++;
+	}
 	return (1);
 }
 

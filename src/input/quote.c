@@ -41,6 +41,8 @@ void	clean_quotes(char *token)
 
 	j = 0;
 	k = 0;
+	if (ft_strlen(token) == 2)
+		return ;
 	while (token[j])
 	{
 		if (token[j] != '\"')

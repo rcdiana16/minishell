@@ -27,7 +27,9 @@ char	*extract_var_name(t_cmd_state *state)
 		(state->i)++;
 	}
 	if (k == 0)
+	{
 		return (NULL);
+	}
 	var_name = malloc(sizeof(char) * (k + 1));
 	if (!var_name)
 		return (NULL);
@@ -89,6 +91,7 @@ char	*process_replace_env_vars(t_cmd_state *state, \
 	{
 		free(result);
 		return (NULL);
+		
 	}
 	return (result);
 }

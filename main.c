@@ -43,8 +43,6 @@ int	handle_user_input(t_command **cmd_info, t_env *env_list, \
 
 void	initialize_shell(t_env **env_list, char **env, t_shell_data *data)
 {
-	data->original_stdout = dup(STDOUT_FILENO);
-	data->original_stdin = dup(STDIN_FILENO);
 	data->shell.exit_code = 0;
 	if (init_shell(env, env_list, &data->path_splitted, \
 		&data->path_sp_w_slash) == 1)
@@ -64,15 +62,26 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		set_signals();
 		input_status = handle_user_input(&cmd_info, env_list, \
 			&data.shell, data.path_sp_w_slash);
+		//printf("%d\n", cmd_info->c_red_o);
+		//if (cmd_info->c_append >= 1 || cmd_info->c_red_o >= 1)
+		data.original_stdout = dup(STDOUT_FILENO);
+		//if (cmd_info->c_red_i >= 1 || cmd_info->here_doc >= 1)
+		data.original_stdin = dup(STDIN_FILENO);
 		if (input_status != 0)
 			data.shell.exit_code = \
 			execute_command(cmd_info, data.path_sp_w_slash, env_list);
 		if ((input_status != 0) && (cmd_info->c_red_o >= 1 || \
 			cmd_info->c_append >= 1) && (cmd_info->c_pipe == 0))
+		{
 			dup2(data.original_stdout, STDOUT_FILENO);
+			close(data.original_stdout);
+		}
 		if ((input_status != 0) && (cmd_info->c_red_i == 1 || \
 			cmd_info->here_doc == 1) && (cmd_info->c_pipe == 0))
+		{
 			dup2(data.original_stdin, STDIN_FILENO);
+			close(data.original_stdin);
+		}
 		if (cmd_info)
 			free_command(cmd_info);
 	}
