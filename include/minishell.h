@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/31 17:39:41 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/16 00:41:43 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void		ft_our_echo(char **cmd);
 //----env.c----
 int			ft_our_env(t_env *env_mini, char **cmd);
 //----exit.c----
-int		ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, \
+int			ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, \
 			char **path);
 //----export.c----
 int			ft_export(t_env *env_mini, char **cmd);

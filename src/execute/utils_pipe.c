@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:52:12 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/27 14:52:54 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/16 00:35:53 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_pipe_bounds(t_command *cmd_info, int i, int *start, int *end)
 		{
 			count++;
 			if (count == i)
-				*start = j + 1;	
+				*start = j + 1;
 		}
 		j++;
 	}
@@ -48,7 +48,6 @@ char	**get_pipe_command(t_command *cmd_info, int i)
 
 	if (!get_pipe_bounds(cmd_info, i, &start, &end))
 		return (NULL);
-
 	pipe_command = malloc(sizeof(char *) * (end - start + 1));
 	if (!pipe_command)
 		return (NULL);

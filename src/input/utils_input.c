@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/31 17:29:27 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/17 22:04:56 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	handle_single_quotes(t_command *cmd_info, int i)
 {
 	make_good_cmd(cmd_info->tokens[i]);
 }
-
+/*
 void	handle_double_quotes_and_env_vars(t_command *cmd_info, t_env *env_mini, \
 	t_shell *shell, int i)
 {
@@ -79,6 +79,77 @@ void	handle_double_quotes_and_env_vars(t_command *cmd_info, t_env *env_mini, \
 		}
 		cmd_info->tokens[j] = NULL;
 	}
+}
+*/
+
+static int	prepare_token(t_command *cmd_info, int i)
+{
+	char	*new_cmd;
+
+	new_cmd = make_good_cmd2(cmd_info->tokens[i]);
+	if (new_cmd)
+		cmd_info->tokens[i] = new_cmd;
+	if (cmd_info->tokens[i][0] == '$' && cmd_info->tokens[i][1] == ' ')
+		return (0);
+	return (1);
+}
+
+static int	check_ambiguous_redirect(t_command *cmd_info, char *token)
+{
+	if (cmd_info->c_red_o > 0)
+	{
+		cmd_info->flag_test = 1;
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(token, 2);
+		ft_putstr_fd(": ambiguous redirect\n", 2);
+		return (1);
+	}
+	return (0);
+}
+
+static void	replace_or_remove_token(t_command *cmd_info, int i, char *tmp)
+{
+	int	j;
+
+	if (tmp && tmp[0] != '\0')
+	{
+		free(cmd_info->tokens[i]);
+		cmd_info->tokens[i] = tmp;
+	}
+	else
+	{
+		free(cmd_info->tokens[i]);
+		free(tmp);
+		j = i;
+		while (cmd_info->tokens[j])
+		{
+			cmd_info->tokens[j] = cmd_info->tokens[j + 1];
+			j++;
+		}
+		cmd_info->tokens[j] = NULL;
+	}
+}
+
+static void	handle_env_var_replacement(t_command *cmd_info, \
+			t_env *env_mini, t_shell *shell, int i)
+{
+	char	*tmp;
+
+	tmp = replace_env_vars(cmd_info->tokens[i], env_mini, shell);
+	if (tmp == NULL)
+	{
+		if (check_ambiguous_redirect(cmd_info, cmd_info->tokens[i]))
+			return ;
+	}
+	replace_or_remove_token(cmd_info, i, tmp);
+}
+
+void	handle_double_quotes_and_env_vars(t_command *cmd_info, \
+		t_env *env_mini, t_shell *shell, int i)
+{
+	if (!prepare_token(cmd_info, i))
+		return ;
+	handle_env_var_replacement(cmd_info, env_mini, shell, i);
 }
 
 void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)

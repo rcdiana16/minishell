@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:21:28 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/27 15:18:30 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/16 00:54:54 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*make_good_cmd(char *cmd)
 char	*make_good_cmd2(char *cmd)
 {
 	char	*tmp;
+
 	clean_quotes(cmd);
 	tmp = realloc(cmd, ft_strlen(cmd) + 1);
 	if (!tmp)

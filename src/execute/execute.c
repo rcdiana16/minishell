@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/28 14:52:28 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/17 21:52:32 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,68 @@ int	execute_builtin(t_command *cmd_info, t_env *env_list, \
 		return (exit_builtin);
 	return (-1);
 }
-
+/*
 int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	t_env *env_list)
 {
 	int	pid;
 	int	exit_status;
 	int	exit_builtin;
-	//int	ret;
 
-	
 	if (cmd_info->c_pipe >= 1)
 		return (execute_pipes(cmd_info, path_sp_w_slash, env_list));
 	cmd_info->tokens = clean_redir(cmd_info->tokens, cmd_info);
 	if (!manage_redirection(cmd_info))
 		return (1);
-	//if (ret != 1)
-	//	return (0);
-	if (cmd_info->flag_test ==1)
-		return 1;
+	if (cmd_info->flag_test == 1)
+		return (1);
 	exit_builtin = execute_builtin(cmd_info, env_list, path_sp_w_slash);
 	if (exit_builtin != -1)
 		return (exit_builtin);
+	pid = fork();
+	if (pid == 0)
+		execute_in_child(cmd_info, path_sp_w_slash, env_list);
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+		waitpid(pid, &exit_status, 0);
+		set_signals();
+		if (WIFEXITED(exit_status))
+			return (WEXITSTATUS(exit_status));
+	}
+	return (0);
+}
+*/
+
+int	prepare_execution(t_command *cmd_info, char **path_sp_w_slash, \
+	t_env *env_list)
+{
+	int	exit_builtin;
+
+	if (cmd_info->c_pipe >= 1)
+		return (execute_pipes(cmd_info, path_sp_w_slash, env_list));
+	cmd_info->tokens = clean_redir(cmd_info->tokens, cmd_info);
+	if (!manage_redirection(cmd_info))
+		return (1);
+	if (cmd_info->flag_test == 1)
+		return (1);
+	exit_builtin = execute_builtin(cmd_info, env_list, path_sp_w_slash);
+	if (exit_builtin != -1)
+		return (exit_builtin);
+	return (-1);
+}
+
+int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
+	t_env *env_list)
+{
+	int	pid;
+	int	exit_status;
+	int	prepare_status;
+
+	prepare_status = prepare_execution(cmd_info, path_sp_w_slash, env_list);
+	if (prepare_status != -1)
+		return (prepare_status);
 	pid = fork();
 	if (pid == 0)
 		execute_in_child(cmd_info, path_sp_w_slash, env_list);

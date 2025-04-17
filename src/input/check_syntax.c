@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:26:18 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/31 17:27:27 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/16 00:47:14 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	check_initial_syntax(char **cmd)
 		return (2);
 	if (ft_strncmp(cmd[0], "|", 1) == 0)
 		return (0);
-	//if (ft_strncmp(cmd[0], "<<", 3) == 0)
-		//return (2);
 	return (-1);
 }
 

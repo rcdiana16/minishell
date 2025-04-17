@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosmos <cosmos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:58 by diana             #+#    #+#             */
-/*   Updated: 2025/03/03 12:55:07 by cosmos           ###   ########.fr       */
+/*   Updated: 2025/04/16 00:40:15 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ void	ft_unset(t_env *env_mini, char **cmd)
 		if (remove_first_node(env_mini, cmd[i]))
 			return ;
 		remove_variable(env_mini, cmd[i]);
-
 		i++;
 	}
 }
-

@@ -6,20 +6,12 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:21:56 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/31 17:24:35 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/17 22:20:10 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-/*
-t_command	*handle_token_error(t_command *cmd_info, \
-			char *error, int code)
-{
-	ft_putstr_fd(error, 2);
-	cmd_info->exit_code = code;
-	//free_command(cmd_info);
-	return (NULL);
-}*/
+
 t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 			char *error, int code)
 {
@@ -29,10 +21,7 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 		ft_putstr_fd(" `", 2);
 		ft_putstr_fd(cmd_info->tokens[1], 2);
 		ft_putstr_fd("\'\n", 2);
-
 	}
-		
-	//ft_putstr_fd("\n", 2);
 	shell->exit_code = code;
 	free_command(cmd_info);
 	return (NULL);
@@ -48,17 +37,6 @@ t_command	*handle_syntax_errors(t_command *cmd_info, t_shell *shell, int ret)
 			"minishell: >>: command not found, unexpected\n", 2));*/
 	return (cmd_info);
 }
-/*
-t_command	*handle_syntax_errors(t_command *cmd_info, int ret)
-{
-	if (ret == 0 || ret == -1)
-		return (handle_token_error(cmd_info, \
-			"minishell: syntax error near unexpected token\n", 2));
-	if (ret == 2)
-		return (handle_token_error(cmd_info, \
-			"minishell: >>: command not found, syntax\n", 2));
-	return (cmd_info);
-}*/
 
 int	is_invalid_single_token(char *token)
 {
@@ -78,92 +56,113 @@ void	process_command_tokens(t_command *cmd_info)
 		i++;
 	}
 }
-/*
-t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
-			t_shell *shell)
+
+static char	**allocate_new_tokens(char **tokens)
 {
-	t_command	*cmd_info;
-	int			ret;
+	int	total;
 
-	cmd_info = initialize_command(shell);
-	if (!cmd_info)
-		return (NULL);
-	//printf("%s\n", cmd);
-
-	count_special_chars(cmd, cmd_info);
-	cmd_info->tokens = tokenize_quotes(cmd);
-	if (!cmd_info->tokens)
-		return (handle_token_error(cmd_info, "", 0));
-	process_command_tokens(cmd_info);
-	if (cmd_info->tokens[1] == NULL && \
-		is_invalid_single_token(cmd_info->tokens[0]))
-		return (handle_token_error(cmd_info, \
-			"minishell: syntax error near unexpected token `newline'\n", 2));
-	ret = check_syntax(cmd_info->tokens);
-	cmd_info = handle_syntax_errors(cmd_info, ret);
-	if (!cmd_info)
-		return (NULL);
-	process_tokens(cmd_info, env_mini, shell);
-	return (cmd_info);
-}*/
-/*
-char	**split_joined_redirections(char **tokens)
-{
-	int		i = 0, total = 0;
-	char	**new_tokens = NULL;
-
-	// Count tokens
+	total = 0;
 	while (tokens[total])
 		total++;
+	return (malloc(sizeof(char *) * (total * 2 + 1)));
+}
 
-	// Allocate big enough array (worst case: every token splits into 2)
-	new_tokens = malloc(sizeof(char *) * (total * 2 + 1));
+static void	split_double_redirection(char **tokens, \
+	char **new_tokens, int *i, int *j)
+{
+	char	*redir;
+	char	*rest;
+
+	redir = ft_substr(tokens[*i], 0, 2);
+	rest = ft_strdup(tokens[*i] + 2);
+	if (rest && rest[0] != '\0')
+	{
+		new_tokens[(*j)++] = redir;
+		new_tokens[(*j)++] = rest;
+	}
+	else
+	{
+		free(redir);
+		free(rest);
+		new_tokens[(*j)++] = ft_strdup(tokens[*i]);
+	}
+}
+
+static void	split_single_redirection(char **tokens, \
+			char **new_tokens, int *i, int *j)
+{
+	char	*redir;
+	char	*rest;
+
+	redir = ft_substr(tokens[*i], 0, 1);
+	rest = ft_strdup(tokens[*i] + 1);
+	if (rest && rest[0] != '\0')
+	{
+		new_tokens[(*j)++] = redir;
+		new_tokens[(*j)++] = rest;
+	}
+	else
+	{
+		free(redir);
+		free(rest);
+		new_tokens[(*j)++] = ft_strdup(tokens[*i]);
+	}
+}
+
+static void	copy_normal_token(char **tokens, char **new_tokens, int *i, int *j)
+{
+	new_tokens[(*j)++] = ft_strdup(tokens[*i]);
+}
+
+char	**split_joined_redirections(char **tokens)
+{
+	int		i;
+	int		j;
+	char	**new_tokens;
+
+	i = 0;
+	j = 0;
+	new_tokens = allocate_new_tokens(tokens);
 	if (!new_tokens)
-		return NULL;
-
-	int j = 0;
+		return (NULL);
 	while (tokens[i])
 	{
-		if ((ft_strncmp(tokens[i], ">>", 2) == 0 && ft_strlen(tokens[i]) > 2) ||
-			(ft_strncmp(tokens[i], "<<", 2) == 0 && ft_strlen(tokens[i]) > 2))
-		{
-			new_tokens[j++] = ft_substr(tokens[i], 0, 2);
-			new_tokens[j++] = ft_strdup(tokens[i] + 2);
-		}
-		else if ((tokens[i][0] == '>' || tokens[i][0] == '<') && ft_strlen(tokens[i]) > 1)
-		{
-			new_tokens[j++] = ft_substr(tokens[i], 0, 1);
-			new_tokens[j++] = ft_strdup(tokens[i] + 1);
-		}
+		if ((ft_strncmp(tokens[i], ">>", 2) == 0 && ft_strlen(tokens[i]) > 2) \
+		|| (ft_strncmp(tokens[i], "<<", 2) == 0 && ft_strlen(tokens[i]) > 2))
+			split_double_redirection(tokens, new_tokens, &i, &j);
+		else if ((tokens[i][0] == '>' || tokens[i][0] == '<') && \
+		ft_strlen(tokens[i]) > 1 && ft_strncmp(tokens[i], "<<", 3) \
+		!= 0 && ft_strncmp(tokens[i], ">>", 3) != 0)
+			split_single_redirection(tokens, new_tokens, &i, &j);
 		else
-		{
-			new_tokens[j++] = ft_strdup(tokens[i]);
-		}
+			copy_normal_token(tokens, new_tokens, &i, &j);
 		i++;
 	}
 	new_tokens[j] = NULL;
-	//free_tokens(tokens); // optional, depending on your memory management
-	return new_tokens;
-}*/
+	return (new_tokens);
+}
 
+/*
 char	**split_joined_redirections(char **tokens)
 {
-	int		i = 0, j = 0, total = 0;
-	char	**new_tokens = NULL;
+	int		i;
+	int		j;
+	int		total;
+	char	**new_tokens;
 
-	// Count tokens
+	i = 0;
+	j = 0;
+	total = 0;
+	new_tokens = NULL;
 	while (tokens[total])
 		total++;
-
-	// Allocate a safe upper-bound size (double in worst case)
 	new_tokens = malloc(sizeof(char *) * (total * 2 + 1));
 	if (!new_tokens)
-		return NULL;
-
+		return (NULL);
 	while (tokens[i])
 	{
-		if ((ft_strncmp(tokens[i], ">>", 2) == 0 && ft_strlen(tokens[i]) > 2) ||
-			(ft_strncmp(tokens[i], "<<", 2) == 0 && ft_strlen(tokens[i]) > 2))
+		if ((ft_strncmp(tokens[i], ">>", 2) == 0 && ft_strlen(tokens[i]) > 2) || \
+		(ft_strncmp(tokens[i], "<<", 2) == 0 && ft_strlen(tokens[i]) > 2))
 		{
 			char *redir = ft_substr(tokens[i], 0, 2);
 			char *rest = ft_strdup(tokens[i] + 2);
@@ -179,7 +178,8 @@ char	**split_joined_redirections(char **tokens)
 				new_tokens[j++] = ft_strdup(tokens[i]);
 			}
 		}
-		else if ((tokens[i][0] == '>' || tokens[i][0] == '<') && ft_strlen(tokens[i]) > 1 && ft_strncmp(tokens[i], "<<", 3) != 0 && ft_strncmp(tokens[i], ">>", 3) != 0)
+		else if ((tokens[i][0] == '>' || tokens[i][0] == '<') && ft_strlen(tokens[i]) > 1 \
+		&& ft_strncmp(tokens[i], "<<", 3) != 0 && ft_strncmp(tokens[i], ">>", 3) != 0)
 		{
 			char *redir = ft_substr(tokens[i], 0, 1);
 			char *rest = ft_strdup(tokens[i] + 1);
@@ -202,14 +202,10 @@ char	**split_joined_redirections(char **tokens)
 		i++;
 	}
 	new_tokens[j] = NULL;
-
-	// Optional: free the original tokens if not needed anymore
 	//free_tokens(tokens); // You must define this safely or skip if unsure
-
-	return new_tokens;
+	return (new_tokens);
 }
-
-
+*/
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 			t_shell *shell)
 {
@@ -223,16 +219,12 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 	cmd_info->tokens = tokenize_quotes(cmd);
 	if (!cmd_info->tokens)
 		return (handle_token_error(cmd_info, shell, "", 0));
-	//cmd_info->tokens = split_joined_redirections(cmd_info->tokens);
 	process_command_tokens(cmd_info);
 	cmd_info->tokens = split_joined_redirections(cmd_info->tokens);
-
 	if (cmd_info->tokens[1] == NULL && \
 		is_invalid_single_token(cmd_info->tokens[0]))
 		return (handle_token_error(cmd_info, shell, \
 			"minishell: syntax error near unexpected token `newline'\n", 2));
-
-
 	ret = check_syntax(cmd_info->tokens);
 	cmd_info = handle_syntax_errors(cmd_info, shell, ret);
 	if (!cmd_info)
