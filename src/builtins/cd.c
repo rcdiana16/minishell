@@ -85,6 +85,19 @@ int	is_valid_path(char *path, t_env *env_mini, t_command *cmd_info, char **cmd)
 	}
 	if (handle_cd_arguments(cmd, cmd_info) != 0)
 		return (1);
+	if (cmd[1] && ft_strncmp(cmd[1], "-", 2) == 0)
+    {
+        path = get_env_value(env_mini, "OLDPWD");
+        if (!path)
+        {
+            write(2, "minishell: cd: OLDPWD not set\n", 30);
+            cmd_info->exit_code = 1;
+            return (1);
+        }
+        // Print the directory to which we change (like Bash)
+        write(1, path, ft_strlen(path));
+        write(1, "\n", 1);
+    }
 	if (chdir(path) == 0)
 	{
 		oldpwd = get_env_value(env_mini, "PWD");

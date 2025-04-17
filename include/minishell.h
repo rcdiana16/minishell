@@ -213,7 +213,7 @@ bool		has_enclosed_double_quotes(char *token);
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 			t_shell *shell);
 //---check_syntax.c----
-int			check_syntax(char **cmd);
+int			check_syntax(char **cmd, char **bad_tokens);
 //----count_sp_ch.c----
 void		count_special_chars(char *cmd, t_command *cmd_info);
 //----rep_env_vars.c----
