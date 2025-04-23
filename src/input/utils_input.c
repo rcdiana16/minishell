@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/23 11:15:55 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/23 17:39:26 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,14 @@ static void	handle_env_var_replacement(t_command *cmd_info, \
 			return ;
 	}
 	replace_or_remove_token(cmd_info, i, tmp);
+}
+
+void	handle_double_quotes_and_env_vars(t_command *cmd_info, \
+		t_env *env_mini, t_shell *shell, int i)
+{
+	if (!prepare_token(cmd_info, i))
+		return ;
+	handle_env_var_replacement(cmd_info, env_mini, shell, i);
 }
 
 void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)

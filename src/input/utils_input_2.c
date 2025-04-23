@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:12:44 by diana             #+#    #+#             */
-/*   Updated: 2025/04/23 11:16:03 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/23 17:39:19 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,4 @@ t_command	*initialize_command(t_shell *shell)
 void	handle_single_quotes(t_command *cmd_info, int i)
 {
 	make_good_cmd(cmd_info->tokens[i]);
-}
-
-void	handle_double_quotes_and_env_vars(t_command *cmd_info, \
-		t_env *env_mini, t_shell *shell, int i)
-{
-	if (!prepare_token(cmd_info, i))
-		return ;
-	handle_env_var_replacement(cmd_info, env_mini, shell, i);
 }

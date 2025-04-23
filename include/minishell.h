@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/16 00:41:43 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/23 17:53:48 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,11 @@ int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
 int			execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
+//----execute_2.c----
+void		exec_builtin_or_exit(char *command, t_command *cmd_info, \
+			t_env *env_list, char **path_sp_w_slash);
+char		*find_builtin_or_exit(char **path_sp_w_slash, t_command *cmd_inf, \
+			t_env *env_list);
 //----execute_utils.c----
 char		*find_no_builtin(char **good_path, char **command);
 int			wait_for_child_processes(int *pids, int pipe_count);
@@ -180,7 +185,7 @@ int			open_file(char *file, int mode);
 int			manage_redirection(t_command *cmd_info);
 void		execute_in_child(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
-//----------------------------free----------------------------
+//----------------------------free------------------------------
 //----free.c---
 void		free_command(t_command *cmd_info);
 void		free_node(t_env *node);
@@ -194,7 +199,7 @@ void		free_arr(char **tok);
 //----------------------------ft_list----------------------------
 //----list.c----
 t_env		*initialize_environment(char **env, t_env *env_list);
-//----------------------------input----------------------------
+//----------------------------input------------------------------
 //----get_input.c----
 t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
 			char **path);
@@ -212,8 +217,19 @@ bool		has_enclosed_double_quotes(char *token);
 //----verify_and_split_cmd.c----
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 			t_shell *shell);
+//----verify_and_split_cmd_utils.c----
+t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
+			int code, char *bad_token);
+t_command	*handle_syntax_errors(t_command *cmd_info, t_shell *shell, \
+			int ret, char *bad_token);
+int			is_invalid_single_token(char *token);
+void		process_command_tokens(t_command *cmd_info);
+char		**allocate_new_tokens(char **tokens);
 //---check_syntax.c----
 int			check_syntax(char **cmd, char **bad_tokens);
+//----check_syntax_utils.c----
+int			check_initial_syntax(char **cmd, char **bad_token);
+int			is_redirection(char *token);
 //----count_sp_ch.c----
 void		count_special_chars(char *cmd, t_command *cmd_info);
 //----rep_env_vars.c----
@@ -223,11 +239,19 @@ int			process_env_var(t_cmd_state *state, char *result, \
 //----rep_env_vars_utils.c----
 int			process_var(t_cmd_state *state, char *result, \
 			int j, t_shell_env *shell_env);
+//----rep_env_var_utils_2.c----
+char		*process_replace_env_vars(t_cmd_state *state, \
+			char *result, t_shell_env *shell_env);
+char		*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell);
+char		*initialize_replace_env_vars(t_cmd_state *state);
 //----utils_input.c----
 t_command	*initialize_command(t_shell *shell);
 void		count_special_chars(char *cmd, t_command *cmd_info);
 void		process_tokens(t_command *cmd_info, t_env *env_mini, \
 			t_shell *shell);
+//----utils_input_2.c----
+t_command	*initialize_command(t_shell *shell);
+void		handle_single_quotes(t_command *cmd_info, int i);
 //----quote.c----
 bool		has_enclosed_single_quotes(char *token);
 void		delete_quotes(char *token);

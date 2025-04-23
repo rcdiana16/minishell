@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/23 10:23:53 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/23 17:29:25 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,4 @@ int	process_env_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
 		free(var_name);
 	}
 	return (j);
-}
-
-char	*initialize_replace_env_vars(t_cmd_state *state)
-{
-	char	*result;
-
-	result = malloc(256);
-	if (!result)
-		return (NULL);
-	state->i = 0;
-	return (result);
 }

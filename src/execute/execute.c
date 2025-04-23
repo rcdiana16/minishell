@@ -6,23 +6,11 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/23 11:03:06 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/23 14:09:28 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-char	*find_builtin_or_exit(char **path_sp_w_slash, t_command *cmd_inf, \
-		t_env *env_list)
-{
-	char	*built_in_path;
-
-	built_in_path = find_no_builtin(path_sp_w_slash, cmd_inf->tokens);
-	if (!built_in_path)
-		exec_builtin_or_exit(cmd_inf->tokens[0], \
-		cmd_inf, env_list, path_sp_w_slash);
-	return (built_in_path);
-}
 
 int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 	t_env *env_list)

@@ -6,11 +6,22 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:21:16 by diana             #+#    #+#             */
-/*   Updated: 2025/04/23 10:23:09 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/23 17:28:52 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	*initialize_replace_env_vars(t_cmd_state *state)
+{
+	char	*result;
+
+	result = malloc(256);
+	if (!result)
+		return (NULL);
+	state->i = 0;
+	return (result);
+}
 
 char	*process_replace_env_vars(t_cmd_state *state, \
 	char *result, t_shell_env *shell_env)
