@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/17 21:52:32 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/23 11:03:06 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
-		t_env *env_list, char **path_sp_w_slash)
-{
-	write(2, "minishell: ", ft_strlen("minishell: "));
-	write(2, command, ft_strlen(command));
-	write(2, ": command not found\n", ft_strlen(": command not found\n"));
-	free_all(cmd_info, path_sp_w_slash, env_list);
-	exit(127);
-}
 
 char	*find_builtin_or_exit(char **path_sp_w_slash, t_command *cmd_inf, \
 		t_env *env_list)

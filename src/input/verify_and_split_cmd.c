@@ -3,72 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   verify_and_split_cmd.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:21:56 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/17 22:20:10 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/23 10:51:48 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
-			 int code, char *bad_token)
-{
-	if (!bad_token)
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
-	else
-		ft_putstr_fd("minishell: syntax error near unexpected token", 2);
-	if (bad_token)
-	{
-		ft_putstr_fd(" `", 2);
-		ft_putstr_fd(bad_token, 2);
-		ft_putstr_fd("'\n", 2);
-	}
-	shell->exit_code = code;
-	free_command(cmd_info);
-	return (NULL);
-}
-
-t_command	*handle_syntax_errors(t_command *cmd_info, t_shell *shell, int ret, char *bad_token)
-{
-	if (ret == 0 || ret == 2)
-		return (handle_token_error(cmd_info, shell, \
-			 2, bad_token));
-	return (cmd_info);
-}
-
-int	is_invalid_single_token(char *token)
-{
-	return (ft_strncmp(token, ">", 1) == 0 || \
-	ft_strncmp(token, "<", 1) == 0 || ft_strncmp(token, "<<", 2) == 0);
-}
-
-void	process_command_tokens(t_command *cmd_info)
-{
-	int	i;
-
-	i = 0;
-	while (cmd_info->tokens[i])
-	{
-		count_redirections(cmd_info->tokens[i], cmd_info);
-		remove_newline(cmd_info->tokens[i]);
-		i++;
-	}
-}
-
-char	**allocate_new_tokens(char **tokens)
-{
-	int	total;
-
-	total = 0;
-	while (tokens[total])
-		total++;
-	return (malloc(sizeof(char *) * (total * 2 + 1)));
-}
-
 void	split_double_redirection(char **tokens, \
-	char **new_tokens, int *i, int *j)
+		char **new_tokens, int *i, int *j)
 {
 	char	*redir;
 	char	*rest;
@@ -162,8 +107,7 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 	cmd_info->tokens = split_joined_redirections(cmd_info->tokens);
 	if (cmd_info->tokens[1] == NULL && \
 		is_invalid_single_token(cmd_info->tokens[0]))
-		return (handle_token_error(cmd_info, shell, \
-			 2, NULL));
+		return (handle_token_error(cmd_info, shell, 2, NULL));
 	ret = check_syntax(cmd_info->tokens, &bad_token); // pass bad_token
 	cmd_info = handle_syntax_errors(cmd_info, shell, ret, bad_token);
 	if (!cmd_info)
@@ -171,5 +115,3 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 	process_tokens(cmd_info, env_mini, shell);
 	return (cmd_info);
 }
-
-
