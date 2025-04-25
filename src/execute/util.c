@@ -11,7 +11,11 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
+#include <sys/stat.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdlib.h>
+/*
 void	exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 	t_env *env_list, char **path_sp_w_slash)
 {
@@ -20,6 +24,42 @@ void	exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 	write(2, ": command not found\n", ft_strlen(": command not found\n"));
 	free_all(cmd_info, path_sp_w_slash, env_list);
 	free_arr(command);
+	//free_arr(envp);
+	exit(127);
+}*/
+
+void exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
+		t_env *env_list, char **path_sp_w_slash)
+{
+	struct stat info;
+
+	if (ft_strncmp(command[0], "..", 3) == 0)
+	{
+		free_all(cmd_info, path_sp_w_slash, env_list);
+		free_arr(command);
+		exit(127);
+	}
+	if (stat(command[0], &info) == 0)
+	{
+		if (S_ISDIR(info.st_mode))
+		{
+			write(2, "minishell: ", ft_strlen("minishell: "));
+			write(2, command[0], ft_strlen(command[0]));
+			write(2, ": Is a directory\n", ft_strlen(": Is a directory\n"));
+			close(cmd_info->og_stdin);
+			close(cmd_info->og_stdout);
+			free_all(cmd_info, path_sp_w_slash, env_list);
+			free_arr(command);
+			exit(126);
+		}
+	}
+	write(2, "minishell: ", ft_strlen("minishell: "));
+	write(2, command[0], ft_strlen(command[0]));
+	write(2, ": command not found\n", ft_strlen(": command not found\n"));
+	close(cmd_info->og_stdin);
+	close(cmd_info->og_stdout);
+	free_arr(command);
+	free_all(cmd_info, path_sp_w_slash, env_list);
 	exit(127);
 }
 

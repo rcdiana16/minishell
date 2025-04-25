@@ -122,5 +122,11 @@ char	*get_next_line(int fd)
 	}
 	line = get_line_in_buffer(buffer);
 	buffer = trim_buffer(buffer);
+	if (!buffer)
+		free(buffer);
+	if (!line) {
+        free(buffer);
+        buffer = NULL;
+    }
 	return (line);
 }

@@ -50,7 +50,10 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 	pipe_exec_info.current_command = tmp_command;
 	exit_builtin = handle_redirection_and_builtins(&pipe_exec_info);
 	if (exit_builtin != -1)
+	{
+
 		return (exit_builtin);
+	}
 	execute_child_process_pipe(pipe_exec_info.current_command, \
 					pipe_exec_info.path_sp_w_slash, \
 					pipe_exec_info.env_list, \
@@ -90,6 +93,7 @@ int	execute_pipes_loop(t_pipe_exec_info *pipe_exec_info, \
 	int	i;
 
 	i = 0;
+
 	while (i <= cmd_info->c_pipe)
 	{
 		pipe_exec_info->current_command = get_pipe_command(cmd_info, i);

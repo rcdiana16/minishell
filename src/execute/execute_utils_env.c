@@ -80,6 +80,6 @@ char	**convert_env_to_array(t_env *env_mini)
 		i++;
 	}
 	env_array[i] = NULL;
-	free_env_list(env_mini);
+	//free_env_list(env_mini);
 	return (env_array);
 }

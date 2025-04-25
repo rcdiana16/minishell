@@ -48,7 +48,7 @@ void	add_new_variable(t_env *env_mini, char **tokens, t_env *new_var)
 		env_mini = env_mini->next;
 	env_mini->next = new_var;
 }
-
+/*
 static int	is_invalid_identifier(char **tokens)
 {
 	if (!tokens || !tokens[0] || !is_valid_variable_name(tokens[0]))
@@ -66,7 +66,20 @@ static int	is_invalid_identifier(char **tokens)
 		return (0);
 	}
 	return (0);
+}*/
+
+static int	is_invalid_identifier(char *tokens)
+{
+	if (!tokens || !*tokens || !is_valid_variable_name(tokens))
+	{
+		ft_putstr_fd("export: `", 2);
+		ft_putstr_fd(tokens, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
+	return (0);
 }
+
 
 int	ft_export(t_env *env_mini, char **cmd)
 {
@@ -80,7 +93,7 @@ int	ft_export(t_env *env_mini, char **cmd)
 	while (cmd[i])
 	{
 		tokens = get_tokens(cmd[i]);
-		if (is_invalid_identifier(tokens))
+		if (is_invalid_identifier(cmd[i]))
 			return (1);
 		if (!update_existing_variable(env_mini, tokens))
 		{

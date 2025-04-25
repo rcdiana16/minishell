@@ -48,18 +48,12 @@ static int	check_pipe_error(char **cmd, int i, char **bad_token)
 		if (bad_token)
 			*bad_token = cmd[i];
 		return (0);
-	}
-	/*if (!cmd[i + 1] || is_redirection(cmd[i + 1]) || (cmd[i + 1][0] == '|'))
+	}	
+	if (cmd[i][0] == '|' && cmd[i + 1][0] == '|')
 	{
-		if (bad_token)
-		{
-			if (cmd[i + 1])
-				*bad_token = cmd[i + 1];
-			else
-				*bad_token = cmd[i];
-		}
+		*bad_token = cmd[i];
 		return (0);
-	}*/
+	}
 	return (-1);
 }
 

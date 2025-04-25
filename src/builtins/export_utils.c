@@ -75,7 +75,7 @@ void	init_new_variable(t_env *new_var, char **tokens)
 	else
 		new_var->value = ft_strdup("");
 }
-
+/*
 int	is_valid_variable_name(char *name)
 {
 	int	i;
@@ -93,3 +93,22 @@ int	is_valid_variable_name(char *name)
 	}
 	return (1);
 }
+*/
+int	is_valid_variable_name(char *name)
+{
+	int	i;
+
+	if (name == NULL || name[0] == '\0')
+		return (0);
+	if (!(ft_isalpha(name[0]) || name[0] == '_'))
+		return (0);
+	i = 1;
+	while (name[i] && name[i] != '=')
+	{
+		if (!(ft_isalpha(name[i]) || ft_isdigit(name[i]) || name[i] == '_'))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+

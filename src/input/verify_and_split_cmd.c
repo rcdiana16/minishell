@@ -22,7 +22,12 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 	if (bad_token)
 	{
 		ft_putstr_fd(" `", 2);
-		ft_putstr_fd(bad_token, 2);
+		if (ft_strlen(bad_token) > 2)
+			write(2, bad_token, 2);
+		else if (ft_strlen(bad_token) == 1)
+			write(2, bad_token, 1);
+		else
+			ft_putstr_fd(bad_token, 2);
 		ft_putstr_fd("'\n", 2);
 	}
 	shell->exit_code = code;

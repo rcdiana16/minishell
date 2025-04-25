@@ -56,6 +56,8 @@ typedef struct s_command
 	int		quotes_d;
 	int		exit_code;
 	int		flag_test;
+	int		og_stdout;
+	int		og_stdin;
 }	t_command;
 
 typedef struct s_env
@@ -160,7 +162,7 @@ char		**clean_redir(char **cmd_tokens, t_command *cmd_info);
 int			execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 			t_env *env_list, t_command *stru);
 char		*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
-			t_env *env_list, t_command *stru);
+			t_env *env_list, t_command *stru, char **envp);
 //----execute_pipe_utils.c----
 int			execute_pipes(t_command *cmd_info, \
 			char **path_sp_w_slash, t_env *env_list);

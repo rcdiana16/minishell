@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
+/*
 char	*make_good_cmd(char *cmd)
 {
 	char	*tmp;
@@ -25,6 +25,23 @@ char	*make_good_cmd(char *cmd)
 	}
 	cmd = tmp;
 	return (cmd);
+}*/
+char	*make_good_cmd(char *cmd)
+{
+	size_t new_len;
+	char *tmp;
+
+	// Safely shrink the string in-place
+	remove_single_quotes(cmd);
+
+	new_len = ft_strlen(cmd) + 1;
+	tmp = realloc(cmd, new_len); // shrink buffer *after* shortening
+	if (!tmp)
+	{
+		perror("realloc failed");
+		return cmd; // still valid, since realloc failed
+	}
+	return tmp;
 }
 
 char	*make_good_cmd2(char *cmd)

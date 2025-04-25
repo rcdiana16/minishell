@@ -139,6 +139,7 @@ t_command	*parse_and_store_command(char *line, t_env *env_mini, \
 	return (cmd_info);
 }
 
+
 t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
 			char **path)
 {

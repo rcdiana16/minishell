@@ -13,14 +13,18 @@
 #include "../../include/minishell.h"
 
 char	*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
-	t_env *env_list, t_command *stru)
+	t_env *env_list, t_command *stru, char **envp __attribute__((unused)))
 {
 	char		*built_in_path;
 
 	built_in_path = find_no_builtin(path_sp_w_slash, cmd_inf);
 	if (!built_in_path)
+	{
+		free_arr(envp);
 		exec_builtin_or_exit_pipe(cmd_inf, \
 		stru, env_list, path_sp_w_slash);
+		
+	}
 	return (built_in_path);
 }
 
@@ -28,22 +32,26 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	t_env *env_list, t_command *stru)
 {
 	char	*built_in_path;
+	char	**envp;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd_info[0])
 		return (0);
+	envp = convert_env_to_array(env_list);
 	if (cmd_info[0][0] == '/' || \
 	ft_strchr(cmd_info[0], '/') != NULL)
 	{
-		execve(cmd_info[0], cmd_info, \
-		convert_env_to_array(env_list));
+		execve(cmd_info[0], cmd_info, envp);
+		free_arr(envp);
 		exec_builtin_or_exit_pipe(cmd_info, \
 		stru, env_list, path_sp_w_slash);
 	}
 	built_in_path = find_builtin_or_exit_pipe(path_sp_w_slash, \
-		cmd_info, env_list, stru);
-	execve(built_in_path, cmd_info, convert_env_to_array(env_list));
+		cmd_info, env_list, stru, envp);
+	execve(built_in_path, cmd_info, envp);
+	free_arr(envp);
+	free(built_in_path);
 	exec_builtin_or_exit_pipe(cmd_info, stru, env_list, \
 	path_sp_w_slash);
 	return (0);
@@ -130,7 +138,11 @@ void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 		ft_strncmp(cmd_tokens[i], ">>", 2) == 0 || \
 		ft_strncmp(cmd_tokens[i], "<", 1) == 0 || \
 		ft_strncmp(cmd_tokens[i], "<<", 2) == 0) && (cmd_tokens[i + 1]))
+		{
 			handle_redirection(cmd_tokens, cmd_info, &i);
+			//break;
+		}
+
 		else
 		{
 			cleaned_cmd[j++] = ft_strdup(cmd_tokens[i]);
