@@ -17,6 +17,8 @@ void	handle_append_redirection(char **cmd_tokens, t_command *cmd_info, \
 {
 	if (cmd_tokens[*i + 1])
 	{
+		if (cmd_info->file_out)
+			free(cmd_info->file_out);
 		cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
 		cmd_info->c_append = 1;
 		cmd_info->c_red_o = 0;
@@ -30,6 +32,8 @@ void	handle_output_redirection(char **cmd_tokens, t_command *cmd_info, \
 {
 	if (cmd_tokens[*i + 1] && cmd_tokens[*i + 1][0] != '\0')
 	{
+		if (cmd_info->file_out)
+			free(cmd_info->file_out);
 		cmd_info->file_out = ft_strdup(cmd_tokens[*i + 1]);
 		cmd_info->c_red_o = 1;
 		cmd_info->c_append = 0;
@@ -42,6 +46,8 @@ void	handle_input_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
 {
 	if (cmd_tokens[*i + 1] && cmd_tokens[*i + 1][0] != '\0')
 	{
+		if (cmd_info->file_in)
+			free(cmd_info->file_in);
 		cmd_info->file_in = ft_strdup(cmd_tokens[*i + 1]);
 		cmd_info->c_red_i = 1;
 		cmd_info->c_append = 0;

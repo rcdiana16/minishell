@@ -21,7 +21,12 @@ int	handle_redirection_and_builtins(t_pipe_exec_info *pipe_exec_info)
 		if (!manage_redirection(pipe_exec_info->cmd_info))
 		{
 			free_arr(pipe_exec_info->current_command);
-			exit(1);
+			//ft_putstr_fd("ta mere\n", 2);
+			//exit(1);
+			free_all(pipe_exec_info->cmd_info, pipe_exec_info->path_sp_w_slash, \
+			pipe_exec_info->env_list);
+			//exit(1);
+			return(1);
 		}
 	}
 	exit_builtin = check_builtins(pipe_exec_info->current_command, \
@@ -51,7 +56,6 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 	exit_builtin = handle_redirection_and_builtins(&pipe_exec_info);
 	if (exit_builtin != -1)
 	{
-
 		return (exit_builtin);
 	}
 	execute_child_process_pipe(pipe_exec_info.current_command, \
