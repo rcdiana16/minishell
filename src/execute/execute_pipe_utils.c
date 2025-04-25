@@ -81,7 +81,9 @@ int	execute_pipes_child_process(t_pipe_exec_info *pipe_exec_info, \
 			close(pipe_exec_info->prev_pipe_fd);
 		if (i < pipe_exec_info->cmd_info->c_pipe)
 			pipe_exec_info->prev_pipe_fd = pipe_exec_info->pipe_fd[0];
-		close(pipe_exec_info->pipe_fd[1]);
+		if (pipe_exec_info->pipe_fd[1] != -1)
+			close(pipe_exec_info->pipe_fd[1]);
+		pipe_exec_info->pipe_fd[1] = -1;
 		free_arr(pipe_exec_info->current_command);
 		return (0);
 	}

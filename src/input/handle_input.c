@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-/*
+
 char	*make_good_cmd(char *cmd)
 {
 	char	*tmp;
@@ -23,9 +23,9 @@ char	*make_good_cmd(char *cmd)
 		perror("realloc failed");
 		return (cmd);
 	}
-	cmd = tmp;
-	return (cmd);
-}*/
+	return (tmp);
+}
+/*
 char	*make_good_cmd(char *cmd)
 {
 	size_t new_len;
@@ -43,7 +43,7 @@ char	*make_good_cmd(char *cmd)
 	}
 	return tmp;
 }
-
+*/
 char	*make_good_cmd2(char *cmd)
 {
 	char	*tmp;

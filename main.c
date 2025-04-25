@@ -123,7 +123,7 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		// Restore STDOUT
 		if (cmd_info)
 		{
-			if (cmd_info->c_red_o != 0 && cmd_info->og_stdout != -1 && cmd_info->c_pipe == 0)
+			if ((cmd_info->c_red_o != 0 || cmd_info->here_doc != 0 )&& cmd_info->og_stdout != -1 && cmd_info->c_pipe == 0)
 			{
 				if (dup2(cmd_info->og_stdout , STDOUT_FILENO) == -1) 
 				{

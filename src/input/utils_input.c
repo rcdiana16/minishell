@@ -41,7 +41,8 @@ t_command	*initialize_command(t_shell *shell)
 
 void	handle_single_quotes(t_command *cmd_info, int i)
 {
-	make_good_cmd(cmd_info->tokens[i]);
+	if (cmd_info->tokens[i])
+		make_good_cmd(cmd_info->tokens[i]);
 }
 /*
 void	handle_double_quotes_and_env_vars(t_command *cmd_info, t_env *env_mini, \
@@ -165,7 +166,8 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 	while (cmd_info->tokens[i])
 	{
 		if (has_enclosed_single_quotes(cmd_info->tokens[i]))
-			handle_single_quotes(cmd_info, i);
+			remove_single_quotes(cmd_info->tokens[i]);
+			//handle_single_quotes(cmd_info, i);
 		else
 			handle_double_quotes_and_env_vars(cmd_info, env_mini, shell, i);
 		i++;

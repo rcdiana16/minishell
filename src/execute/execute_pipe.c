@@ -120,7 +120,11 @@ char	**allocate_cleaned_cmd(char **cmd_tokens)
 	i = 0;
 	while (cmd_tokens[i])
 		i++;
+	if (i == 0)
+		return (NULL); // or malloc(1 * sizeof(char *)) and cleaned_cmd[0] = NULL;
+
 	cleaned_cmd = malloc(sizeof(char *) * (i + 1));
+	cleaned_cmd[i] = NULL;
 	return (cleaned_cmd);
 }
 
@@ -132,6 +136,8 @@ void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 
 	i = 0;
 	j = 0;
+	if (!cmd_tokens)
+		return ;
 	while (cmd_tokens[i])
 	{
 		if ((ft_strncmp(cmd_tokens[i], ">", 1) == 0 || \
@@ -145,7 +151,8 @@ void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 
 		else
 		{
-			cleaned_cmd[j++] = ft_strdup(cmd_tokens[i]);
+			if (cmd_tokens[i])
+				cleaned_cmd[j++] = ft_strdup(cmd_tokens[i]);
 			i++;
 		}
 	}
@@ -160,7 +167,11 @@ char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
 	if (!cleaned_cmd)
 		return (NULL);
 	filter_and_copy_tokens(cmd_tokens, cmd_info, cleaned_cmd);
-	free_arr(cmd_tokens);
+	/*if (cmd_tokens)
+		free_arr(cmd_tokens);*/
+	if (cmd_tokens != cleaned_cmd) // avoid double-free
+		free_arr(cmd_tokens);
+
 	return (cleaned_cmd);
 }
 /*
