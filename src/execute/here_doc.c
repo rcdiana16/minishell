@@ -56,7 +56,7 @@ void here_doc(char *delimiter) {
 	g_heredoc_interrupted = 0;
     // Créer un pipe
     if (pipe(pipefd) == -1) {
-        perror("pipe");
+        //perror("pipe");
         exit(EXIT_FAILURE);
     }
 
@@ -65,7 +65,6 @@ void here_doc(char *delimiter) {
     sigemptyset(&sa_new.sa_mask);
     sa_new.sa_flags = 0;
     sigaction(SIGINT, &sa_new, &sa_old);
-
     while (1) {
         if (g_heredoc_interrupted) {
             free(line);
@@ -88,16 +87,16 @@ void here_doc(char *delimiter) {
 			sigaction(SIGINT, &sa_old, NULL);
 			return;
 		}
-        len = strlen(line);
+        len = ft_strlen(line);
         if (len > 0 && line[len - 1] == '\n')
             line[len - 1] = '\0';
 
-        if (strcmp(line, delimiter) == 0) {
+        if (ft_strncmp(line, delimiter, len) == 0) {
             free(line);
             break;
         }
 
-        write(pipefd[1], line, strlen(line));
+        write(pipefd[1], line, ft_strlen(line));
         write(pipefd[1], "\n", 1);
 
         free(line);
