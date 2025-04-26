@@ -152,7 +152,7 @@ int			wait_for_child_processes(int *pids, int pipe_count);
 //----execute_utils_env.c
 char		**convert_env_to_array(t_env *env_mini);
 //----here_doc.c----
-void		here_doc(char *limiter, int *fd);
+void		here_doc(char *limiter);
 void		handle_heredoc_redirection(char **cmd_tokens, t_command *cmd_info, \
 			int *i);
 //----redir.c----

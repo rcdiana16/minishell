@@ -57,7 +57,7 @@ int	open_file(char *file, int mode)
 
 int	manage_redirection(t_command *cmd_info)
 {
-	if (cmd_info->c_red_i == 1)
+	if (cmd_info->c_red_i == 1 || cmd_info->here_doc)
 	{
 		if (!cmd_info->file_in || cmd_info->file_in[0] == '\0')
 			return (2);
