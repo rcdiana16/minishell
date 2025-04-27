@@ -130,6 +130,16 @@ int	ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, char **path)
 			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(cmd[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
+			if (cmd_info->og_stdin != -1)
+			{
+				close(cmd_info->og_stdin);
+				cmd_info->og_stdin = -1;
+			}
+			if (cmd_info->og_stdout != -1)
+			{
+				close(cmd_info->og_stdout);
+				cmd_info->og_stdout = -1;
+			}
 			free_env_list(env_mini);
 			free_command(cmd_info);
 			free_arr(path);

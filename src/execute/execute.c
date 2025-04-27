@@ -35,13 +35,61 @@ void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
 #include <stdlib.h>
 
 void exec_builtin_or_exit(char *command, t_command *cmd_info, \
-		t_env *env_list, char **path_sp_w_slash, char **envp)
+		t_env *env_list, char **path_sp_w_slash, char **envp __attribute__((unused)))
 {
 	struct stat info;
 	
 	if (ft_strncmp(command, "", 2) == 0)
 	{
 		if (cmd_info->og_stdin != -1)
+		{
+			close(cmd_info->og_stdin);
+			cmd_info->og_stdin = -1;
+		}
+		if (cmd_info->og_stdout != -1)
+		{
+			close(cmd_info->og_stdout);
+			cmd_info->og_stdout = -1;
+		}
+		free_all(cmd_info, path_sp_w_slash, env_list);
+		free_arr(envp);
+		exit(0);
+	}
+	else if (ft_strncmp(command, "..", 3) == 0)
+	{
+		free_all(cmd_info, path_sp_w_slash, env_list);
+		exit(127);
+	}
+	else if (stat(command, &info) == 0)
+	{
+		if (S_ISDIR(info.st_mode))
+		{
+			write(2, "minishell: ", ft_strlen("minishell: "));
+			write(2, command, ft_strlen(command));
+			write(2, ": Is a directory\n", ft_strlen(": Is a directory\n"));
+			if (cmd_info->og_stdin != -1)
+			{
+				close(cmd_info->og_stdin);
+				cmd_info->og_stdin = -1;
+			}
+			if (cmd_info->og_stdout != -1)
+			{
+				close(cmd_info->og_stdout);
+				cmd_info->og_stdout = -1;
+			}
+			free_all(cmd_info, path_sp_w_slash, env_list);
+			exit(0);
+		}			
+		free_all(cmd_info, path_sp_w_slash, env_list);
+		free_arr(envp);
+		
+		exit(126);
+	}
+	
+	write(2, "minishell: ", ft_strlen("minishell: "));
+	write(2, command, ft_strlen(command));
+	write(2, ": command not found\n", ft_strlen(": command not found\n"));
+	if (cmd_info->og_stdin != -1)
 	{
 		close(cmd_info->og_stdin);
 		cmd_info->og_stdin = -1;
@@ -51,34 +99,8 @@ void exec_builtin_or_exit(char *command, t_command *cmd_info, \
 		close(cmd_info->og_stdout);
 		cmd_info->og_stdout = -1;
 	}
-		free_all(cmd_info, path_sp_w_slash, env_list);
-		exit(0);
-	}
-	if (ft_strncmp(command, "..", 3) == 0)
-	{
-		free_all(cmd_info, path_sp_w_slash, env_list);
-		exit(127);
-	}
-	if (stat(command, &info) == 0)
-	{
-		if (S_ISDIR(info.st_mode))
-		{
-			write(2, "minishell: ", ft_strlen("minishell: "));
-			write(2, command, ft_strlen(command));
-			write(2, ": Is a directory\n", ft_strlen(": Is a directory\n"));
-			close(cmd_info->og_stdin);
-			close(cmd_info->og_stdout);
-			free_all(cmd_info, path_sp_w_slash, env_list);
-			//free_arr(envp);
-			exit(126);
-		}
-	}
-	write(2, "minishell: ", ft_strlen("minishell: "));
-	write(2, command, ft_strlen(command));
-	write(2, ": command not found\n", ft_strlen(": command not found\n"));
-	close(cmd_info->og_stdin);
-	close(cmd_info->og_stdout);
-	free_arr(envp);
+	if (envp)
+		free_arr(envp);
 	free_all(cmd_info, path_sp_w_slash, env_list);
 	exit(127);
 }
@@ -117,7 +139,7 @@ int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 	}
 	built_in_path = find_builtin_or_exit(path_sp_w_slash, cmd_info, env_list, envp);
 	execve(built_in_path, cmd_info->tokens, envp);
-	free_arr(envp);
+	//free_arr(envp);
 	free(built_in_path);
 	exec_builtin_or_exit(cmd_info->tokens[0], cmd_info, env_list, \
 	path_sp_w_slash, envp);

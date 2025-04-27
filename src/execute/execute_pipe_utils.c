@@ -56,6 +56,7 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 	exit_builtin = handle_redirection_and_builtins(&pipe_exec_info);
 	if (exit_builtin != -1)
 	{
+
 		return (exit_builtin);
 	}
 	execute_child_process_pipe(pipe_exec_info.current_command, \

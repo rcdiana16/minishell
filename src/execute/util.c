@@ -33,6 +33,22 @@ void exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 {
 	struct stat info;
 
+	if (ft_strncmp(command[0], "", 2) == 0)
+	{
+		if (cmd_info->og_stdin != -1)
+		{
+			close(cmd_info->og_stdin);
+			cmd_info->og_stdin = -1;
+		}
+		if (cmd_info->og_stdout != -1)
+		{
+			close(cmd_info->og_stdout);
+			cmd_info->og_stdout = -1;
+		}
+		free_all(cmd_info, path_sp_w_slash, env_list);
+		free_arr(command);
+		exit(0);
+	}
 	if (ft_strncmp(command[0], "..", 3) == 0)
 	{
 		free_all(cmd_info, path_sp_w_slash, env_list);
@@ -46,8 +62,16 @@ void exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 			write(2, "minishell: ", ft_strlen("minishell: "));
 			write(2, command[0], ft_strlen(command[0]));
 			write(2, ": Is a directory\n", ft_strlen(": Is a directory\n"));
-			close(cmd_info->og_stdin);
-			close(cmd_info->og_stdout);
+			if (cmd_info->og_stdin != -1)
+			{
+				close(cmd_info->og_stdin);
+				cmd_info->og_stdin = -1;
+			}
+			if (cmd_info->og_stdout != -1)
+			{
+				close(cmd_info->og_stdout);
+				cmd_info->og_stdout = -1;
+			}
 			free_all(cmd_info, path_sp_w_slash, env_list);
 			free_arr(command);
 			exit(126);
@@ -56,8 +80,16 @@ void exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 	write(2, "minishell: ", ft_strlen("minishell: "));
 	write(2, command[0], ft_strlen(command[0]));
 	write(2, ": command not found\n", ft_strlen(": command not found\n"));
-	close(cmd_info->og_stdin);
-	close(cmd_info->og_stdout);
+	if (cmd_info->og_stdin != -1)
+	{
+		close(cmd_info->og_stdin);
+		cmd_info->og_stdin = -1;
+	}
+	if (cmd_info->og_stdout != -1)
+	{
+		close(cmd_info->og_stdout);
+		cmd_info->og_stdout = -1;
+	}
 	free_arr(command);
 	free_all(cmd_info, path_sp_w_slash, env_list);
 	exit(127);
