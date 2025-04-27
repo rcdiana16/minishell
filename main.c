@@ -133,8 +133,11 @@ void	execute_shell_loop(t_env *env_list, char **env)
 				//close(cmd_info->og_stdout);
 			//	cmd_info->og_stdout = -1;
 			}
-			close(cmd_info->og_stdout);
-			cmd_info->og_stdout = -1;
+			if (cmd_info->og_stdout != -1)
+			{
+				close(cmd_info->og_stdout);
+				cmd_info->og_stdout = -1;
+			}
 		}
 		//close(data.original_stdout);
 
@@ -149,8 +152,11 @@ void	execute_shell_loop(t_env *env_list, char **env)
 					exit(EXIT_FAILURE);
 				}
 			}
-			close(cmd_info->og_stdin);
-			cmd_info->og_stdin =-1;
+			if (cmd_info->og_stdin != -1)
+			{
+				close(cmd_info->og_stdin);
+				cmd_info->og_stdin =-1;
+			}
 		}
 		
 		

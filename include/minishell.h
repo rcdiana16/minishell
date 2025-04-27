@@ -178,7 +178,7 @@ int			execute_child_process_pipe_helper(t_pipe_exec_info pipe_exec_info);
 void		exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 			t_env *env_list, char **path_sp_w_slash);
 //----check_redir.c----
-int			open_file(char *file, int mode);
+int			open_file(char *file, int mode, t_command *cmd_info);
 int			manage_redirection(t_command *cmd_info);
 void		execute_in_child(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);

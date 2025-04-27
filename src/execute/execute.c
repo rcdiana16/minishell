@@ -38,7 +38,22 @@ void exec_builtin_or_exit(char *command, t_command *cmd_info, \
 		t_env *env_list, char **path_sp_w_slash, char **envp)
 {
 	struct stat info;
-
+	
+	if (ft_strncmp(command, "", 2) == 0)
+	{
+		if (cmd_info->og_stdin != -1)
+	{
+		close(cmd_info->og_stdin);
+		cmd_info->og_stdin = -1;
+	}
+	if (cmd_info->og_stdout != -1)
+	{
+		close(cmd_info->og_stdout);
+		cmd_info->og_stdout = -1;
+	}
+		free_all(cmd_info, path_sp_w_slash, env_list);
+		exit(0);
+	}
 	if (ft_strncmp(command, "..", 3) == 0)
 	{
 		free_all(cmd_info, path_sp_w_slash, env_list);

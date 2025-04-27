@@ -32,7 +32,7 @@ char	**check_redir(t_command *cmd_info)
 	return (cmd_info->tokens);
 }
 */
-int	open_file(char *file, int mode)
+int	open_file(char *file, int mode, t_command *cmd_info)
 {
 	int	fd;
 
@@ -50,6 +50,16 @@ int	open_file(char *file, int mode)
 		//write(2, ": Permission denied\n", ft_strlen(": Permission denied\n"));
 		ft_putstr_fd(": ", 2);
 		perror("");
+		if (cmd_info->og_stdin != -1)
+		{
+			close(cmd_info->og_stdin);
+			cmd_info->og_stdin = -1;
+		}
+		if (cmd_info->og_stdout != -1)
+		{
+			close(cmd_info->og_stdout);
+			cmd_info->og_stdout = -1;
+		}
 		return (-1);
 	}
 	return (fd);
@@ -61,7 +71,7 @@ int	manage_redirection(t_command *cmd_info)
 	{
 		if (!cmd_info->file_in || cmd_info->file_in[0] == '\0')
 			return (2);
-		cmd_info->fd_in = open_file(cmd_info->file_in, 3);
+		cmd_info->fd_in = open_file(cmd_info->file_in, 3, cmd_info);
 		if (cmd_info->fd_in == -1)
 			return (0);
 		dup2(cmd_info->fd_in, STDIN_FILENO);
@@ -72,9 +82,9 @@ int	manage_redirection(t_command *cmd_info)
 		if (!cmd_info->file_out || cmd_info->file_out[0] == '\0')
 			return (-1);
 		if (cmd_info->c_red_o == 1)
-			cmd_info->fd_out = open_file(cmd_info->file_out, 1);
+			cmd_info->fd_out = open_file(cmd_info->file_out, 1, cmd_info);
 		else if (cmd_info->c_append == 1)
-			cmd_info->fd_out = open_file(cmd_info->file_out, 2);
+			cmd_info->fd_out = open_file(cmd_info->file_out, 2, cmd_info);
 		if (cmd_info->fd_out == -1)
 			return (0);
 		dup2(cmd_info->fd_out, STDOUT_FILENO);

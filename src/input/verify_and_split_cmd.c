@@ -30,6 +30,16 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 			ft_putstr_fd(bad_token, 2);
 		ft_putstr_fd("'\n", 2);
 	}
+	if (cmd_info->og_stdin != -1)
+	{
+		close(cmd_info->og_stdin);
+		cmd_info->og_stdin = -1;
+	}
+	if (cmd_info->og_stdout != -1)
+	{
+		close(cmd_info->og_stdout);
+		cmd_info->og_stdout = -1;
+	}
 	shell->exit_code = code;
 	free_command(cmd_info);
 	return (NULL);
@@ -167,12 +177,16 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 	cmd_info->tokens = split_joined_redirections(cmd_info->tokens);
 	if (cmd_info->tokens[1] == NULL && \
 		is_invalid_single_token(cmd_info->tokens[0]))
+	{
 		return (handle_token_error(cmd_info, shell, \
 			 2, NULL));
+	}
 	ret = check_syntax(cmd_info->tokens, &bad_token); // pass bad_token
 	cmd_info = handle_syntax_errors(cmd_info, shell, ret, bad_token);
 	if (!cmd_info)
+	{
 		return (NULL);
+	}
 	process_tokens(cmd_info, env_mini, shell);
 	return (cmd_info);
 }
