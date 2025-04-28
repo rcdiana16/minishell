@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:16 by diana             #+#    #+#             */
-/*   Updated: 2025/03/31 16:51:49 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 21:15:08 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	execute_shell_loop(t_env *env_list, char **env)
 	}
 }*/
 
-
-
 void	execute_shell_loop(t_env *env_list, char **env)
 {
 	t_shell_data	data;
@@ -106,26 +104,24 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		set_signals();
 		//cmd_info->og_stdout = data.original_stdout;
 		//cmd_info->og_stdin = data.original_stdin;
-		
 		/*if (data.original_stdout == -1 || data.original_stdin == -1)
 		{
 			perror("dup");
-			exit(EXIT_FAILURE); // or a nice cleanup
+			exit(EXIT_FAILURE);
 		}*/
-
 		input_status = handle_user_input(&cmd_info, env_list, \
 			&data.shell, data.path_sp_w_slash);
 		//cmd_info->og_stdout = data.original_stdout;
 		//cmd_info->og_stdin = data.original_stdin;
-			
 		if (input_status != 0)
-			data.shell.exit_code = execute_command(cmd_info, data.path_sp_w_slash, env_list);
-		// Restore STDOUT
+			data.shell.exit_code = execute_command(cmd_info, \
+			data.path_sp_w_slash, env_list);
 		if (cmd_info)
 		{
-			if ((cmd_info->c_red_o != 0 || cmd_info->c_append != 0 )&& cmd_info->og_stdout != -1 /*&& cmd_info->c_pipe == 0*/)
+			if ((cmd_info->c_red_o != 0 || cmd_info->c_append != 0) \
+			&& cmd_info->og_stdout != -1 /*&& cmd_info->c_pipe == 0*/)
 			{
-				if (dup2(cmd_info->og_stdout , STDOUT_FILENO) == -1) 
+				if (dup2(cmd_info->og_stdout, STDOUT_FILENO) == -1)
 				{
 					perror("dup2 stdout");
 					exit(EXIT_FAILURE);
@@ -140,13 +136,13 @@ void	execute_shell_loop(t_env *env_list, char **env)
 			}
 		}
 		//close(data.original_stdout);
-
-		// Restore STDIN
 		if (cmd_info)
 		{
-			if ((cmd_info->c_red_i != 0 || cmd_info->here_doc != 0) && cmd_info->og_stdin != -1 /*&& cmd_info->c_pipe == 0*/)
+			if ((cmd_info->c_red_i != 0 || cmd_info->here_doc != 0) \
+			&& cmd_info->og_stdin != -1 /*&& cmd_info->c_pipe == 0*/)
 			{
-				if (dup2(cmd_info->og_stdin , STDIN_FILENO) == -1 && cmd_info->c_red_i != 0)
+				if (dup2(cmd_info->og_stdin, STDIN_FILENO) == -1 \
+				&& cmd_info->c_red_i != 0)
 				{
 					perror("dup2 stdin");
 					exit(EXIT_FAILURE);
@@ -154,18 +150,15 @@ void	execute_shell_loop(t_env *env_list, char **env)
 			}
 			if (cmd_info->og_stdin != -1)
 			{
-				close(cmd_info->og_stdin);
-				cmd_info->og_stdin =-1;
+				close (cmd_info->og_stdin);
+				cmd_info->og_stdin = -1;
 			}
 		}
-		
-		
 		if (cmd_info)
 			free_command(cmd_info);
 	}
 	//close(data.original_stdout);
 	//close(data.original_stdin);
-
 }
 
 int	main(int ac, char **av, char **env)

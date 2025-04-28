@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:26:18 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/16 00:47:14 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 22:18:15 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	check_initial_syntax(char **cmd, char **bad_token)
-{
-	if (!cmd[0])
-		return (-1);
-	if (ft_strncmp(cmd[0], ">>", 3) == 0)
-	{
-		if (bad_token)
-			*bad_token = cmd[0];
-		return (2);
-	}
-	if (ft_strncmp(cmd[0], "|", 2) == 0)
-	{
-		if (bad_token)
-			*bad_token = cmd[0];
-		return (0);
-	}
-	return (-1);
-}
-
-int	is_redirection(char *token)
-{
-	if (!token)
-		return (0);
-	return (ft_strncmp(token, ">", 1) == 0 || \
-			ft_strncmp(token, ">>", 2) == 0 || \
-			ft_strncmp(token, "<", 1) == 0 || \
-			ft_strncmp(token, "<<", 2) == 0);
-}
 
 static int	check_pipe_error(char **cmd, int i, char **bad_token)
 {
@@ -48,7 +19,7 @@ static int	check_pipe_error(char **cmd, int i, char **bad_token)
 		if (bad_token)
 			*bad_token = cmd[i];
 		return (0);
-	}	
+	}
 	if (cmd[i][0] == '|' && cmd[i + 1][0] == '|')
 	{
 		*bad_token = cmd[i];
@@ -93,7 +64,6 @@ int	check_middle_syntax(char **cmd, char **bad_token)
 	return (-1);
 }
 
-
 int	check_final_syntax(char **cmd, int i, char **bad_token)
 {
 	while (cmd[i])
@@ -122,4 +92,3 @@ int	check_syntax(char **cmd, char **bad_token)
 		return (result);
 	return (check_final_syntax(cmd, 0, bad_token));
 }
-

@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:01:49 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/31 17:20:39 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 21:26:45 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <sys/stat.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
+
 /*
 void	exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 	t_env *env_list, char **path_sp_w_slash)
@@ -28,10 +25,10 @@ void	exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 	exit(127);
 }*/
 
-void exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
+void	exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 		t_env *env_list, char **path_sp_w_slash)
 {
-	struct stat info;
+	struct stat	info;
 
 	if (ft_strncmp(command[0], "", 2) == 0)
 	{

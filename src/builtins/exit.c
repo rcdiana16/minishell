@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:09:42 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/16 00:41:04 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 21:17:20 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ int	ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, \
 	return (0);
 }*/
 
-
-
-
 void	handle_exit_argument_error(t_command *cmd_info)
 {
 	ft_putstr_fd("minishell: exit: too many arguments\n", 2);
@@ -121,7 +118,6 @@ int	ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, char **path)
 	i = 0;
 	while (cmd[i])
 		i++;
-
 	//ft_putstr_fd("exit\n", 2);
 	if (cmd[1])
 	{
@@ -167,7 +163,6 @@ int	ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, char **path)
 	close(0);
 	close(1);
 	close(2);
-	exit((unsigned char)ex); // Important: cast to unsigned char (mod 256 automatically)
+	exit((unsigned char)ex);
 	return (0);
 }
-

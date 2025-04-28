@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/16 00:41:43 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 22:42:31 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <limits.h>
 # include <termios.h>
 # include <unistd.h>
+# include <sys/stat.h>
 # include "../libft/libft.h"
 
 typedef struct s_split_data
@@ -146,9 +147,13 @@ int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
 int			execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
+char		*find_builtin_or_exit(char **path_sp_w_slash, t_command *cmd_inf, \
+			t_env *env_list, char **envp);
 //----execute_utils.c----
 char		*find_no_builtin(char **good_path, char **command);
 int			wait_for_child_processes(int *pids, int pipe_count);
+int			execute_builtin(t_command *cmd_info, t_env *env_list, \
+			char **path_sp_w_slash);
 //----execute_utils_env.c
 char		**convert_env_to_array(t_env *env_mini);
 //----here_doc.c----
@@ -214,22 +219,42 @@ bool		has_enclosed_double_quotes(char *token);
 //----verify_and_split_cmd.c----
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 			t_shell *shell);
+//----verify_and_split_cmd_utils.c----
+t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
+			int code, char *bad_token);
+t_command	*handle_syntax_errors(t_command *cmd_info, \
+			t_shell *shell, int ret, char *bad_token);
+int			is_invalid_single_token(char *token);
+void		process_command_tokens(t_command *cmd_info);
+char		**allocate_new_tokens(char **tokens);
 //---check_syntax.c----
 int			check_syntax(char **cmd, char **bad_tokens);
+int			check_middle_syntax(char **cmd, char **bad_token);
+int			check_final_syntax(char **cmd, int i, char **bad_token);
+//---check_syntax_utils.c----
+int			check_initial_syntax(char **cmd, char **bad_token);
+int			is_redirection(char *token);
 //----count_sp_ch.c----
 void		count_special_chars(char *cmd, t_command *cmd_info);
-//----rep_env_vars.c----
+//----rep_env_var.c----
 char		*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell);
 int			process_env_var(t_cmd_state *state, char *result, \
 			int j, t_env *env_mini);
-//----rep_env_vars_utils.c----
+//----rep_env_var_utils.c----
 int			process_var(t_cmd_state *state, char *result, \
 			int j, t_shell_env *shell_env);
+char		*process_replace_env_vars(t_cmd_state *state, \
+			char *result, t_shell_env *shell_env);
+char		*initialize_replace_env_vars(t_cmd_state *state);
 //----utils_input.c----
-t_command	*initialize_command(t_shell *shell);
 void		count_special_chars(char *cmd, t_command *cmd_info);
+void		handle_double_quotes_and_env_vars(t_command *cmd_info, \
+			t_env *env_mini, t_shell *shell, int i);
+//----utils_input_2.c----
 void		process_tokens(t_command *cmd_info, t_env *env_mini, \
 			t_shell *shell);
+void		handle_single_quotes(t_command *cmd_info, int i);
+t_command	*initialize_command(t_shell *shell);
 //----quote.c----
 bool		has_enclosed_single_quotes(char *token);
 void		delete_quotes(char *token);

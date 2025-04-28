@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:59:48 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/31 17:38:28 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 22:01:35 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
 		free_arr(envp);
 		exec_builtin_or_exit_pipe(cmd_inf, \
 		stru, env_list, path_sp_w_slash);
-		
 	}
 	return (built_in_path);
 }
@@ -121,15 +120,14 @@ char	**allocate_cleaned_cmd(char **cmd_tokens)
 	while (cmd_tokens[i])
 		i++;
 	if (i == 0)
-		return (NULL); // or malloc(1 * sizeof(char *)) and cleaned_cmd[0] = NULL;
-
+		return (NULL);
 	cleaned_cmd = malloc(sizeof(char *) * (i + 1));
 	cleaned_cmd[i] = NULL;
 	return (cleaned_cmd);
 }
 
 void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
-	char **cleaned_cmd)
+		char **cleaned_cmd)
 {
 	int	i;
 	int	j;
@@ -148,7 +146,6 @@ void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 			handle_redirection(cmd_tokens, cmd_info, &i);
 			//break;
 		}
-
 		else
 		{
 			if (cmd_tokens[i])
@@ -169,9 +166,8 @@ char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
 	filter_and_copy_tokens(cmd_tokens, cmd_info, cleaned_cmd);
 	/*if (cmd_tokens)
 		free_arr(cmd_tokens);*/
-	if (cmd_tokens != cleaned_cmd) // avoid double-free
+	if (cmd_tokens != cleaned_cmd)
 		free_arr(cmd_tokens);
-
 	return (cleaned_cmd);
 }
 /*

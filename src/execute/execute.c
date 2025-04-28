@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/17 21:52:32 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 21:54:50 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,13 @@ void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
 	free_all(cmd_info, path_sp_w_slash, env_list);
 	exit(127);
 }*/
-#include <sys/stat.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
 
-void exec_builtin_or_exit(char *command, t_command *cmd_info, \
-		t_env *env_list, char **path_sp_w_slash, char **envp __attribute__((unused)))
+void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
+		t_env *env_list, char **path_sp_w_slash, \
+		char **envp __attribute__((unused)))
 {
-	struct stat info;
-	
+	struct stat	info;
+
 	if (ft_strncmp(command, "", 2) == 0)
 	{
 		if (cmd_info->og_stdin != -1)
@@ -79,13 +76,11 @@ void exec_builtin_or_exit(char *command, t_command *cmd_info, \
 			}
 			free_all(cmd_info, path_sp_w_slash, env_list);
 			exit(0);
-		}			
+		}
 		free_all(cmd_info, path_sp_w_slash, env_list);
 		free_arr(envp);
-		
 		exit(126);
 	}
-	
 	write(2, "minishell: ", ft_strlen("minishell: "));
 	write(2, command, ft_strlen(command));
 	write(2, ": command not found\n", ft_strlen(": command not found\n"));
@@ -132,12 +127,13 @@ int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 	ft_strchr(cmd_info->tokens[0], '/') != NULL)
 	{
 		execve(cmd_info->tokens[0], cmd_info->tokens, \
-		envp );
-		free_arr(envp);
+		envp);
+		free_arr (envp);
 		exec_builtin_or_exit(cmd_info->tokens[0], \
 		cmd_info, env_list, path_sp_w_slash, envp);
 	}
-	built_in_path = find_builtin_or_exit(path_sp_w_slash, cmd_info, env_list, envp);
+	built_in_path = find_builtin_or_exit(path_sp_w_slash, cmd_info, \
+	env_list, envp);
 	execve(built_in_path, cmd_info->tokens, envp);
 	//free_arr(envp);
 	free(built_in_path);
@@ -146,7 +142,7 @@ int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 	return (0);
 }
 
-int	execute_builtin(t_command *cmd_info, t_env *env_list, \
+/*int	execute_builtin(t_command *cmd_info, t_env *env_list, \
 	char **path_sp_w_slash)
 {
 	int	exit_builtin;
@@ -156,7 +152,7 @@ int	execute_builtin(t_command *cmd_info, t_env *env_list, \
 	if (exit_builtin != -1)
 		return (exit_builtin);
 	return (-1);
-}
+}*/
 /*
 int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	t_env *env_list)

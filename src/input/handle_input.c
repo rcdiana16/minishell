@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:21:28 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/16 00:54:54 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 22:30:47 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*make_good_cmd(char *cmd)
 	return tmp;
 }
 */
+
 char	*make_good_cmd2(char *cmd)
 {
 	char	*tmp;

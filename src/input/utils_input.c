@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/18 17:05:35 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 22:39:50 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
+/*
 t_command	*initialize_command(t_shell *shell)
 {
 	t_command	*cmd_info;
@@ -35,7 +35,6 @@ t_command	*initialize_command(t_shell *shell)
 	cmd_info->flag_test = 0;
 	cmd_info->og_stdout = dup(STDOUT_FILENO);
 	cmd_info->og_stdin = dup(STDIN_FILENO);
-
 	return (cmd_info);
 }
 
@@ -43,7 +42,7 @@ void	handle_single_quotes(t_command *cmd_info, int i)
 {
 	if (cmd_info->tokens[i])
 		make_good_cmd(cmd_info->tokens[i]);
-}
+}*/
 /*
 void	handle_double_quotes_and_env_vars(t_command *cmd_info, t_env *env_mini, \
 	t_shell *shell, int i)
@@ -149,47 +148,37 @@ static void	replace_or_remove_token(t_command *cmd_info, int i, char *tmp)
 	}
 }*/
 
-static void replace_or_remove_token(t_command *cmd_info, int i, char *tmp)
+static void	replace_or_remove_token(t_command *cmd_info, int i, char *tmp)
 {
-    int j;
+	int	j;
 
-    // Si tmp est NULL (variable d'environnement non trouvée)
-    if (!tmp)
-    {
-        free(cmd_info->tokens[i]);  // Libère le token actuel
-
-        // Remplace le token par une chaîne vide (si tu veux qu'il n'y ait rien)
-        cmd_info->tokens[i] = ft_strdup("");  // Assure-toi de dupliquer une chaîne vide
-        if (!cmd_info->tokens[i])
-        {
-            // Si la duplication échoue, tu dois gérer l'erreur et éviter la fuite
-            return;
-        }
-    }
-    else if (tmp && tmp[0] != '\0')  // Si tmp contient une valeur valide
-    {
-        // Libère l'ancien token et remplace par le nouveau
-        free(cmd_info->tokens[i]);
-        cmd_info->tokens[i] = tmp;
-    }
-    else  // Si tmp est une chaîne vide (cas de remplacement vide)
-    {
-        free(cmd_info->tokens[i]);  // Libère l'ancien token
-        free(tmp);  // Libère la chaîne vide allouée
-
-        // Décale les autres tokens pour supprimer celui qui était à la position i
-        j = i;
-        while (cmd_info->tokens[j])
-        {
-            cmd_info->tokens[j] = cmd_info->tokens[j + 1];
-            j++;
-        }
-        cmd_info->tokens[j] = NULL;  // Assure que la fin de la liste des tokens est bien NULL
-    }
+	if (!tmp)
+	{
+		free(cmd_info->tokens[i]);
+		cmd_info->tokens[i] = ft_strdup("");
+		if (!cmd_info->tokens[i])
+		{
+			return ;
+		}
+	}
+	else if (tmp && tmp[0] != '\0')
+	{
+		free(cmd_info->tokens[i]);
+		cmd_info->tokens[i] = tmp;
+	}
+	else
+	{
+		free(cmd_info->tokens[i]);
+		free(tmp);
+		j = i;
+		while (cmd_info->tokens[j])
+		{
+			cmd_info->tokens[j] = cmd_info->tokens[j + 1];
+			j++;
+		}
+		cmd_info->tokens[j] = NULL;
+	}
 }
-
-
-
 
 static void	handle_env_var_replacement(t_command *cmd_info, \
 			t_env *env_mini, t_shell *shell, int i)
@@ -212,7 +201,7 @@ void	handle_double_quotes_and_env_vars(t_command *cmd_info, \
 		return ;
 	handle_env_var_replacement(cmd_info, env_mini, shell, i);
 }
-
+/*
 void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 {
 	int	i;
@@ -230,3 +219,4 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 		i++;
 	}
 }
+*/

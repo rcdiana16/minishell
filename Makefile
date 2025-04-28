@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
+#    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/03/31 17:39:14 by maximemarti      ###   ########.fr        #
+#    Updated: 2025/04/27 22:43:05 by diana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,16 @@ SRCS            = main.c \
 					src/input/get_input.c \
 					src/input/get_input_utils.c \
 					src/input/utils_input.c \
+					src/input/utils_input_2.c \
 					src/input/rep_env_var.c \
 					src/input/rep_env_var_utils.c \
 					src/input/handle_input.c \
 					src/input/quote.c \
 					src/input/redirection.c \
 					src/input/verify_and_split_cmd.c \
+					src/input/verify_and_split_cmd_utils.c \
 					src/input/check_syntax.c \
+					src/input/check_syntax_utils.c \
 					src/input/count_sp_ch.c \
 					src/execute/execute_utils.c \
 					src/execute/execute.c \

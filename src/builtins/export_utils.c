@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 23:03:53 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/27 15:14:23 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 21:18:23 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	is_valid_variable_name(char *name)
 	return (1);
 }
 */
+
 int	is_valid_variable_name(char *name)
 {
 	int	i;
@@ -111,4 +112,3 @@ int	is_valid_variable_name(char *name)
 	}
 	return (1);
 }
-

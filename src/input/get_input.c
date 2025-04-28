@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:54:37 by diana             #+#    #+#             */
-/*   Updated: 2025/03/31 17:26:39 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 22:05:15 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ t_command	*parse_and_store_command(char *line, t_env *env_mini, \
 	free(line);
 	return (cmd_info);
 }
-
 
 t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
 			char **path)

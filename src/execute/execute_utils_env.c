@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils_env.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:45:08 by cosmos            #+#    #+#             */
-/*   Updated: 2025/03/24 15:28:35 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 21:54:37 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	execute_builtin(t_command *cmd_info, t_env *env_list, \
+	char **path_sp_w_slash)
+{
+	int	exit_builtin;
+
+	exit_builtin = check_builtins(cmd_info->tokens, env_list, \
+		cmd_info, path_sp_w_slash);
+	if (exit_builtin != -1)
+		return (exit_builtin);
+	return (-1);
+}
 
 int	env_list_size(t_env *env)
 {

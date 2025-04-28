@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rep_env_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:46 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/17 22:08:26 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 22:12:34 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,39 +105,6 @@ int	process_env_var(t_cmd_state *state, char *result, int j, t_env *env_mini)
 		free(var_name);
 	}
 	return (j);
-}
-
-char	*initialize_replace_env_vars(t_cmd_state *state)
-{
-	char	*result;
-
-	result = malloc(256);
-	if (!result)
-		return (NULL);
-	state->i = 0;
-	return (result);
-}
-
-char	*process_replace_env_vars(t_cmd_state *state, \
-	char *result, t_shell_env *shell_env)
-{
-	int	j;
-
-	j = 0;
-	while (state->cmd[state->i])
-	{
-		if (state->cmd[state->i] == '$' && state->cmd[state->i + 1])
-			j = process_var(state, result, j, shell_env);
-		else
-			j = copy_non_var_part(state, result, j);
-	}
-	result[j] = '\0';
-	if (j == 0)
-	{
-		free(result);
-		return (NULL);
-	}
-	return (result);
 }
 
 char	*replace_env_vars(char *cmd, t_env *env_mini, t_shell *shell)

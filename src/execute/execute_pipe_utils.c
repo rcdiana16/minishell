@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:32:31 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/16 00:32:31 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/27 21:58:53 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	handle_redirection_and_builtins(t_pipe_exec_info *pipe_exec_info)
 			free_all(pipe_exec_info->cmd_info, pipe_exec_info->path_sp_w_slash, \
 			pipe_exec_info->env_list);
 			//exit(1);
-			return(1);
+			return (1);
 		}
 	}
 	exit_builtin = check_builtins(pipe_exec_info->current_command, \
@@ -56,7 +56,6 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 	exit_builtin = handle_redirection_and_builtins(&pipe_exec_info);
 	if (exit_builtin != -1)
 	{
-
 		return (exit_builtin);
 	}
 	execute_child_process_pipe(pipe_exec_info.current_command, \
@@ -100,7 +99,6 @@ int	execute_pipes_loop(t_pipe_exec_info *pipe_exec_info, \
 	int	i;
 
 	i = 0;
-
 	while (i <= cmd_info->c_pipe)
 	{
 		pipe_exec_info->current_command = get_pipe_command(cmd_info, i);
