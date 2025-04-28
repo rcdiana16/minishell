@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:12:36 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/27 22:39:50 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/28 11:11:35 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,33 +79,6 @@ static void	replace_or_remove_token(t_command *cmd_info, int i, char *tmp)
 	}
 }*/
 
-static void	replace_token_with_empty(t_command *cmd_info, int i)
-{
-	free(cmd_info->tokens[i]);
-	cmd_info->tokens[i] = ft_strdup("");
-}
-
-static void	replace_token_with_tmp(t_command *cmd_info, int i, char *tmp)
-{
-	free(cmd_info->tokens[i]);
-	cmd_info->tokens[i] = tmp;
-}
-
-static void	remove_token(t_command *cmd_info, int i, char *tmp)
-{
-	int	j;
-
-	free(cmd_info->tokens[i]);
-	free(tmp);
-	j = i;
-	while (cmd_info->tokens[j])
-	{
-		cmd_info->tokens[j] = cmd_info->tokens[j + 1];
-		j++;
-	}
-	cmd_info->tokens[j] = NULL;
-}
-
 static void	replace_or_remove_token(t_command *cmd_info, int i, char *tmp)
 {
 	if (!tmp)
@@ -119,7 +92,6 @@ static void	replace_or_remove_token(t_command *cmd_info, int i, char *tmp)
 	else
 		remove_token(cmd_info, i, tmp);
 }
-
 
 static void	handle_env_var_replacement(t_command *cmd_info, \
 			t_env *env_mini, t_shell *shell, int i)
@@ -142,4 +114,3 @@ void	handle_double_quotes_and_env_vars(t_command *cmd_info, \
 		return ;
 	handle_env_var_replacement(cmd_info, env_mini, shell, i);
 }
-

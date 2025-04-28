@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:09:42 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/27 21:17:20 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/28 11:14:15 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,43 +34,6 @@ int	validate_exit_argument(char *arg)
 	return (1);
 }
 
-long long	ft_atoll(const char *str)
-{
-	long long	result;
-	int			sign;
-
-	result = 0;
-	sign = 1;
-	while ((*str >= 9 && *str <= 13) || *str == ' ')
-		str++;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = -1;
-		str++;
-	}
-	while (*str >= '0' && *str <= '9')
-	{
-		result = result * 10 + (*str - '0');
-		str++;
-	}
-	return (result * sign);
-}
-
-static void	close_original_fds(t_command *cmd_info)
-{
-	if (cmd_info->og_stdin != -1)
-	{
-		close(cmd_info->og_stdin);
-		cmd_info->og_stdin = -1;
-	}
-	if (cmd_info->og_stdout != -1)
-	{
-		close(cmd_info->og_stdout);
-		cmd_info->og_stdout = -1;
-	}
-}
-
 static void	exit_cleanup(t_env *env_mini, t_command *cmd_info, char **path)
 {
 	free_env_list(env_mini);
@@ -87,7 +50,7 @@ static void	exit_with_error(t_env *env_mini, t_command *cmd_info, \
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
-	close_original_fds(cmd_info);
+	close_fd(cmd_info);
 	exit_cleanup(env_mini, cmd_info, path);
 	exit(2);
 }
@@ -98,6 +61,7 @@ int	ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, char **path)
 	int			i;
 
 	i = 0;
+	ex = 0;
 	while (cmd[i])
 		i++;
 	if (cmd[1])
@@ -114,7 +78,7 @@ int	ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, char **path)
 	}
 	else
 		ex = cmd_info->exit_code;
-	close_original_fds(cmd_info);
+	close_fd(cmd_info);
 	exit_cleanup(env_mini, cmd_info, path);
 	exit((unsigned char)ex);
 	return (0);

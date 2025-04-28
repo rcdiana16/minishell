@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/27 22:42:31 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/28 11:50:31 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ typedef struct s_pipe_exec_info
 //----cd_utils.c----
 void		update_env(t_env *env, char *new_path, \
 			char *env_to_update, int flag);
+void		update_pwd_env(t_env *env_mini, char *oldpwd, char *path);
+int			print_cd_error(char *path);
 //----cd.c---
 int			is_valid_path(char *path, t_env *env_mini, \
 			t_command *cmd_info, char **cmd);
@@ -150,17 +152,34 @@ int			execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
 char		*find_builtin_or_exit(char **path_sp_w_slash, t_command *cmd_inf, \
 			t_env *env_list);
+//----execute_error.c----
+void		handle_empty_command(t_command *cmd_info, char **path_sp_w_slash, \
+			t_env *env_list);
+void		handle_dotdot_command(t_command *cmd_info, char **path_sp_w_slash, \
+			t_env *env_list);
+void		handle_is_directory(char *command, t_command *cmd_info, \
+			t_env *env_list, char **path_sp_w_slash);
+void		handle_command_found(t_command *cmd_info, \
+			t_env *env_list, char **path_sp_w_slash);
+void		handle_command_not_found(char *command, t_command *cmd_info, \
+			t_env *env_list, char **path_sp_w_slash);
 //----execute_utils.c----
 char		*find_no_builtin(char **good_path, char **command);
 int			wait_for_child_processes(int *pids, int pipe_count);
 int			execute_builtin(t_command *cmd_info, t_env *env_list, \
 			char **path_sp_w_slash);
+//----utils_execute.c----
+int			wait_for_child_processes(int *pids, int pipe_count);
 //----execute_utils_env.c
 char		**convert_env_to_array(t_env *env_mini);
 //----here_doc.c----
 void		here_doc(char *limiter);
 void		handle_heredoc_redirection(char **cmd_tokens, t_command *cmd_info, \
 			int *i);
+//----here_doc_utils.c----
+//int			get_next_line_pip(char **output_line);
+void		handle_heredoc_redirection(char **cmd_tokens, \
+			t_command *cmd_info, int *i);
 //----redir.c----
 void		handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i);
 //----execute_pipe.c----
@@ -258,6 +277,10 @@ void		process_tokens(t_command *cmd_info, t_env *env_mini, \
 			t_shell *shell);
 void		handle_single_quotes(t_command *cmd_info, int i);
 t_command	*initialize_command(t_shell *shell);
+//----utils_replace_tok.c----
+void		replace_token_with_empty(t_command *cmd_info, int i);
+void		replace_token_with_tmp(t_command *cmd_info, int i, char *tmp);
+void		remove_token(t_command *cmd_info, int i, char *tmp);
 //----quote.c----
 bool		has_enclosed_single_quotes(char *token);
 void		delete_quotes(char *token);
@@ -285,5 +308,10 @@ void		handle_sigquit(int sig);
 //----utils.c----
 char		*get_env_value(t_env *env_mini, const char *var);
 int			process_exit_code(char *result, int j, t_shell *shell);
+long long	ft_atoll(const char *str);
+//----main_utils.c----
+void		handle_cmd_info(t_command *cmd_info);
+void		reset_stdin(t_command *cmd_info);
+void		reset_stdout(t_command *cmd_info);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:59:48 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/27 22:01:35 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/28 11:50:00 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	t_env *env_list, t_command *stru)
 {
 	char	*built_in_path;
-	//char	**envp;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -142,10 +141,7 @@ void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 		ft_strncmp(cmd_tokens[i], ">>", 2) == 0 || \
 		ft_strncmp(cmd_tokens[i], "<", 1) == 0 || \
 		ft_strncmp(cmd_tokens[i], "<<", 2) == 0) && (cmd_tokens[i + 1]))
-		{
 			handle_redirection(cmd_tokens, cmd_info, &i);
-			//break;
-		}
 		else
 		{
 			if (cmd_tokens[i])

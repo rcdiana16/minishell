@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:18:11 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/27 22:47:21 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/28 11:06:43 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,5 @@ char	*get_next_line(int fd)
 	buffer = trim_buffer(buffer);
 	if (!buffer)
 		free(buffer);
-	/*if (!line)
-	{
-		free(buffer);
-		buffer = NULL;
-	}*/
 	return (line);
 }

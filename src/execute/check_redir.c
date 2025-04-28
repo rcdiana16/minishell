@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:04:23 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/31 16:15:33 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/04/28 11:16:28 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ char	**check_redir(t_command *cmd_info)
 	return (cmd_info->tokens);
 }
 */
-
-void  close_fd(t_command *cmd_info)
+void	close_fd(t_command *cmd_info)
 {
 	if (cmd_info->og_stdin != -1)
 	{

@@ -3,58 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:36:55 by diana             #+#    #+#             */
-/*   Updated: 2025/04/27 21:20:57 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/28 11:15:05 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	print_cd_error(char *path)
-{
-	int	fd;
-
-	fd = open(path, O_RDONLY);
-	if (fd != -1)
-	{
-		write(2, "minishell: cd: ", 16);
-		write(2, path, ft_strlen(path));
-		write(2, ": Not a directory\n", 18);
-		close(fd);
-	}
-	else
-	{
-		write(2, "minishell: cd: ", 16);
-		write(2, path, ft_strlen(path));
-		write(2, ": No such file or directory\n", 29);
-	}
-	return (1);
-}
-
-void	update_pwd_env(t_env *env_mini, char *oldpwd, char *path)
-{
-	char	*cwd;
-
-	cwd = calloc(256, 4);
-	if (!oldpwd | !path | !cwd)
-	{
-		free(cwd);
-		return ;
-	}
-	if (path[0] == '/')
-	{
-		update_env(env_mini, oldpwd, "OLDPWD", 3);
-		update_env(env_mini, getcwd(cwd, 1024), "PWD", 1);
-	}
-	else
-	{
-		update_env(env_mini, oldpwd, "OLDPWD", 3);
-		update_env(env_mini, getcwd(cwd, 1024), "PWD", 1);
-	}
-	free(cwd);
-}
 
 int	handle_cd_arguments(char **cmd, t_command *cmd_info)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_input_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 22:36:16 by diana             #+#    #+#             */
-/*   Updated: 2025/04/27 22:44:35 by diana            ###   ########.fr       */
+/*   Updated: 2025/04/28 11:07:46 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 	{
 		if (has_enclosed_single_quotes(cmd_info->tokens[i]))
 			remove_single_quotes(cmd_info->tokens[i]);
-			//handle_single_quotes(cmd_info, i);
 		else
 			handle_double_quotes_and_env_vars(cmd_info, env_mini, shell, i);
 		i++;

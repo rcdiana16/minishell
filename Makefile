@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
+#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/04/27 22:43:05 by diana            ###   ########.fr        #
+#    Updated: 2025/04/28 11:32:07 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS            = main.c \
 					src/input/get_input_utils.c \
 					src/input/utils_input.c \
 					src/input/utils_input_2.c \
+					src/input/utils_replace_tok.c \
 					src/input/rep_env_var.c \
 					src/input/rep_env_var_utils.c \
 					src/input/handle_input.c \
@@ -37,13 +38,16 @@ SRCS            = main.c \
 					src/input/count_sp_ch.c \
 					src/execute/execute_utils.c \
 					src/execute/execute.c \
+					src/execute/execute_error.c \
 					src/execute/execute_utils_env.c \
 					src/execute/execute_pipe.c \
 					src/execute/execute_pipe_utils.c \
 					src/execute/utils_pipe.c \
 					src/execute/util.c \
+					src/execute/utils_execute.c \
 					src/execute/check_redir.c \
 					src/execute/here_doc.c \
+					src/execute/here_doc_utils.c \
 					src/execute/redir.c \
 					src/check_cmd/check_builtins.c \
 					src/ft_list/list.c \
@@ -63,6 +67,7 @@ SRCS            = main.c \
 					src/signals/ctrl_c.c \
 					src/signals/ctrl_nothing.c \
 					src/utils/utils.c \
+					src/utils/main_utils.c \
 
 OBJS            = $(SRCS:.c=.o)
 
