@@ -32,6 +32,21 @@ char	**check_redir(t_command *cmd_info)
 	return (cmd_info->tokens);
 }
 */
+
+void  close_fd(t_command *cmd_info)
+{
+	if (cmd_info->og_stdin != -1)
+	{
+		close(cmd_info->og_stdin);
+		cmd_info->og_stdin = -1;
+	}
+	if (cmd_info->og_stdout != -1)
+	{
+		close(cmd_info->og_stdout);
+		cmd_info->og_stdout = -1;
+	}
+}
+
 int	open_file(char *file, int mode, t_command *cmd_info)
 {
 	int	fd;
@@ -47,19 +62,9 @@ int	open_file(char *file, int mode, t_command *cmd_info)
 	{
 		write(2, "minishell: ", ft_strlen("minishell: "));
 		write(2, file, ft_strlen(file));
-		//write(2, ": Permission denied\n", ft_strlen(": Permission denied\n"));
 		ft_putstr_fd(": ", 2);
 		perror("");
-		if (cmd_info->og_stdin != -1)
-		{
-			close(cmd_info->og_stdin);
-			cmd_info->og_stdin = -1;
-		}
-		if (cmd_info->og_stdout != -1)
-		{
-			close(cmd_info->og_stdout);
-			cmd_info->og_stdout = -1;
-		}
+		close_fd(cmd_info);
 		return (-1);
 	}
 	return (fd);

@@ -29,27 +29,16 @@ void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
 	free_all(cmd_info, path_sp_w_slash, env_list);
 	exit(127);
 }*/
-
+/*
 void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
-		t_env *env_list, char **path_sp_w_slash, \
-		char **envp __attribute__((unused)))
+		t_env *env_list, char **path_sp_w_slash)
 {
 	struct stat	info;
 
 	if (ft_strncmp(command, "", 2) == 0)
 	{
-		if (cmd_info->og_stdin != -1)
-		{
-			close(cmd_info->og_stdin);
-			cmd_info->og_stdin = -1;
-		}
-		if (cmd_info->og_stdout != -1)
-		{
-			close(cmd_info->og_stdout);
-			cmd_info->og_stdout = -1;
-		}
+		close_fd(cmd_info);
 		free_all(cmd_info, path_sp_w_slash, env_list);
-		free_arr(envp);
 		exit(0);
 	}
 	else if (ft_strncmp(command, "..", 3) == 0)
@@ -64,51 +53,99 @@ void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
 			write(2, "minishell: ", ft_strlen("minishell: "));
 			write(2, command, ft_strlen(command));
 			write(2, ": Is a directory\n", ft_strlen(": Is a directory\n"));
-			if (cmd_info->og_stdin != -1)
-			{
-				close(cmd_info->og_stdin);
-				cmd_info->og_stdin = -1;
-			}
-			if (cmd_info->og_stdout != -1)
-			{
-				close(cmd_info->og_stdout);
-				cmd_info->og_stdout = -1;
-			}
+			close_fd(cmd_info);	
 			free_all(cmd_info, path_sp_w_slash, env_list);
-			exit(0);
+			exit(127);
 		}
 		free_all(cmd_info, path_sp_w_slash, env_list);
-		free_arr(envp);
+		//free_arr(envp);
 		exit(126);
 	}
 	write(2, "minishell: ", ft_strlen("minishell: "));
 	write(2, command, ft_strlen(command));
 	write(2, ": command not found\n", ft_strlen(": command not found\n"));
-	if (cmd_info->og_stdin != -1)
-	{
-		close(cmd_info->og_stdin);
-		cmd_info->og_stdin = -1;
-	}
-	if (cmd_info->og_stdout != -1)
-	{
-		close(cmd_info->og_stdout);
-		cmd_info->og_stdout = -1;
-	}
-	if (envp)
+	close_fd(cmd_info);
+	if (envp) to add to cmd info to free it at the end 
 		free_arr(envp);
+	free_all(cmd_info, path_sp_w_slash, env_list);
+	exit(127);
+}*/
+
+static void	handle_empty_command(t_command *cmd_info, char **path_sp_w_slash, \
+		t_env *env_list)
+{
+	close_fd(cmd_info);
+	free_all(cmd_info, path_sp_w_slash, env_list);
+	exit(0);
+}
+
+static void	handle_dotdot_command(t_command *cmd_info, char **path_sp_w_slash, \
+		t_env *env_list)
+{
 	free_all(cmd_info, path_sp_w_slash, env_list);
 	exit(127);
 }
 
+static void	handle_is_directory(char *command, t_command *cmd_info, \
+		t_env *env_list, char **path_sp_w_slash)
+{
+	write(2, "minishell: ", 11);
+	write(2, command, ft_strlen(command));
+	write(2, ": Is a directory\n", 17);
+	close_fd(cmd_info);
+	free_all(cmd_info, path_sp_w_slash, env_list);
+	exit(127);
+}
+
+static void	handle_command_found(t_command *cmd_info, \
+		t_env *env_list, char **path_sp_w_slash)
+{
+	free_all(cmd_info, path_sp_w_slash, env_list);
+	// free_arr(envp);
+	exit(126);
+}
+
+static void	handle_command_not_found(char *command, t_command *cmd_info, \
+		t_env *env_list, char **path_sp_w_slash)
+{
+	write(2, "minishell: ", 11);
+	write(2, command, ft_strlen(command));
+	write(2, ": command not found\n", 20);
+	close_fd(cmd_info);
+	/* if (envp) to add to cmd info to free it at the end 
+		free_arr(envp); */
+	free_all(cmd_info, path_sp_w_slash, env_list);
+	exit(127);
+}
+
+void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
+		t_env *env_list, char **path_sp_w_slash)
+{
+	struct stat	info;
+
+	if (ft_strncmp(command, "", 2) == 0)
+		handle_empty_command(cmd_info, path_sp_w_slash, env_list);
+	else if (ft_strncmp(command, "..", 3) == 0)
+		handle_dotdot_command(cmd_info, path_sp_w_slash, env_list);
+	else if (stat(command, &info) == 0)
+	{
+		if (S_ISDIR(info.st_mode))
+			handle_is_directory(command, cmd_info, env_list, path_sp_w_slash);
+		handle_command_found( cmd_info, env_list, path_sp_w_slash);
+	}
+	handle_command_not_found(command, cmd_info, env_list, path_sp_w_slash);
+}
+
+
 char	*find_builtin_or_exit(char **path_sp_w_slash, t_command *cmd_inf, \
-		t_env *env_list, char **envp)
+		t_env *env_list)
 {
 	char	*built_in_path;
 
 	built_in_path = find_no_builtin(path_sp_w_slash, cmd_inf->tokens);
 	if (!built_in_path)
 		exec_builtin_or_exit(cmd_inf->tokens[0], \
-		cmd_inf, env_list, path_sp_w_slash, envp);
+		cmd_inf, env_list, path_sp_w_slash);
 	return (built_in_path);
 }
 
@@ -116,29 +153,29 @@ int	execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 	t_env *env_list)
 {
 	char	*built_in_path;
-	char	**envp;
+	//char	**envp;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd_info->tokens[0])
 		return (0);
-	envp = convert_env_to_array(env_list);
+	cmd_info->envp = convert_env_to_array(env_list);
 	if (cmd_info->tokens[0][0] == '/' || \
 	ft_strchr(cmd_info->tokens[0], '/') != NULL)
 	{
 		execve(cmd_info->tokens[0], cmd_info->tokens, \
-		envp);
-		free_arr (envp);
+		cmd_info->envp);
+		//free_arr (cmd_info->envp);
 		exec_builtin_or_exit(cmd_info->tokens[0], \
-		cmd_info, env_list, path_sp_w_slash, envp);
+		cmd_info, env_list, path_sp_w_slash);
 	}
 	built_in_path = find_builtin_or_exit(path_sp_w_slash, cmd_info, \
-	env_list, envp);
-	execve(built_in_path, cmd_info->tokens, envp);
+	env_list);
+	execve(built_in_path, cmd_info->tokens, cmd_info->envp);
 	//free_arr(envp);
 	free(built_in_path);
 	exec_builtin_or_exit(cmd_info->tokens[0], cmd_info, env_list, \
-	path_sp_w_slash, envp);
+	path_sp_w_slash);
 	return (0);
 }
 

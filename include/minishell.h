@@ -42,6 +42,7 @@ typedef struct s_split_data
 typedef struct s_command
 {
 	char	**tokens;
+	char	**envp;
 	char	*file_out;
 	char	*file_in;
 	int		fd_out;
@@ -148,7 +149,7 @@ int			execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 int			execute_child_process(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
 char		*find_builtin_or_exit(char **path_sp_w_slash, t_command *cmd_inf, \
-			t_env *env_list, char **envp);
+			t_env *env_list);
 //----execute_utils.c----
 char		*find_no_builtin(char **good_path, char **command);
 int			wait_for_child_processes(int *pids, int pipe_count);
@@ -167,7 +168,7 @@ char		**clean_redir(char **cmd_tokens, t_command *cmd_info);
 int			execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 			t_env *env_list, t_command *stru);
 char		*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
-			t_env *env_list, t_command *stru, char **envp);
+			t_env *env_list, t_command *stru);
 //----execute_pipe_utils.c----
 int			execute_pipes(t_command *cmd_info, \
 			char **path_sp_w_slash, t_env *env_list);
@@ -187,6 +188,8 @@ int			open_file(char *file, int mode, t_command *cmd_info);
 int			manage_redirection(t_command *cmd_info);
 void		execute_in_child(t_command *cmd_info, char **path_sp_w_slash, \
 			t_env *env_list);
+void		close_fd(t_command *cmd_info);
+
 //----------------------------free----------------------------
 //----free.c---
 void		free_command(t_command *cmd_info);

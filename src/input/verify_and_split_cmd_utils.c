@@ -31,16 +31,7 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 			ft_putstr_fd(bad_token, 2);
 		ft_putstr_fd("'\n", 2);
 	}
-	if (cmd_info->og_stdin != -1)
-	{
-		close(cmd_info->og_stdin);
-		cmd_info->og_stdin = -1;
-	}
-	if (cmd_info->og_stdout != -1)
-	{
-		close(cmd_info->og_stdout);
-		cmd_info->og_stdout = -1;
-	}
+	close_fd(cmd_info);
 	shell->exit_code = code;
 	free_command(cmd_info);
 	return (NULL);

@@ -21,8 +21,6 @@ int	handle_redirection_and_builtins(t_pipe_exec_info *pipe_exec_info)
 		if (!manage_redirection(pipe_exec_info->cmd_info))
 		{
 			free_arr(pipe_exec_info->current_command);
-			//ft_putstr_fd("ta mere\n", 2);
-			//exit(1);
 			free_all(pipe_exec_info->cmd_info, pipe_exec_info->path_sp_w_slash, \
 			pipe_exec_info->env_list);
 			//exit(1);
@@ -107,8 +105,6 @@ int	execute_pipes_loop(t_pipe_exec_info *pipe_exec_info, \
 			free(pids);
 			return (1);
 		}
-		/*if (cmd_info->flag_test ==1)
-			return 1;*/
 		if (i < cmd_info->c_pipe)
 			create_pipe(pipe_exec_info->pipe_fd);
 		pipe_exec_info->i = i;

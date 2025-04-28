@@ -62,72 +62,19 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		set_signals();
 		input_status = handle_user_input(&cmd_info, env_list, \
 			&data.shell, data.path_sp_w_slash);
-		//printf("%d\n", cmd_info->c_red_o);
-		//if (cmd_info->c_append >= 1 || cmd_info->c_red_o >= 1)
-		data.original_stdout = dup(STDOUT_FILENO);
-		//if (cmd_info->c_red_i >= 1 || cmd_info->here_doc >= 1)
-		data.original_stdin = dup(STDIN_FILENO);
-		if (input_status != 0)
-			data.shell.exit_code = \
-			execute_command(cmd_info, data.path_sp_w_slash, env_list);*/
-		/*if ((input_status != 0) && (cmd_info->c_red_o >= 1 || \
-			cmd_info->c_append >= 1) && (cmd_info->c_pipe == 0))
-		{
-		dup2(data.original_stdout, STDOUT_FILENO);
-		close(data.original_stdout);
-		}
-		if ((input_status != 0) && (cmd_info->c_red_i == 1 || \
-			cmd_info->here_doc == 1) && (cmd_info->c_pipe == 0))
-		{
-		dup2(data.original_stdin, STDIN_FILENO);
-		close(data.original_stdin);
-		//}
-		if (cmd_info)
-			free_command(cmd_info);
-	}
-}*/
-
-void	execute_shell_loop(t_env *env_list, char **env)
-{
-	t_shell_data	data;
-	t_command		*cmd_info;
-	int				input_status;
-
-	initialize_shell(&env_list, env, &data);
-	//cmd_info->og_stdout = dup(STDOUT_FILENO);
-	//cmd_info->og_stdin = dup(STDIN_FILENO);
-	//data.original_stdout = dup(STDOUT_FILENO);
-	//data.original_stdin = dup(STDIN_FILENO);
-	while (1)
-	{
-		handle_path(&data.path_splitted, &data.path_sp_w_slash, env_list);
-		set_signals();
-		//cmd_info->og_stdout = data.original_stdout;
-		//cmd_info->og_stdin = data.original_stdin;
-		/*if (data.original_stdout == -1 || data.original_stdin == -1)
-		{
-			perror("dup");
-			exit(EXIT_FAILURE);
-		}*/
-		input_status = handle_user_input(&cmd_info, env_list, \
-			&data.shell, data.path_sp_w_slash);
-		//cmd_info->og_stdout = data.original_stdout;
-		//cmd_info->og_stdin = data.original_stdin;
 		if (input_status != 0)
 			data.shell.exit_code = execute_command(cmd_info, \
 			data.path_sp_w_slash, env_list);
 		if (cmd_info)
 		{
 			if ((cmd_info->c_red_o != 0 || cmd_info->c_append != 0) \
-			&& cmd_info->og_stdout != -1 /*&& cmd_info->c_pipe == 0*/)
+			&& cmd_info->og_stdout != -1 && cmd_info->c_pipe == 0)
 			{
 				if (dup2(cmd_info->og_stdout, STDOUT_FILENO) == -1)
 				{
 					perror("dup2 stdout");
 					exit(EXIT_FAILURE);
 				}
-				//close(cmd_info->og_stdout);
-			//	cmd_info->og_stdout = -1;
 			}
 			if (cmd_info->og_stdout != -1)
 			{
@@ -135,11 +82,10 @@ void	execute_shell_loop(t_env *env_list, char **env)
 				cmd_info->og_stdout = -1;
 			}
 		}
-		//close(data.original_stdout);
 		if (cmd_info)
 		{
 			if ((cmd_info->c_red_i != 0 || cmd_info->here_doc != 0) \
-			&& cmd_info->og_stdin != -1 /*&& cmd_info->c_pipe == 0*/)
+			&& cmd_info->og_stdin != -1 && cmd_info->c_pipe == 0)
 			{
 				if (dup2(cmd_info->og_stdin, STDIN_FILENO) == -1 \
 				&& cmd_info->c_red_i != 0)
@@ -157,8 +103,77 @@ void	execute_shell_loop(t_env *env_list, char **env)
 		if (cmd_info)
 			free_command(cmd_info);
 	}
-	//close(data.original_stdout);
-	//close(data.original_stdin);
+}*/
+
+static void	reset_stdout(t_command *cmd_info)
+{
+	if (cmd_info->c_red_o != 0 || cmd_info->c_append != 0)
+	{
+		if (cmd_info->og_stdout != -1)
+		{
+			if (dup2(cmd_info->og_stdout, STDOUT_FILENO) == -1)
+			{
+				perror("dup2 stdout");
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
+	if (cmd_info->og_stdout != -1)
+	{
+		close(cmd_info->og_stdout);
+		cmd_info->og_stdout = -1;
+	}
+}
+
+static void	reset_stdin(t_command *cmd_info)
+{
+	if (cmd_info->c_red_i != 0 || cmd_info->here_doc != 0)
+	{
+		if (cmd_info->og_stdin != -1)
+		{
+			if (dup2(cmd_info->og_stdin, STDIN_FILENO) == -1)
+			{
+				perror("dup2 stdin");
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
+	if (cmd_info->og_stdin != -1)
+	{
+		close(cmd_info->og_stdin);
+		cmd_info->og_stdin = -1;
+	}
+}
+
+static void	handle_cmd_info(t_command *cmd_info)
+{
+	if (cmd_info)
+	{
+		reset_stdout(cmd_info);
+		reset_stdin(cmd_info);
+		free_command(cmd_info);
+	}
+}
+
+void	execute_shell_loop(t_env *env_list, char **env)
+{
+	t_shell_data	data;
+	t_command		*cmd_info;
+	int				input_status;
+
+	initialize_shell(&env_list, env, &data);
+	while (1)
+	{
+		cmd_info = NULL;
+		handle_path(&data.path_splitted, &data.path_sp_w_slash, env_list);
+		set_signals();
+		input_status = handle_user_input(&cmd_info, env_list, \
+						&data.shell, data.path_sp_w_slash);
+		if (input_status != 0)
+			data.shell.exit_code = execute_command(cmd_info, \
+						data.path_sp_w_slash, env_list);
+		handle_cmd_info(cmd_info);
+	}
 }
 
 int	main(int ac, char **av, char **env)

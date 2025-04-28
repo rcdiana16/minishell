@@ -28,6 +28,7 @@ void	free_command(t_command *cmd_info)
 		}
 		free(cmd_info->tokens);
 	}
+	free_arr(cmd_info->envp);
 	if (cmd_info->file_out)
 		free(cmd_info->file_out);
 	if (cmd_info->file_in)

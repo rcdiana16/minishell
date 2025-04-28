@@ -124,10 +124,10 @@ char	*get_next_line(int fd)
 	buffer = trim_buffer(buffer);
 	if (!buffer)
 		free(buffer);
-	if (!line)
+	/*if (!line)
 	{
 		free(buffer);
 		buffer = NULL;
-	}
+	}*/
 	return (line);
 }

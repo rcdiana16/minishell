@@ -107,16 +107,12 @@ t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 	cmd_info->tokens = split_joined_redirections(cmd_info->tokens);
 	if (cmd_info->tokens[1] == NULL && \
 		is_invalid_single_token(cmd_info->tokens[0]))
-	{
 		return (handle_token_error(cmd_info, shell, \
 				2, NULL));
-	}
 	ret = check_syntax(cmd_info->tokens, &bad_token);
 	cmd_info = handle_syntax_errors(cmd_info, shell, ret, bad_token);
 	if (!cmd_info)
-	{
 		return (NULL);
-	}
 	process_tokens(cmd_info, env_mini, shell);
 	return (cmd_info);
 }
