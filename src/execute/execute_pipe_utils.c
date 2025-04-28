@@ -99,6 +99,7 @@ int	execute_pipes_loop(t_pipe_exec_info *pipe_exec_info, \
 	i = 0;
 	while (i <= cmd_info->c_pipe)
 	{
+		close_fd(cmd_info);
 		pipe_exec_info->current_command = get_pipe_command(cmd_info, i);
 		if (!pipe_exec_info->current_command)
 		{

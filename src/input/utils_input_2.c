@@ -22,6 +22,7 @@ t_command	*initialize_command(t_shell *shell)
 	if (!cmd_info)
 		return (NULL);
 	cmd_info->c_pipe = 0;
+	cmd_info->envp = NULL;
 	cmd_info->flag = 0;
 	cmd_info->c_red_i = 0;
 	cmd_info->here_doc = 0;

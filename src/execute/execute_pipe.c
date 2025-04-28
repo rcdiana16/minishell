@@ -20,7 +20,7 @@ char	*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
 	built_in_path = find_no_builtin(path_sp_w_slash, cmd_inf);
 	if (!built_in_path)
 	{
-		free_arr(stru->envp);
+		//free_arr(stru->envp);
 		exec_builtin_or_exit_pipe(cmd_inf, \
 		stru, env_list, path_sp_w_slash);
 	}
@@ -41,14 +41,14 @@ int	execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 	ft_strchr(cmd_info[0], '/') != NULL)
 	{
 		execve(cmd_info[0], cmd_info, stru->envp);
-		free_arr(stru->envp);
+		//free_arr(stru->envp);
 		exec_builtin_or_exit_pipe(cmd_info, \
 		stru, env_list, path_sp_w_slash);
 	}
 	built_in_path = find_builtin_or_exit_pipe(path_sp_w_slash, \
 		cmd_info, env_list, stru);
 	execve(built_in_path, cmd_info, stru->envp);
-	free_arr(stru->envp);
+	//free_arr(stru->envp);
 	free(built_in_path);
 	exec_builtin_or_exit_pipe(cmd_info, stru, env_list, \
 	path_sp_w_slash);
