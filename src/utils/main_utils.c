@@ -58,6 +58,7 @@ void	handle_cmd_info(t_command *cmd_info)
 	{
 		reset_stdout(cmd_info);
 		reset_stdin(cmd_info);
+		close_fd(cmd_info);
 		free_command(cmd_info);
 	}
 }

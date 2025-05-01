@@ -14,21 +14,21 @@
 
 t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 			int code, char *bad_token)
-{
+{	
 	if (!bad_token)
-		ft_putstr_fd("minishell: syntax error near unexpected token \
-		`newline'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected "
+		"token `newline'\n", 2);
 	else
 		ft_putstr_fd("minishell: syntax error near unexpected token", 2);
 	if (bad_token)
 	{
 		ft_putstr_fd(" `", 2);
-		if (ft_strlen(bad_token) > 2)
-			write(2, bad_token, 2);
-		else if (ft_strlen(bad_token) == 1)
-			write(2, bad_token, 1);
-		else
+		if (ft_strncmp(bad_token, ">>", 3) == 0 || ft_strncmp(bad_token, "<<", 3) == 0)
 			ft_putstr_fd(bad_token, 2);
+		else if (ft_strlen(bad_token) > 2)
+			write(2, bad_token, 2);
+		else
+			write(2, bad_token, 1);
 		ft_putstr_fd("'\n", 2);
 	}
 	close_fd(cmd_info);

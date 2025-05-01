@@ -79,6 +79,30 @@ static int	is_invalid_identifier(char *tokens)
 	}
 	return (0);
 }
+/*gpt
+static int is_invalid_identifier(char *tokens)
+{
+    // Check if the token is NULL, empty, or starts with an '='
+    if (!tokens || !*tokens || tokens[0] == '=')
+    {
+        ft_putstr_fd("export: `", 2);
+        ft_putstr_fd(tokens, 2);
+        ft_putstr_fd("': not a valid identifier\n", 2);
+        return (1);
+    }
+
+    // Check if the token starts with an invalid character (e.g., '=' or contains invalid symbols)
+    if (!is_valid_variable_name(tokens))
+    {
+        ft_putstr_fd("export: `", 2);
+        ft_putstr_fd(tokens, 2);
+        ft_putstr_fd("': not a valid identifier\n", 2);
+        return (1);
+    }
+
+    return (0);
+}*/
+
 
 int	ft_export(t_env *env_mini, char **cmd)
 {
@@ -91,12 +115,13 @@ int	ft_export(t_env *env_mini, char **cmd)
 		return (1);
 	while (cmd[i])
 	{
-		tokens = get_tokens(cmd[i]);
+		//tokens = get_tokens(cmd[i]);
 		if (is_invalid_identifier(cmd[i]))
 		{
-			free_arr(tokens);
+			//free_arr(tokens);
 			return (1);
 		}
+		tokens = get_tokens(cmd[i]);
 		if (!update_existing_variable(env_mini, tokens))
 		{
 			new_var = malloc(sizeof(t_env));

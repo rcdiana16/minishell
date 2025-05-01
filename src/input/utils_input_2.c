@@ -32,6 +32,7 @@ t_command	*initialize_command(t_shell *shell)
 	cmd_info->exit_code = 0;
 	cmd_info->file_out = NULL;
 	cmd_info->file_in = NULL;
+	cmd_info->fd_here_doc = 0;
 	cmd_info->c_append = 0;
 	cmd_info->flag_test = 0;
 	cmd_info->og_stdout = dup(STDOUT_FILENO);

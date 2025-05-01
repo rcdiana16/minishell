@@ -44,6 +44,11 @@ void	close_fd(t_command *cmd_info)
 		close(cmd_info->og_stdout);
 		cmd_info->og_stdout = -1;
 	}
+	/*if(cmd_info->fd_here_doc != -1)
+	{
+		close(cmd_info->fd_here_doc);
+		cmd_info->fd_here_doc = -1;
+	}*/
 }
 
 int	open_file(char *file, int mode, t_command *cmd_info)

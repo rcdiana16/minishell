@@ -36,7 +36,7 @@ void	handle_is_directory(char *command, t_command *cmd_info, \
 	write(2, ": Is a directory\n", 17);
 	close_fd(cmd_info);
 	free_all(cmd_info, path_sp_w_slash, env_list);
-	exit(127);
+	exit(126);
 }
 
 void	handle_command_found(t_command *cmd_info, \

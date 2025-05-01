@@ -38,7 +38,7 @@ int	update_existing_variable(t_env *env_mini, char **tokens)
 	while (env_mini)
 	{
 		if (ft_strncmp(tokens[0], env_mini->variable, \
-			ft_strlen(tokens[0])) == 0)
+			ft_strlen(tokens[0]) + 1) == 0)
 			return (handle_existing_variable(env_mini, tokens));
 		env_mini = env_mini->next;
 	}

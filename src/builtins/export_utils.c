@@ -75,6 +75,8 @@ void	init_new_variable(t_env *new_var, char **tokens)
 	else
 		new_var->value = ft_strdup("");
 }
+
+
 /*
 int	is_valid_variable_name(char *name)
 {
