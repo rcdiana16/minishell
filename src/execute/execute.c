@@ -87,6 +87,7 @@ void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
 		handle_command_found(cmd_info, env_list, path_sp_w_slash);
 	}
 	handle_command_not_found(command, cmd_info, env_list, path_sp_w_slash);
+	close_fd(cmd_info);
 }
 
 char	*find_builtin_or_exit(char **path_sp_w_slash, t_command *cmd_inf, \

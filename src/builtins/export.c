@@ -93,7 +93,10 @@ int	ft_export(t_env *env_mini, char **cmd)
 	{
 		tokens = get_tokens(cmd[i]);
 		if (is_invalid_identifier(cmd[i]))
+		{
+			free_arr(tokens);
 			return (1);
+		}
 		if (!update_existing_variable(env_mini, tokens))
 		{
 			new_var = malloc(sizeof(t_env));

@@ -18,7 +18,7 @@ int	remove_first_node(t_env *env_mini, char *var)
 
 	if (!var)
 		return (0);
-	if (env_mini && ft_strncmp((env_mini)->variable, var, ft_strlen(var)) == 0)
+	if (env_mini && ft_strncmp((env_mini)->variable, var, ft_strlen(var)) == 0 && ft_strlen(var) != 0)
 	{
 		tmp = env_mini;
 		env_mini = tmp->next;
@@ -41,7 +41,7 @@ void	remove_variable(t_env *env_mini, char *var)
 	prev = NULL;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->variable, var, ft_strlen(var)) == 0)
+		if (ft_strncmp(tmp->variable, var, ft_strlen(var)) == 0 && ft_strlen(var) != 0)
 		{
 			prev->next = tmp->next;
 			free(tmp->variable);

@@ -23,6 +23,7 @@ void	handle_empty_command(t_command *cmd_info, char **path_sp_w_slash, \
 void	handle_dotdot_command(t_command *cmd_info, char **path_sp_w_slash, \
 	t_env *env_list)
 {
+	close_fd(cmd_info);
 	free_all(cmd_info, path_sp_w_slash, env_list);
 	exit(127);
 }
@@ -43,6 +44,8 @@ void	handle_command_found(t_command *cmd_info, \
 {
 	free_all(cmd_info, path_sp_w_slash, env_list);
 	// free_arr(envp);
+
+	//close_fd(cmd_info);
 	exit(126);
 }
 
