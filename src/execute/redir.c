@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:32:15 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/31 17:39:52 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/02 17:35:03 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,15 @@ void	handle_input_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
 	}
 }
 
-void	handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i)
+void	handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i, \
+		t_pipe_exec_info *pipe_exec_info)
 {
 	if (ft_strncmp(cmd_tokens[*i], ">>", 2) == 0)
 		handle_append_redirection(cmd_tokens, cmd_info, i);
 	else if (ft_strncmp(cmd_tokens[*i], ">", 1) == 0)
 		handle_output_redirection(cmd_tokens, cmd_info, i);
 	else if (ft_strncmp(cmd_tokens[*i], "<<", 2) == 0)
-		handle_heredoc_redirection(cmd_tokens, cmd_info, i);
+		handle_heredoc_redirection(cmd_tokens, cmd_info, i, pipe_exec_info);
 	else if (ft_strncmp(cmd_tokens[*i], "<", 1) == 0)
 		handle_input_redirection(cmd_tokens, cmd_info, i);
 }

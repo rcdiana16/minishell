@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:33:31 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/28 11:28:47 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/02 17:38:43 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static int	process_heredoc_line(char *line, char *delimiter, int *pipefd)
 	return (0);
 }
 
-void	here_doc(char *delimiter)
+void	here_doc(char *delimiter, t_pipe_exec_info *pipe_exec_info)
 {
 	char				*line;
 	int					pipefd[2];
@@ -136,6 +136,8 @@ void	here_doc(char *delimiter)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
+		line = replace_env_vars(line, pipe_exec_info->env_list, \
+			pipe_exec_info->shell);
 		if (!line || check_heredoc_interrupt(line, pipefd, &sa_old))
 			break ;
 		if (check_heredoc_interrupt(line, pipefd, &sa_old))

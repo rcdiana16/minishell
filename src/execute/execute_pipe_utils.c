@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:32:31 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/27 21:58:53 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/02 17:33:37 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
 	int		exit_builtin;
 
 	tmp_command = clean_redir(pipe_exec_info.current_command, \
-		pipe_exec_info.cmd_info);
+		pipe_exec_info.cmd_info, &pipe_exec_info);
 	if (!tmp_command)
 		return (1);
 	pipe_exec_info.current_command = tmp_command;

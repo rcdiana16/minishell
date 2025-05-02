@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/28 11:50:31 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/02 17:41:16 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_pipe_exec_info
 	char		**path_sp_w_slash;
 	t_env		*env_list;
 	t_command	*cmd_info;
+	t_shell		*shell;
 }	t_pipe_exec_info;
 //----------------------------builtins---------------------------------
 //----cd_utils.c----
@@ -176,17 +177,18 @@ int			wait_for_child_processes(int *pids, int pipe_count);
 //----execute_utils_env.c
 char		**convert_env_to_array(t_env *env_mini);
 //----here_doc.c----
-void		here_doc(char *limiter);
+void		here_doc(char *limiter, t_pipe_exec_info *pipe_exec_info);
 void		handle_heredoc_redirection(char **cmd_tokens, t_command *cmd_info, \
-			int *i);
+			int *i, t_pipe_exec_info *pipe_exec_info);
 //----here_doc_utils.c----
 //int			get_next_line_pip(char **output_line);
-void		handle_heredoc_redirection(char **cmd_tokens, \
-			t_command *cmd_info, int *i);
+
 //----redir.c----
-void		handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i);
+void		handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i, \
+			t_pipe_exec_info *pipe_exec_info);
 //----execute_pipe.c----
-char		**clean_redir(char **cmd_tokens, t_command *cmd_info);
+char		**clean_redir(char **cmd_tokens, t_command *cmd_info, \
+			t_pipe_exec_info *pipe_exec_info);
 int			execute_child_process_pipe(char **cmd_info, char **path_sp_w_slash, \
 			t_env *env_list, t_command *stru);
 char		*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \

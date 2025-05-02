@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:59:48 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/28 11:50:00 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/02 17:34:28 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char	**allocate_cleaned_cmd(char **cmd_tokens)
 }
 
 void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
-		char **cleaned_cmd)
+		char **cleaned_cmd, t_pipe_exec_info *pipe_exec_info)
 {
 	int	i;
 	int	j;
@@ -141,7 +141,7 @@ void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 		ft_strncmp(cmd_tokens[i], ">>", 2) == 0 || \
 		ft_strncmp(cmd_tokens[i], "<", 1) == 0 || \
 		ft_strncmp(cmd_tokens[i], "<<", 2) == 0) && (cmd_tokens[i + 1]))
-			handle_redirection(cmd_tokens, cmd_info, &i);
+			handle_redirection(cmd_tokens, cmd_info, &i, pipe_exec_info);
 		else
 		{
 			if (cmd_tokens[i])
@@ -152,14 +152,14 @@ void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 	cleaned_cmd[j] = NULL;
 }
 
-char	**clean_redir(char **cmd_tokens, t_command *cmd_info)
+char	**clean_redir(char **cmd_tokens, t_command *cmd_info, t_pipe_exec_info *pipe_exec_info)
 {
 	char	**cleaned_cmd;
 
 	cleaned_cmd = allocate_cleaned_cmd(cmd_tokens);
 	if (!cleaned_cmd)
 		return (NULL);
-	filter_and_copy_tokens(cmd_tokens, cmd_info, cleaned_cmd);
+	filter_and_copy_tokens(cmd_tokens, cmd_info, cleaned_cmd, pipe_exec_info);
 	/*if (cmd_tokens)
 		free_arr(cmd_tokens);*/
 	if (cmd_tokens != cleaned_cmd)

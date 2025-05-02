@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/28 11:49:00 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/02 17:32:56 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,13 +182,13 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 */
 
 int	prepare_execution(t_command *cmd_info, char **path_sp_w_slash, \
-	t_env *env_list)
+	t_env *env_list, t_pipe_exec_info *pipe_exec_info)
 {
 	int	exit_builtin;
 
 	if (cmd_info->c_pipe >= 1)
 		return (execute_pipes(cmd_info, path_sp_w_slash, env_list));
-	cmd_info->tokens = clean_redir(cmd_info->tokens, cmd_info);
+	cmd_info->tokens = clean_redir(cmd_info->tokens, cmd_info, pipe_exec_info);
 	if (!manage_redirection(cmd_info))
 		return (1);
 	if (cmd_info->flag_test == 1)
@@ -205,8 +205,13 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	int	pid;
 	int	exit_status;
 	int	prepare_status;
+	t_pipe_exec_info	pipe_exec_info;
 
-	prepare_status = prepare_execution(cmd_info, path_sp_w_slash, env_list);
+	pipe_exec_info.prev_pipe_fd = -1;
+	pipe_exec_info.path_sp_w_slash = path_sp_w_slash;
+	pipe_exec_info.env_list = env_list;
+	pipe_exec_info.cmd_info = cmd_info;
+	prepare_status = prepare_execution(cmd_info, path_sp_w_slash, env_list, &pipe_exec_info);
 	if (prepare_status != -1)
 		return (prepare_status);
 	pid = fork();

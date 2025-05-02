@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 11:21:20 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/28 11:51:57 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/02 17:35:55 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	get_next_line_pip(char **output_line)
 }*/
 
 void	handle_heredoc_redirection(char **cmd_tokens, \
-	t_command *cmd_info, int *i)
+	t_command *cmd_info, int *i, t_pipe_exec_info *pipe_exec_info)
 {
 	int	saved_stdin;
 
 	if (cmd_tokens[*i + 1])
 	{
-		here_doc(cmd_tokens[*i + 1]);
+		here_doc(cmd_tokens[*i + 1], pipe_exec_info);
 		saved_stdin = dup(0);
 		cmd_info->fd_here_doc = saved_stdin;
 		cmd_info->here_doc = 1;
