@@ -29,6 +29,13 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 		return (NULL);	
 
 	}
+	else if (ft_strncmp(bad_token, "", 2) == 0)
+	{
+		close_fd(cmd_info);
+		shell->exit_code = 127;
+		free_command(cmd_info);
+		return (NULL);	
+	}
 	else
 		ft_putstr_fd("minishell: syntax error near unexpected token", 2);
 	if (bad_token)

@@ -58,7 +58,12 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 		if (has_enclosed_single_quotes(cmd_info->tokens[i]))
 			remove_single_quotes(cmd_info->tokens[i]);
 		else
+		{
+			if (!has_enclosed_double_quotes(cmd_info->tokens[i]) /*&& is_redirection(cmd_info->tokens[i])*/)
+				remove_single_quotes(cmd_info->tokens[i]);
 			handle_double_quotes_and_env_vars(cmd_info, env_mini, shell, i);
+			
+		}
 		i++;
 	}
 }

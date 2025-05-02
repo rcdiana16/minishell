@@ -118,10 +118,16 @@ void	handle_eof_or_empty(char *line, t_shell *shell, t_env *env_mini, \
 		if (mode == 0)
 			write(1, "exit\n", 5);
 		free_env_list(env_mini);
-		exit(shell->exit_code);
+		free(line);
+		exit(shell->exit_code);	
 	}
 	if (*line == '\0')
 		free(line);
+	if (ft_strncmp(line, "\"\"", 2) == 0)
+	{
+		free(line);
+		shell->exit_code = 127;	
+	}
 }
 
 t_command	*parse_and_store_command(char *line, t_env *env_mini, \
@@ -145,7 +151,7 @@ t_command	*get_input(t_env *env_mini, int mode, t_shell *shell, \
 	char	*line;
 
 	line = read_command_line(mode);
-	if (!line || *line == '\0')
+	if (!line || *line == '\0' || ft_strncmp(line, "\"\"", 2) == 0)
 	{
 		if (!line && path)
 			free_arr(path);

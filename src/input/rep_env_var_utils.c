@@ -53,7 +53,7 @@ char	*process_replace_env_vars(t_cmd_state *state, \
 	j = 0;
 	while (state->cmd[state->i])
 	{
-		if (state->cmd[state->i] == '$' && state->cmd[state->i + 1] && state->cmd[state->i + 1] != ' ')
+		if (state->cmd[state->i] == '$' && state->cmd[state->i + 1] && state->cmd[state->i + 1] != ' ' && state->cmd[state->i + 1] != '$')
 			j = process_var(state, result, j, shell_env);
 		else
 			j = copy_non_var_part(state, result, j);
