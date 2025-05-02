@@ -66,6 +66,9 @@ typedef struct s_env
 {
 	char			*variable;
 	char			*value;
+//	int		mode;
+
+
 	struct s_env	*next;
 }	t_env;
 
@@ -314,4 +317,6 @@ void		handle_cmd_info(t_command *cmd_info);
 void		reset_stdin(t_command *cmd_info);
 void		reset_stdout(t_command *cmd_info);
 
+void	handle_is_directory_empty(char *command, t_command *cmd_info, \
+	t_env *env_list, char **path_sp_w_slash);
 #endif

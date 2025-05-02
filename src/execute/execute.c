@@ -75,6 +75,7 @@ void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
 		t_env *env_list, char **path_sp_w_slash)
 {
 	struct stat	info;
+	char  *path_val	;
 
 	if (ft_strncmp(command, "", 2) == 0)
 		handle_empty_command(cmd_info, path_sp_w_slash, env_list);
@@ -86,7 +87,11 @@ void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
 			handle_is_directory(command, cmd_info, env_list, path_sp_w_slash);
 		handle_command_found(cmd_info, env_list, path_sp_w_slash);
 	}
-	handle_command_not_found(command, cmd_info, env_list, path_sp_w_slash);
+	path_val = get_env_value(env_list, "PATH");
+	if (!path_val || path_val[0] == '\0')
+		handle_is_directory_empty(command, cmd_info, env_list, path_sp_w_slash);
+	else
+		handle_command_not_found(command, cmd_info, env_list, path_sp_w_slash);
 	close_fd(cmd_info);
 }
 

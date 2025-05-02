@@ -14,10 +14,21 @@
 
 t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 			int code, char *bad_token)
-{	
+{
 	if (!bad_token)
 		ft_putstr_fd("minishell: syntax error near unexpected "
 		"token `newline'\n", 2);
+	else if (code ==3)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("<<", 2);
+		ft_putstr_fd(": command not found\n", 2);
+		close_fd(cmd_info);
+		shell->exit_code = 127;
+		free_command(cmd_info);
+		return (NULL);	
+
+	}
 	else
 		ft_putstr_fd("minishell: syntax error near unexpected token", 2);
 	if (bad_token)
@@ -40,9 +51,15 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 t_command	*handle_syntax_errors(t_command *cmd_info, \
 			t_shell *shell, int ret, char *bad_token)
 {
-	if (ret == 0 || ret == 2)
-		return (handle_token_error(cmd_info, shell, \
+	if (ret == 0 || ret == 2 || ret == 3)
+	{
+		if (ret != 3)
+			return (handle_token_error(cmd_info, shell, \
 				2, bad_token));
+		else
+			return (handle_token_error(cmd_info, shell, \
+				3, bad_token));
+	}
 	return (cmd_info);
 }
 

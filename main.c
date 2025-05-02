@@ -29,12 +29,16 @@ int	handle_user_input(t_command **cmd_info, t_env *env_list, \
 	if (isatty(STDIN_FILENO))
 	{
 		*cmd_info = get_input(env_list, 0, shell, path);
+		//(*cmd_info)->mode = 0;
+		//env_list->mode = 0;	
 		if (!*cmd_info)
 			return (0);
 	}
 	else
 	{
 		*cmd_info = get_input(env_list, 1, shell, path);
+		//(*cmd_info)->mode = 1;
+		//env_list->mode = 1;
 		if (!*cmd_info)
 			return (0);
 	}

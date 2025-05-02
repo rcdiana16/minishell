@@ -39,6 +39,17 @@ void	handle_is_directory(char *command, t_command *cmd_info, \
 	exit(126);
 }
 
+void	handle_is_directory_empty(char *command, t_command *cmd_info, \
+	t_env *env_list, char **path_sp_w_slash)
+{
+	write(2, "minishell: ", 11);
+	write(2, command, ft_strlen(command));
+	ft_putstr_fd(": No such file or directory\n", 2);
+	close_fd(cmd_info);
+	free_all(cmd_info, path_sp_w_slash, env_list);
+	exit(127);
+}
+
 void	handle_command_found(t_command *cmd_info, \
 	t_env *env_list, char **path_sp_w_slash)
 {
