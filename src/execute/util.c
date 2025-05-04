@@ -97,6 +97,7 @@ void	exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 {
 	struct stat	info;
 
+	get_next_line(-42);
 	if (ft_strncmp(command[0], "", 2) == 0)
 		handle_empty_command_pip(cmd_info, path_sp_w_slash, env_list, command);
 	if (ft_strncmp(command[0], "..", 3) == 0)

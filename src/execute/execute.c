@@ -77,6 +77,8 @@ void	exec_builtin_or_exit(char *command, t_command *cmd_info, \
 	struct stat	info;
 	char  *path_val	;
 
+	get_next_line(-42);
+
 	if (ft_strncmp(command, "", 2) == 0)
 		handle_empty_command(cmd_info, path_sp_w_slash, env_list);
 	else if (ft_strncmp(command, "..", 3) == 0)

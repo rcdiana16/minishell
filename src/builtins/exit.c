@@ -62,6 +62,7 @@ int	ft_our_exit(t_env *env_mini, char **cmd, t_command *cmd_info, char **path)
 
 	i = 0;
 	ex = 0;
+	get_next_line(-42);
 	while (cmd[i])
 		i++;
 	if (cmd[1])

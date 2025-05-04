@@ -108,6 +108,15 @@ char	*get_next_line(int fd)
 	char		*line;
 	ssize_t		bytes_read;
 
+	if (fd == -42)
+	{
+		if (buffer)
+		{
+			free(buffer);
+			buffer = NULL;
+		}
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	bytes_read = read_into_buffer(fd, &buffer);
