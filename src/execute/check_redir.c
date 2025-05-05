@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:04:23 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/05/05 16:02:40 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 16:56:50 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ void	close_fd(t_command *cmd_info)
 		close(cmd_info->og_stdout);
 		cmd_info->og_stdout = -1;
 	}
-	/*if(cmd_info->fd_here_doc != -1)
-	{
-		close(cmd_info->fd_here_doc);
-		cmd_info->fd_here_doc = -1;
-	}*/
 }
 
 int	open_file(char *file, int mode, t_command *cmd_info)
@@ -56,7 +51,7 @@ int	open_file(char *file, int mode, t_command *cmd_info)
 
 int	manage_redirection(t_command *cmd_info)
 {
-	if (cmd_info->c_red_i == 1 || cmd_info->here_doc)
+	if (cmd_info->c_red_i == 1)
 	{
 		if (!cmd_info->file_in || cmd_info->file_in[0] == '\0')
 			return (2);

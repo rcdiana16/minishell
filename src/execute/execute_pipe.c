@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:59:48 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/05/05 16:19:08 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 17:10:12 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	**allocate_cleaned_cmd(char **cmd_tokens)
 	cleaned_cmd[i] = NULL;
 	return (cleaned_cmd);
 }
-
+/*
 int	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 		char **cleaned_cmd, t_pipe_exec_info *pipe_exec_info)
 {
@@ -95,6 +95,56 @@ int	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 				cleaned_cmd[j++] = ft_strdup(cmd_tokens[i]);
 			i++;
 		}
+	}
+	cleaned_cmd[j] = NULL;
+	return (0);
+}*/
+
+static int	handle_redirection_tokens(char **cmd_tokens, \
+	t_command *cmd_info, int *i, t_pipe_exec_info *pipe_exec_info)
+{
+	int	ret;
+
+	if ((ft_strncmp(cmd_tokens[*i], ">", 1) == 0 || \
+		ft_strncmp(cmd_tokens[*i], ">>", 2) == 0 || \
+		ft_strncmp(cmd_tokens[*i], "<", 1) == 0 || \
+		ft_strncmp(cmd_tokens[*i], "<<", 2) == 0) && \
+		cmd_tokens[*i + 1])
+	{
+		ret = handle_redirection(cmd_tokens, cmd_info, i, pipe_exec_info);
+		if (ret == -1)
+			return (-1);
+	}
+	return (0);
+}
+
+static void	copy_normal_token(char **cmd_tokens, \
+char **cleaned_cmd, int *j, int i)
+{
+	if (cmd_tokens[i])
+		cleaned_cmd[*j] = ft_strdup(cmd_tokens[i]);
+	(*j)++;
+}
+
+int	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
+	char **cleaned_cmd, t_pipe_exec_info *pipe_exec_info)
+{
+	int	i;
+	int	j;
+	int	ret;
+
+	i = 0;
+	j = 0;
+	if (!cmd_tokens)
+		return (0);
+	while (cmd_tokens[i])
+	{
+		ret = \
+		handle_redirection_tokens(cmd_tokens, cmd_info, &i, pipe_exec_info);
+		if (ret == -1)
+			return (-1);
+		copy_normal_token(cmd_tokens, cleaned_cmd, &j, i);
+		i++;
 	}
 	cleaned_cmd[j] = NULL;
 	return (0);

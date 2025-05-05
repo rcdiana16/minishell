@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:18:11 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/28 11:06:43 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 16:38:43 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static char	*trim_buffer(char *buffer)
 	free(buffer);
 	return (new_buffer);
 }
-
+/*
 char	*get_next_line(int fd)
 {
 	static char	*buffer = NULL;
@@ -129,6 +129,25 @@ char	*get_next_line(int fd)
 		}
 		return (NULL);
 	}
+	line = get_line_in_buffer(buffer);
+	buffer = trim_buffer(buffer);
+	if (!buffer)
+		free(buffer);
+	return (line);
+}
+*/
+
+char	*get_next_line(int fd)
+{
+	static char	*buffer = NULL;
+	char		*line;
+	ssize_t		bytes_read;
+
+	if (fd == -42)
+		return (cleanup(&buffer));
+	bytes_read = read_into_buffer(fd, &buffer);
+	if (bytes_read < 0 || (!bytes_read && should_stop(fd, buffer)))
+		return (cleanup(&buffer));
 	line = get_line_in_buffer(buffer);
 	buffer = trim_buffer(buffer);
 	if (!buffer)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/05/05 16:12:10 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 16:33:52 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void		handle_heredoc_redirection(char **cmd_tokens, t_command *cmd_info, \
 			int *i, t_pipe_exec_info *pipe_exec_info);
 //----here_doc_utils.c----
 //int			get_next_line_pip(char **output_line);
-
+void		restore_heredoc_stdin(t_command *cmd_info);
 //----redir.c----
 int			handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i, \
 			t_pipe_exec_info *pipe_exec_info);
@@ -320,4 +320,5 @@ void		reset_stdout(t_command *cmd_info);
 
 void		handle_is_directory_empty(char *command, t_command *cmd_info, \
 			t_env *env_list, char **path_sp_w_slash);
+
 #endif

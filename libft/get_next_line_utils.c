@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:21:33 by maximemarti       #+#    #+#             */
-/*   Updated: 2024/11/06 11:30:10 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 16:38:10 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,23 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	if (s1)
 		free(s1);
 	return (new_str);
+}
+
+char	*cleanup(char **buffer)
+{
+	if (*buffer)
+	{
+		free(*buffer);
+		*buffer = NULL;
+	}
+	return (NULL);
+}
+
+int	should_stop(int fd, char *buffer)
+{
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (1);
+	if (!buffer || !buffer[0])
+		return (1);
+	return (0);
 }

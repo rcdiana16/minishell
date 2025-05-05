@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:43:32 by cosmos            #+#    #+#             */
-/*   Updated: 2025/05/05 16:18:02 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 16:59:06 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	prepare_execution(t_command *cmd_info, char **path_sp_w_slash, \
 	return (-1);
 }
 
+/*
 int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 	t_env *env_list)
 {
@@ -121,8 +122,50 @@ int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid, &exit_status, 0);
 		set_signals();
+		restore_heredoc_stdin(cmd_info);
 		if (WIFEXITED(exit_status))
 			return (WEXITSTATUS(exit_status));
 	}
 	return (0);
+}
+*/
+
+static void	init_pipe_exec_info(t_pipe_exec_info *info, \
+	t_command *cmd_info, char **path_sp_w_slash, t_env *env_list)
+{
+	info->prev_pipe_fd = -1;
+	info->path_sp_w_slash = path_sp_w_slash;
+	info->env_list = env_list;
+	info->cmd_info = cmd_info;
+}
+
+static int	handle_parent_process(int pid, t_command *cmd_info)
+{
+	int	status;
+
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	set_signals();
+	restore_heredoc_stdin(cmd_info);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (0);
+}
+
+int	execute_command(t_command *cmd_info, char **path_sp_w_slash, \
+	t_env *env_list)
+{
+	int					pid;
+	int					status;
+	t_pipe_exec_info	info;
+
+	init_pipe_exec_info(&info, cmd_info, path_sp_w_slash, env_list);
+	status = prepare_execution(cmd_info, path_sp_w_slash, env_list, &info);
+	if (status != -1)
+		return (status);
+	pid = fork();
+	if (pid == 0)
+		execute_in_child(cmd_info, path_sp_w_slash, env_list);
+	return (handle_parent_process(pid, cmd_info));
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: diana <diana@student.42.fr>                +#+  +:+       +#+         #
+#    By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/25 11:45:57 by diana             #+#    #+#              #
-#    Updated: 2025/05/05 16:05:35 by diana            ###   ########.fr        #
+#    Updated: 2025/05/05 16:31:30 by maximemarti      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ SRCS            = main.c \
 					src/execute/util.c \
 					src/execute/utils_execute.c \
 					src/execute/check_redir.c \
-					src/execute/here_doc.c \
 					src/execute/here_doc_utils.c \
 					src/execute/redir.c \
 					src/check_cmd/check_builtins.c \

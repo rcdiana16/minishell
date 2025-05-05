@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:28:53 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/03/02 12:13:50 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 16:37:58 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,7 @@ int		print_ptr(va_list *ptr);
 char	*get_next_line(int fd);
 char	*ft_strjoin_free(char *s1, char *s2);
 ssize_t	ft_strlen_gnl(char *s1);
+char	*cleanup(char **buffer);
+int		should_stop(int fd, char *buffer);
 
 #endif
