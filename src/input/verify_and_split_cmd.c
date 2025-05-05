@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:21:56 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/27 22:29:12 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 15:45:29 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,36 +58,6 @@ void	copy_normal_token(char **tokens, char **new_tokens, int *i, int *j)
 {
 	new_tokens[(*j)++] = ft_strdup(tokens[*i]);
 }
-/*mien og 
-char	**split_joined_redirections(char **tokens)
-{
-	int		i;
-	int		j;
-	char	**new_tokens;
-
-	i = 0;
-	j = 0;
-	new_tokens = allocate_new_tokens(tokens);
-	if (!new_tokens)
-		return (NULL);
-	while (tokens[i])
-	{
-		if ((ft_strncmp(tokens[i], ">>", 2) == 0 && ft_strlen(tokens[i]) > 2) \
-		|| (ft_strncmp(tokens[i], "<<", 2) == 0 && ft_strlen(tokens[i]) > 2))
-			split_double_redirection(tokens, new_tokens, &i, &j);
-		else if ((tokens[i][0] == '>' || tokens[i][0] == '<') && \
-		ft_strlen(tokens[i]) > 1 && ft_strncmp(tokens[i], "<<", 3) \
-		!= 0 && ft_strncmp(tokens[i], ">>", 3) != 0)
-			split_single_redirection(tokens, new_tokens, &i, &j);
-		else
-			copy_normal_token(tokens, new_tokens, &i, &j);
-		i++;
-	}
-	new_tokens[j] = NULL;
-	free_arr(tokens);
-	return (new_tokens);
-}*/
-
 
 char	**split_joined_redirections(char **tokens)
 {
@@ -105,13 +75,14 @@ char	**split_joined_redirections(char **tokens)
 		if ((ft_strncmp(tokens[i], "><", 2) == 0 || ft_strncmp(tokens[i], "<>", 2) == 0 /*|| \
 	(ft_strchr(tokens[i], '|') && ft_strlen(tokens[i]) > 1)*/))
 			copy_normal_token(tokens, new_tokens, &i, &j);
-		if ((ft_strncmp(tokens[i], ">>", 2) == 0 && ft_strlen(tokens[i]) > 2) || \
-			(ft_strncmp(tokens[i], "<<", 2) == 0 && ft_strlen(tokens[i]) > 2))
+		if ((ft_strncmp(tokens[i], ">>", 2) == 0 && ft_strlen(tokens[i]) > 2) \
+		|| (ft_strncmp(tokens[i], "<<", 2) == 0 && ft_strlen(tokens[i]) > 2))
 			split_double_redirection(tokens, new_tokens, &i, &j);
 		else if ((tokens[i][0] == '>' || tokens[i][0] == '<') && \
 			ft_strlen(tokens[i]) > 1 && \
-			((tokens[i][1] != '>' && tokens[i][1] != '<') || tokens[i][2] == '\0') && \
-			!ft_strchr(tokens[i] + 1, '>') && !ft_strchr(tokens[i] + 1, '<'))
+			((tokens[i][1] != '>' && tokens[i][1] != '<') || tokens[i][2] == \
+			'\0') && !ft_strchr(tokens[i] + 1, '>') && \
+			!ft_strchr(tokens[i] + 1, '<'))
 			split_single_redirection(tokens, new_tokens, &i, &j);
 		else
 			copy_normal_token(tokens, new_tokens, &i, &j);
@@ -121,7 +92,6 @@ char	**split_joined_redirections(char **tokens)
 	free_arr(tokens);
 	return (new_tokens);
 }
-
 
 t_command	*verify_and_split_command(char *cmd, t_env *env_mini, \
 			t_shell *shell)

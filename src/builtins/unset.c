@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:43:58 by diana             #+#    #+#             */
-/*   Updated: 2025/04/16 00:40:15 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 14:43:07 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	remove_first_node(t_env *env_mini, char *var)
 
 	if (!var)
 		return (0);
-	if (env_mini && ft_strncmp((env_mini)->variable, var, ft_strlen(var)) == 0 && ft_strlen(var) != 0)
+	if (env_mini && ft_strncmp((env_mini)->variable, var, \
+		ft_strlen(var)) == 0 && ft_strlen(var) != 0)
 	{
 		tmp = env_mini;
 		env_mini = tmp->next;
@@ -41,7 +42,8 @@ void	remove_variable(t_env *env_mini, char *var)
 	prev = NULL;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->variable, var, ft_strlen(var)) == 0 && ft_strlen(var) != 0)
+		if (ft_strncmp(tmp->variable, var, ft_strlen(var)) == 0 \
+			&& ft_strlen(var) != 0)
 		{
 			prev->next = tmp->next;
 			free(tmp->variable);

@@ -3,35 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   check_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:04:23 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/05/05 10:19:21 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 16:02:40 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-/*
-char	**check_redir(t_command *cmd_info)
-{
-	int	i;
 
-	i = 0;
-	while (cmd_info->tokens[i])
-		i++;
-	if ((cmd_info->c_red_o == 1 || cmd_info->c_append == 1) && i >= 2)
-	{
-		cmd_info->file_out = ft_strdup(cmd_info->tokens[i - 1]);
-		free(cmd_info->tokens[i - 2]);
-		cmd_info->tokens[i - 2] = NULL;
-		free(cmd_info->tokens[i - 1]);
-		cmd_info->tokens[i - 1] = NULL;
-		cmd_info->tokens[i - 2] = cmd_info->tokens[i];
-		cmd_info->tokens[i - 1] = NULL;
-	}
-	return (cmd_info->tokens);
-}
-*/
 void	close_fd(t_command *cmd_info)
 {
 	if (cmd_info->og_stdin != -1)
@@ -80,7 +60,6 @@ int	manage_redirection(t_command *cmd_info)
 	{
 		if (!cmd_info->file_in || cmd_info->file_in[0] == '\0')
 			return (2);
-		//cmd_info->fd_in = open_file(cmd_info->file_in, 3, cmd_info);
 		if (cmd_info->fd_in == -1)
 			return (0);
 		dup2(cmd_info->fd_in, STDIN_FILENO);
@@ -90,10 +69,6 @@ int	manage_redirection(t_command *cmd_info)
 	{
 		if (!cmd_info->file_out || cmd_info->file_out[0] == '\0')
 			return (-1);
-		/*if (cmd_info->c_red_o == 1)
-			cmd_info->fd_out = open_file(cmd_info->file_out, 1, cmd_info);
-		else if (cmd_info->c_append == 1)
-			cmd_info->fd_out = open_file(cmd_info->file_out, 2, cmd_info);*/
 		if (cmd_info->fd_out == -1)
 			return (0);
 		dup2(cmd_info->fd_out, STDOUT_FILENO);

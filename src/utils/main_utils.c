@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 11:02:14 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/28 11:11:52 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 15:51:11 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	reset_stdout(t_command *cmd_info)
 {
-	if ((cmd_info->c_red_o != 0 || cmd_info->c_append != 0) && cmd_info->file_out && cmd_info->fd_out != -1)
+	if ((cmd_info->c_red_o != 0 || cmd_info->c_append != 0) && \
+	cmd_info->file_out && cmd_info->fd_out != -1)
 	{
 		if (cmd_info->og_stdout != -1)
 		{
@@ -34,7 +35,8 @@ void	reset_stdout(t_command *cmd_info)
 
 void	reset_stdin(t_command *cmd_info)
 {
-	if ((cmd_info->c_red_i != 0 || cmd_info->here_doc != 0) && cmd_info->file_in && cmd_info->fd_in != -1)
+	if ((cmd_info->c_red_i != 0 || cmd_info->here_doc != 0) && \
+	cmd_info->file_in && cmd_info->fd_in != -1)
 	{
 		if (cmd_info->og_stdin != -1)
 		{

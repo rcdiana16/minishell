@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 22:24:34 by diana             #+#    #+#             */
-/*   Updated: 2025/04/27 22:25:39 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 15:41:27 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 {
 	if (!bad_token)
 		ft_putstr_fd("minishell: syntax error near unexpected "
-		"token `newline'\n", 2);
-	else if (code ==3)
+			"token `newline'\n", 2);
+	else if (code == 3)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd("<<", 2);
@@ -26,10 +26,9 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 		close_fd(cmd_info);
 		shell->exit_code = 127;
 		free_command(cmd_info);
-		return (NULL);	
-
+		return (NULL);
 	}
-	else if (code ==4)
+	else if (code == 4)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(".>>", 2);
@@ -37,22 +36,22 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 		close_fd(cmd_info);
 		shell->exit_code = 127;
 		free_command(cmd_info);
-		return (NULL);	
-
+		return (NULL);
 	}
 	else if (ft_strncmp(bad_token, "", 2) == 0)
 	{
 		close_fd(cmd_info);
 		shell->exit_code = 127;
 		free_command(cmd_info);
-		return (NULL);	
+		return (NULL);
 	}
 	else
 		ft_putstr_fd("minishell: syntax error near unexpected token", 2);
 	if (bad_token)
 	{
 		ft_putstr_fd(" `", 2);
-		if (ft_strncmp(bad_token, ">>", 3) == 0 || ft_strncmp(bad_token, "<<", 3) == 0)
+		if (ft_strncmp(bad_token, ">>", 3) == 0 || ft_strncmp(bad_token, "<<", \
+		3) == 0)
 			ft_putstr_fd(bad_token, 2);
 		else if (ft_strlen(bad_token) > 2)
 			write(2, bad_token, 2);

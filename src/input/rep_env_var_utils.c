@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:22:54 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/27 22:09:03 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 16:15:25 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ char	*process_replace_env_vars(t_cmd_state *state, \
 	j = 0;
 	while (state->cmd[state->i])
 	{
-		if (state->cmd[state->i] == '$' && state->cmd[state->i + 1] && state->cmd[state->i + 1] != ' ' && state->cmd[state->i + 1] != '$')
+		if (state->cmd[state->i] == '$' && state->cmd[state->i + 1] \
+		&& state->cmd[state->i + 1] != ' ' && state->cmd[state->i + 1] != '$')
 			j = process_var(state, result, j, shell_env);
 		else
 			j = copy_non_var_part(state, result, j);

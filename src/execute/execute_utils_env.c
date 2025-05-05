@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:45:08 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/27 21:54:37 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 16:20:04 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,5 @@ char	**convert_env_to_array(t_env *env_mini)
 		i++;
 	}
 	env_array[i] = NULL;
-	//free_env_list(env_mini);
 	return (env_array);
 }

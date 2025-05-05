@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_input_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 22:36:16 by diana             #+#    #+#             */
-/*   Updated: 2025/04/28 11:07:46 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 15:29:15 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,39 +62,7 @@ void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
 			if (!has_enclosed_double_quotes(cmd_info->tokens[i]) /*&& is_redirection(cmd_info->tokens[i])*/)
 				remove_single_quotes(cmd_info->tokens[i]);
 			handle_double_quotes_and_env_vars(cmd_info, env_mini, shell, i);
-			
 		}
 		i++;
 	}
 }
-
-/*to see
-void	process_tokens(t_command *cmd_info, t_env *env_mini, t_shell *shell)
-{
-	int	i;
-
-	if (!cmd_info->tokens || !cmd_info->tokens[0])
-		return ;
-	i = 0;
-	while (cmd_info->tokens[i])
-	{
-		if (env_mini->mode == 1)
-		{
-			//remove_single_quotes(cmd_info->tokens[i]);
-			delete_quotes(cmd_info->tokens[i]);
-			// In non-interactive mode, expand env vars even in single quotes
-			handle_double_quotes_and_env_vars(cmd_info, env_mini, shell, i);
-
-			 // Remove both single and double quotes
-		}
-		else
-		{
-			if (has_enclosed_single_quotes(cmd_info->tokens[i]))
-				remove_single_quotes(cmd_info->tokens[i]);
-			else
-				handle_double_quotes_and_env_vars(cmd_info, env_mini, shell, i);
-		}
-		i++;
-	}
-}
-*/

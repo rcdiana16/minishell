@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 23:03:53 by cosmos            #+#    #+#             */
-/*   Updated: 2025/04/27 21:18:23 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 14:42:09 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,27 +75,6 @@ void	init_new_variable(t_env *new_var, char **tokens)
 	else
 		new_var->value = ft_strdup("");
 }
-
-
-/*
-int	is_valid_variable_name(char *name)
-{
-	int	i;
-
-	if (name == NULL || name[0] == '\0')
-		return (0);
-	if (!(ft_isalpha(name[0]) || name[0] == '_'))
-		return (0);
-	i = 1;
-	while (name[i])
-	{
-		if (!(ft_isalpha(name[i]) || ft_isdigit(name[i]) || name[i] == '_'))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-*/
 
 int	is_valid_variable_name(char *name)
 {

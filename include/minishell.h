@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/05/05 10:03:35 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 16:12:10 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ typedef struct s_env
 	char			*variable;
 	char			*value;
 //	int		mode;
-
-
 	struct s_env	*next;
 }	t_env;
 
@@ -165,6 +163,7 @@ void		handle_is_directory(char *command, t_command *cmd_info, \
 			t_env *env_list, char **path_sp_w_slash);
 void		handle_command_found(t_command *cmd_info, \
 			t_env *env_list, char **path_sp_w_slash);
+//----execute_error_utils.c----
 void		handle_command_not_found(char *command, t_command *cmd_info, \
 			t_env *env_list, char **path_sp_w_slash);
 //----execute_utils.c----
@@ -184,7 +183,7 @@ void		handle_heredoc_redirection(char **cmd_tokens, t_command *cmd_info, \
 //int			get_next_line_pip(char **output_line);
 
 //----redir.c----
-int		handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i, \
+int			handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i, \
 			t_pipe_exec_info *pipe_exec_info);
 //----execute_pipe.c----
 char		**clean_redir(char **cmd_tokens, t_command *cmd_info, \
@@ -319,6 +318,6 @@ void		handle_cmd_info(t_command *cmd_info);
 void		reset_stdin(t_command *cmd_info);
 void		reset_stdout(t_command *cmd_info);
 
-void	handle_is_directory_empty(char *command, t_command *cmd_info, \
-	t_env *env_list, char **path_sp_w_slash);
+void		handle_is_directory_empty(char *command, t_command *cmd_info, \
+			t_env *env_list, char **path_sp_w_slash);
 #endif

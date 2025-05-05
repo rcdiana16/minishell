@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:33:31 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/05/02 17:38:43 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 15:06:45 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,64 +14,6 @@
 
 volatile sig_atomic_t	g_heredoc_interrupted = 0;
 
-/*
-void	here_doc(char *delimiter)
-{
-	char				*line;
-	int					pipefd[2];
-	ssize_t				len;
-	struct sigaction	sa_new;
-	struct sigaction	sa_old;
-
-	g_heredoc_interrupted = 0;
-	line = NULL;
-	if (pipe(pipefd) == -1)
-		exit(EXIT_FAILURE);
-	sa_new.sa_handler = sigint_handler_heredoc;
-	sigemptyset(&sa_new.sa_mask);
-	sa_new.sa_flags = 0;
-	sigaction(SIGINT, &sa_new, &sa_old);
-	while (1)
-	{
-		if (g_heredoc_interrupted)
-		{
-			free(line);
-			close(pipefd[0]);
-			close(pipefd[1]);
-			sigaction(SIGINT, &sa_old, NULL);
-			return ;
-		}
-		write(STDOUT_FILENO, "> ", 2);
-		line = get_next_line(STDIN_FILENO);
-		if (!line)
-		{
-			break ;
-		}
-		if (g_heredoc_interrupted)
-		{
-			free(line);
-			close(pipefd[0]);
-			close(pipefd[1]);
-			sigaction(SIGINT, &sa_old, NULL);
-			return ;
-		}
-		len = ft_strlen(line);
-		if (len > 0 && line[len - 1] == '\n')
-			line[len - 1] = '\0';
-		if (ft_strncmp(line, delimiter, len) == 0)
-		{
-			free(line);
-			break ;
-		}
-		write(pipefd[1], line, ft_strlen(line));
-		write(pipefd[1], "\n", 1);
-		free(line);
-	}
-	close(pipefd[1]);
-	dup2(pipefd[0], STDIN_FILENO);
-	close(pipefd[0]);
-	sigaction(SIGINT, &sa_old, NULL);
-}*/
 void	sigint_handler_heredoc(int sig)
 {
 	(void)sig;
@@ -155,7 +97,8 @@ void	here_doc(char *delimiter, t_pipe_exec_info *pipe_exec_info)
 
 	if (tmp)
 	{
-		char *expanded = replace_env_vars(tmp, pipe_exec_info->env_list, pipe_exec_info->shell);
+		char *expanded = replace_env_vars(tmp, pipe_exec_info->env_list, \
+		pipe_exec_info->shell);
 		free(tmp);
 		line = expanded;
 	}
@@ -216,7 +159,8 @@ void	here_doc(char *delimiter, t_pipe_exec_info *pipe_exec_info)
 
 		if (tmp)
 		{
-			char *expanded = replace_env_vars(tmp, pipe_exec_info->env_list, pipe_exec_info->shell);
+			char *expanded = replace_env_vars(tmp, pipe_exec_info->env_list, \
+			pipe_exec_info->shell);
 			free(tmp);
 			line = expanded;
 		}
@@ -287,7 +231,8 @@ void	here_doc(char *delimiter, t_pipe_exec_info *pipe_exec_info)
 
 		if (tmp)
 		{
-			char *expanded = replace_env_vars(tmp, pipe_exec_info->env_list, pipe_exec_info->shell);
+			char *expanded = replace_env_vars(tmp, pipe_exec_info->env_list, \
+			pipe_exec_info->shell);
 			free(tmp);
 			line = expanded;
 		}
@@ -315,7 +260,7 @@ void	here_doc(char *delimiter, t_pipe_exec_info *pipe_exec_info)
 	close(pipefd[0]);
 	sigaction(SIGINT, &sa_old, NULL);
 
-	// Free internal static buffer in get_next_line, if your implementation supports this
+//Free internal static buffer in get_next_line, if your implementation supports this
 	get_next_line(-42);
 }
 */
@@ -340,9 +285,9 @@ void here_doc(char *delimiter, t_pipe_exec_info *pipe_exec_info)
     // Loop to read lines for the heredoc input
     while (1)
     {
-        write(STDOUT_FILENO, "> ", 2);  // Print the prompt
-        int tty_fd = open("/dev/tty", O_RDONLY);  // Open /dev/tty for reading input
-        char *tmp = get_next_line(tty_fd);  // Get the next line from the terminal
+        write(STDOUT_FILENO, "> ", 2);// Print the prompt
+        int tty_fd = open("/dev/tty", O_RDONLY); // Open /dev/tty for reading input
+        char *tmp = get_next_line(tty_fd);// Get the next line from the terminal
         close(tty_fd);
 
         if (tmp)
@@ -356,14 +301,12 @@ void here_doc(char *delimiter, t_pipe_exec_info *pipe_exec_info)
         {
             line = NULL;  // No more input
         }
-
         // Check if we reached the delimiter or an interrupt signal
         if (!line || check_heredoc_interrupt(line, pipefd, &sa_old))
         {
             free(line);
             break;
         }
-
         // Process the heredoc line (write it to the pipe)
         if (process_heredoc_line(line, delimiter, pipefd))
             break;
@@ -396,67 +339,56 @@ void	here_doc(char *delimiter, t_pipe_exec_info *pipe_exec_info)
 	struct sigaction	sa_new;
 	struct sigaction	sa_old;
 	int					input_fd;
-	int					line_limit = 1000;
+	int					line_limit;
+	char				*tmp;
+	char				*expanded;
 
+	line_limit = 1000;
 	g_heredoc_interrupted = 0;
 	line = NULL;
-
 	if (pipe(pipefd) == -1)
 		exit(EXIT_FAILURE);
-
 	init_here_doc_signals(&sa_new, &sa_old);
-
 	while (1)
 	{
 		write(STDOUT_FILENO, "> ", 2);
-
-		// Use tty if interactive, stdin otherwise
 		if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 			input_fd = open("/dev/tty", O_RDONLY);
 		else
 			input_fd = STDIN_FILENO;
-
 		if (input_fd < 0)
 		{
-			perror("minishell: heredoc input error");
-			break;
+			perror ("minishell: heredoc input error");
+			break ;
 		}
-		char *tmp = get_next_line(input_fd);	
+		tmp = get_next_line(input_fd);
 		if (input_fd != STDIN_FILENO)
 			close(input_fd);
 		if (tmp)
 		{
-			char *expanded = replace_env_vars(tmp, pipe_exec_info->env_list, pipe_exec_info->shell);
+			expanded = replace_env_vars(tmp, pipe_exec_info->env_list, \
+			pipe_exec_info->shell);
 			free(tmp);
 			line = expanded;
 		}
 		else
 			line = NULL;
-
 		if (!line || check_heredoc_interrupt(line, pipefd, &sa_old))
 		{
 			free(line);
-			break;
+			break ;
 		}
-
 		if (process_heredoc_line(line, delimiter, pipefd))
-			break;
-
+			break ;
 		if (!isatty(STDIN_FILENO) && --line_limit <= 0)
 		{
 			write(STDERR_FILENO, "minishell: heredoc line limit reached\n", 38);
-			break;
+			break ;
 		}
 	}
-
 	close(pipefd[1]);
-
-	// ✅ Always redirect pipe output to STDIN
 	dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
-
 	sigaction(SIGINT, &sa_old, NULL);
-
-	get_next_line(-42); // cleanup static buffer if supported
+	get_next_line(-42);
 }
-

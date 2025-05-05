@@ -6,7 +6,7 @@
 /*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 22:14:53 by diana             #+#    #+#             */
-/*   Updated: 2025/04/27 22:16:06 by diana            ###   ########.fr       */
+/*   Updated: 2025/05/05 16:08:56 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	check_initial_syntax(char **cmd, char **bad_token)
 			*bad_token = cmd[0];
 		return (4);
 	}
-	
 	if (ft_strncmp(cmd[0], "'<<'", 5) == 0)
 	{
 		if (bad_token)

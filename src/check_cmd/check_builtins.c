@@ -3,66 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
+/*   By: diana <diana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:38:03 by diana             #+#    #+#             */
-/*   Updated: 2025/03/19 12:19:06 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 14:47:00 by diana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-/*
-int	check_standard_builtins(char **command, t_env *env_mini, \
-	t_command **cmd_info, char **path)
-{
-	if (!command || !command[0])
-		return (0);
-	if ((ft_strncmp(command[0], "echo", ft_strlen(command[0]) + 1)) == 0)
-		return (ft_our_echo(command), 0);
-	else if ((ft_strncmp(command[0], "cd", ft_strlen(command[0]) + 1)) == 0)
-		return (is_valid_path(command[1], env_mini, *cmd_info, command));
-	else if ((ft_strncmp(command[0], "pwd", ft_strlen(command[0]) + 1)) == 0)
-		return (ft_our_pwd(env_mini), 0);
-	else if ((ft_strncmp(command[0], "env", ft_strlen(command[0]) + 1)) == 0)
-		return ((ft_our_env(env_mini, command)));
-	else if ((ft_strncmp(command[0], "exit", ft_strlen(command[0]) + 1)) == 0)
-		return ((ft_our_exit(env_mini, (*cmd_info)->tokens, \
-		*cmd_info, path)));
-	else
-		return (-1);
-}*/
 
 int	check_standard_builtins(char **command, t_env *env_mini, \
 	t_command **cmd_info, char **path)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	if (!command)
 		return (0);
-
 	while (command[i])
 	{
 		if (ft_strncmp(command[i], "", 2) == 0)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		if ((ft_strncmp(command[i], "echo", ft_strlen(command[i]) + 1)) == 0)
 			return (ft_our_echo(command), 0);
 		else if ((ft_strncmp(command[i], "cd", ft_strlen(command[i]) + 1)) == 0)
-			return (is_valid_path(command[i + 1], env_mini, *cmd_info, &command[i]));
-		else if ((ft_strncmp(command[i], "pwd", ft_strlen(command[i]) + 1)) == 0)
+			return (is_valid_path(command[i + 1], env_mini, *cmd_info, \
+			&command[i]));
+		else if ((ft_strncmp(command[i], "pwd", ft_strlen(command[i]) + 1)) \
+				== 0)
 			return (ft_our_pwd(env_mini), 0);
-		else if ((ft_strncmp(command[i], "env", ft_strlen(command[i]) + 1)) == 0)
+		else if ((ft_strncmp(command[i], "env", ft_strlen(command[i]) + 1)) \
+				== 0)
 			return ((ft_our_env(env_mini, &command[i])));
-		else if ((ft_strncmp(command[i], "exit", ft_strlen(command[i]) + 1)) == 0)
-			return ((ft_our_exit(env_mini, (*cmd_info)->tokens, *cmd_info, path)));
+		else if ((ft_strncmp(command[i], "exit", ft_strlen(command[i]) + 1)) \
+				== 0)
+			return ((ft_our_exit(env_mini, (*cmd_info)->tokens, *cmd_info, \
+			path)));
 		else
 			return (-1);
 	}
 	return (0);
 }
-
 
 int	check_env_builtins(char **command, t_env *env_mini)
 {
