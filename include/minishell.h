@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:46:38 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/05/02 17:41:16 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 10:03:35 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void		handle_heredoc_redirection(char **cmd_tokens, t_command *cmd_info, \
 //int			get_next_line_pip(char **output_line);
 
 //----redir.c----
-void		handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i, \
+int		handle_redirection(char **cmd_tokens, t_command *cmd_info, int *i, \
 			t_pipe_exec_info *pipe_exec_info);
 //----execute_pipe.c----
 char		**clean_redir(char **cmd_tokens, t_command *cmd_info, \

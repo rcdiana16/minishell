@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:04:23 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/04/28 11:16:28 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 10:19:21 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	manage_redirection(t_command *cmd_info)
 	{
 		if (!cmd_info->file_in || cmd_info->file_in[0] == '\0')
 			return (2);
-		cmd_info->fd_in = open_file(cmd_info->file_in, 3, cmd_info);
+		//cmd_info->fd_in = open_file(cmd_info->file_in, 3, cmd_info);
 		if (cmd_info->fd_in == -1)
 			return (0);
 		dup2(cmd_info->fd_in, STDIN_FILENO);
@@ -90,10 +90,10 @@ int	manage_redirection(t_command *cmd_info)
 	{
 		if (!cmd_info->file_out || cmd_info->file_out[0] == '\0')
 			return (-1);
-		if (cmd_info->c_red_o == 1)
+		/*if (cmd_info->c_red_o == 1)
 			cmd_info->fd_out = open_file(cmd_info->file_out, 1, cmd_info);
 		else if (cmd_info->c_append == 1)
-			cmd_info->fd_out = open_file(cmd_info->file_out, 2, cmd_info);
+			cmd_info->fd_out = open_file(cmd_info->file_out, 2, cmd_info);*/
 		if (cmd_info->fd_out == -1)
 			return (0);
 		dup2(cmd_info->fd_out, STDOUT_FILENO);

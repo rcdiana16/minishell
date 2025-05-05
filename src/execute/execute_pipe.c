@@ -6,7 +6,7 @@
 /*   By: maximemartin <maximemartin@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:59:48 by maximemarti       #+#    #+#             */
-/*   Updated: 2025/05/02 17:34:28 by maximemarti      ###   ########.fr       */
+/*   Updated: 2025/05/05 10:04:32 by maximemarti      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,23 +125,28 @@ char	**allocate_cleaned_cmd(char **cmd_tokens)
 	return (cleaned_cmd);
 }
 
-void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
+int	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 		char **cleaned_cmd, t_pipe_exec_info *pipe_exec_info)
 {
 	int	i;
 	int	j;
+	int ret;
 
 	i = 0;
 	j = 0;
 	if (!cmd_tokens)
-		return ;
+		return 0;
 	while (cmd_tokens[i])
 	{
 		if ((ft_strncmp(cmd_tokens[i], ">", 1) == 0 || \
 		ft_strncmp(cmd_tokens[i], ">>", 2) == 0 || \
 		ft_strncmp(cmd_tokens[i], "<", 1) == 0 || \
 		ft_strncmp(cmd_tokens[i], "<<", 2) == 0) && (cmd_tokens[i + 1]))
-			handle_redirection(cmd_tokens, cmd_info, &i, pipe_exec_info);
+		{
+			ret = handle_redirection(cmd_tokens, cmd_info, &i, pipe_exec_info);
+			if (ret == -1)
+				return (-1);
+		}
 		else
 		{
 			if (cmd_tokens[i])
@@ -150,16 +155,20 @@ void	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 		}
 	}
 	cleaned_cmd[j] = NULL;
+	return 0;
 }
 
 char	**clean_redir(char **cmd_tokens, t_command *cmd_info, t_pipe_exec_info *pipe_exec_info)
 {
 	char	**cleaned_cmd;
+	int test;
 
 	cleaned_cmd = allocate_cleaned_cmd(cmd_tokens);
 	if (!cleaned_cmd)
 		return (NULL);
-	filter_and_copy_tokens(cmd_tokens, cmd_info, cleaned_cmd, pipe_exec_info);
+	test = filter_and_copy_tokens(cmd_tokens, cmd_info, cleaned_cmd, pipe_exec_info);
+	if (test == -1)
+		return (NULL);
 	/*if (cmd_tokens)
 		free_arr(cmd_tokens);*/
 	if (cmd_tokens != cleaned_cmd)
