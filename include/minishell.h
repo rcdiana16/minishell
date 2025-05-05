@@ -196,14 +196,14 @@ char		*find_builtin_or_exit_pipe(char **path_sp_w_slash, char **cmd_inf, \
 //----execute_pipe_utils.c----
 int			execute_pipes(t_command *cmd_info, \
 			char **path_sp_w_slash, t_env *env_list);
-int			child_process_execute_command(t_pipe_exec_info pipe_exec_info);
+int			child_process_execute_command(t_pipe_exec_info *pipe_exec_info);
 //void		child_process_handle_redirection(t_pipe_exec_info pipe_exec_info);
 //----utils_pipe.c----
 int			get_pipe_bounds(t_command *cmd_info, int i, int *start, int *end);
 char		**get_pipe_command(t_command *cmd_info, int i);
 int			create_pipe(int *pipe_fd);
-void		child_process_setup_io(t_pipe_exec_info pipe_exec_info);
-int			execute_child_process_pipe_helper(t_pipe_exec_info pipe_exec_info);
+void		child_process_setup_io(t_pipe_exec_info *pipe_exec_info);
+int			execute_child_process_pipe_helper(t_pipe_exec_info *pipe_exec_info);
 //----utils.c----
 void		exec_builtin_or_exit_pipe(char **command, t_command *cmd_info, \
 			t_env *env_list, char **path_sp_w_slash);

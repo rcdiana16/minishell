@@ -14,7 +14,7 @@
 
 void	reset_stdout(t_command *cmd_info)
 {
-	if (cmd_info->c_red_o != 0 || cmd_info->c_append != 0)
+	if ((cmd_info->c_red_o != 0 || cmd_info->c_append != 0) && cmd_info->file_out && cmd_info->fd_out != -1)
 	{
 		if (cmd_info->og_stdout != -1)
 		{
@@ -34,7 +34,7 @@ void	reset_stdout(t_command *cmd_info)
 
 void	reset_stdin(t_command *cmd_info)
 {
-	if (cmd_info->c_red_i != 0 || cmd_info->here_doc != 0)
+	if ((cmd_info->c_red_i != 0 || cmd_info->here_doc != 0) && cmd_info->file_in && cmd_info->fd_in != -1)
 	{
 		if (cmd_info->og_stdin != -1)
 		{

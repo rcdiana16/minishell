@@ -23,6 +23,8 @@ int	handle_redirection_and_builtins(t_pipe_exec_info *pipe_exec_info)
 			free_arr(pipe_exec_info->current_command);
 			free_all(pipe_exec_info->cmd_info, pipe_exec_info->path_sp_w_slash, \
 			pipe_exec_info->env_list);
+			close(0);
+			close(1);
 			//exit(1);
 			return (1);
 		}
@@ -33,6 +35,8 @@ int	handle_redirection_and_builtins(t_pipe_exec_info *pipe_exec_info)
 					pipe_exec_info->path_sp_w_slash);
 	if (exit_builtin != -1)
 	{
+		close(0);
+		close(1);
 		free_all(pipe_exec_info->cmd_info, pipe_exec_info->path_sp_w_slash, \
 			pipe_exec_info->env_list);
 		free_arr(pipe_exec_info->current_command);
@@ -41,27 +45,56 @@ int	handle_redirection_and_builtins(t_pipe_exec_info *pipe_exec_info)
 	return (-1);
 }
 
-int	child_process_execute_command(t_pipe_exec_info pipe_exec_info)
+int	child_process_execute_command(t_pipe_exec_info *pipe_exec_info)
 {
 	char	**tmp_command;
 	int		exit_builtin;
 
-	tmp_command = clean_redir(pipe_exec_info.current_command, \
-		pipe_exec_info.cmd_info, &pipe_exec_info);
+	tmp_command = clean_redir(pipe_exec_info->current_command, \
+		pipe_exec_info->cmd_info, pipe_exec_info);
 	if (!tmp_command)
 		return (1);
-	pipe_exec_info.current_command = tmp_command;
-	exit_builtin = handle_redirection_and_builtins(&pipe_exec_info);
+	pipe_exec_info->current_command = tmp_command;
+	exit_builtin = handle_redirection_and_builtins(pipe_exec_info);
 	if (exit_builtin != -1)
 	{
 		return (exit_builtin);
 	}
-	execute_child_process_pipe(pipe_exec_info.current_command, \
-					pipe_exec_info.path_sp_w_slash, \
-					pipe_exec_info.env_list, \
-					pipe_exec_info.cmd_info);
+	execute_child_process_pipe(pipe_exec_info->current_command, \
+					pipe_exec_info->path_sp_w_slash, \
+					pipe_exec_info->env_list, \
+					pipe_exec_info->cmd_info);
 	return (127);
 }
+/*
+int	child_process_execute_command(t_pipe_exec_info *pipe_exec_info)
+{
+	char	**tmp_command;
+	int		exit_builtin;
+
+	tmp_command = clean_redir(pipe_exec_info->current_command,
+		pipe_exec_info->cmd_info, pipe_exec_info);
+	if (!tmp_command)
+		return (1);
+	pipe_exec_info->current_command = tmp_command;
+
+	// ✅ Handle redirections first
+	exit_builtin = handle_redirection_and_builtins(pipe_exec_info);
+
+	// ✅ Only setup pipe IO if no redirection occurred
+	if (!(pipe_exec_info->cmd_info->file_in || pipe_exec_info->cmd_info->file_out))
+		child_process_setup_io(pipe_exec_info);
+
+	if (exit_builtin != -1)
+		return (exit_builtin);
+
+	execute_child_process_pipe(pipe_exec_info->current_command,
+					pipe_exec_info->path_sp_w_slash,
+					pipe_exec_info->env_list,
+					pipe_exec_info->cmd_info);
+	return (127);
+}
+*/
 
 int	execute_pipes_child_process(t_pipe_exec_info *pipe_exec_info, \
 	int *pids, int i)
@@ -71,7 +104,7 @@ int	execute_pipes_child_process(t_pipe_exec_info *pipe_exec_info, \
 	pid = fork();
 	if (pid == 0)
 	{
-		execute_child_process_pipe_helper(*pipe_exec_info);
+		execute_child_process_pipe_helper(pipe_exec_info);
 		exit(0);
 	}
 	else

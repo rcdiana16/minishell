@@ -29,6 +29,17 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 		return (NULL);	
 
 	}
+	else if (code ==4)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(".>>", 2);
+		ft_putstr_fd(": command not found\n", 2);
+		close_fd(cmd_info);
+		shell->exit_code = 127;
+		free_command(cmd_info);
+		return (NULL);	
+
+	}
 	else if (ft_strncmp(bad_token, "", 2) == 0)
 	{
 		close_fd(cmd_info);
@@ -58,7 +69,7 @@ t_command	*handle_token_error(t_command *cmd_info, t_shell *shell, \
 t_command	*handle_syntax_errors(t_command *cmd_info, \
 			t_shell *shell, int ret, char *bad_token)
 {
-	if (ret == 0 || ret == 2 || ret == 3)
+	if (ret == 0 || ret == 2 || ret == 3 || ret == 4)
 	{
 		if (ret != 3)
 			return (handle_token_error(cmd_info, shell, \

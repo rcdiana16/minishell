@@ -22,6 +22,13 @@ int	check_initial_syntax(char **cmd, char **bad_token)
 			*bad_token = cmd[0];
 		return (2);
 	}
+	if (ft_strncmp(cmd[0], "\">>\"", 5) == 0)
+	{
+		if (bad_token)
+			*bad_token = cmd[0];
+		return (4);
+	}
+	
 	if (ft_strncmp(cmd[0], "'<<'", 5) == 0)
 	{
 		if (bad_token)

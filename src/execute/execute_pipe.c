@@ -120,7 +120,9 @@ char	**allocate_cleaned_cmd(char **cmd_tokens)
 		i++;
 	if (i == 0)
 		return (NULL);
-	cleaned_cmd = malloc(sizeof(char *) * (i + 1));
+	//cleaned_cmd = malloc(sizeof(char *) * (i + 1));
+	cleaned_cmd = calloc(i + 1, sizeof(char *));
+
 	cleaned_cmd[i] = NULL;
 	return (cleaned_cmd);
 }
@@ -161,14 +163,14 @@ int	filter_and_copy_tokens(char **cmd_tokens, t_command *cmd_info, \
 char	**clean_redir(char **cmd_tokens, t_command *cmd_info, t_pipe_exec_info *pipe_exec_info)
 {
 	char	**cleaned_cmd;
-	int test;
+	//int test;
 
 	cleaned_cmd = allocate_cleaned_cmd(cmd_tokens);
 	if (!cleaned_cmd)
 		return (NULL);
-	test = filter_and_copy_tokens(cmd_tokens, cmd_info, cleaned_cmd, pipe_exec_info);
-	if (test == -1)
-		return (NULL);
+	filter_and_copy_tokens(cmd_tokens, cmd_info, cleaned_cmd, pipe_exec_info);
+	/*if (test == -1)
+		return (NULL);*/
 	/*if (cmd_tokens)
 		free_arr(cmd_tokens);*/
 	if (cmd_tokens != cleaned_cmd)
